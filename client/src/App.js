@@ -1,3 +1,19 @@
+/* 
+
+This file checks whether the user access the site
+as a Admin or Super Admin by checking isLoggedin & 
+isSuperLogin flags. 
+
+Also ensures that pages cannot be accessed without having 
+either flags set to true. This takes cares of any threat 
+to the site since credentials are verified from the database
+each time.
+
+If a user is not logged in then he/she is redirected to 
+login page.
+
+*/
+
 import React from 'react';
 import "./assets/css/loader.css"
 import {

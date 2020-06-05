@@ -1,3 +1,11 @@
+/* 
+
+This file is used connect backend APIs to
+frontend i.e connect the frontend components
+to database & functionalities.
+
+*/
+
 import axios from 'axios';
 var baseUrl = "https://devjam-server.herokuapp.com/api";
 // var baseUrl = "http://localhost:3000/api";

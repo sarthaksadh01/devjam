@@ -1,3 +1,9 @@
+
+/*
+
+   This file contains schema for Topic Table.
+
+ */
 let mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var topic = new Schema({

@@ -1,3 +1,10 @@
+/*
+
+   This file contains schema for
+   Admins Table.
+
+ */
+
 let mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var admins = new Schema({

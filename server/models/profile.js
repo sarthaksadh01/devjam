@@ -1,3 +1,9 @@
+/*
+
+    This file contains schema for Profiles Table.
+
+ */
+
 let mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var profiles = new Schema({

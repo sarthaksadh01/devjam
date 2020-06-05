@@ -1,3 +1,10 @@
+/* 
+
+This file is used as a Hobbies Section component for 
+Create Profile Form.
+
+*/
+
 import React from 'react';
 function HobbiesForm(props) {
     return (

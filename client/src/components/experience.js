@@ -1,3 +1,10 @@
+/* 
+
+This file is used as a Experience Section component for 
+Create Profile Form.
+
+*/
+
 import React from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";

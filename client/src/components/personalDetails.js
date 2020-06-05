@@ -1,3 +1,10 @@
+/* 
+
+This file is used as a Personal Details Section 
+component for Create Profile Form.
+
+*/
+
 import React from 'react';
 import {  NotificationManager } from 'react-notifications';
 import StarRatings from 'react-star-ratings';

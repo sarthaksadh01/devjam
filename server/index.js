@@ -1,3 +1,10 @@
+/* 
+
+This file is used to set up the server  
+
+*/
+
+
 const express = require('express')
 var cors = require('cors')
 const profileRouter = require("./routes/profileRouter")

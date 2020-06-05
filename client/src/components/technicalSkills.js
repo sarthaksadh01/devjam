@@ -1,3 +1,10 @@
+/* 
+
+This file is used as a Technical Skills Section 
+component for Create Profile Form.
+
+*/
+
 import React from 'react';
 function TechSkillsForm(props) {
     return (

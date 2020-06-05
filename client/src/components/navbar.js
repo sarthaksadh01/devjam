@@ -1,3 +1,10 @@
+/* 
+
+This file is used as a Navbar component 
+used across entire site.
+
+*/
+
 import React from 'react';
 import "../assets/css/navbar.css"
 import { reactLocalStorage } from 'reactjs-localstorage';

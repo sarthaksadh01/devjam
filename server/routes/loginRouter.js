@@ -1,3 +1,12 @@
+/*
+
+   This file contains routes specific to manage
+   Admins & Super Admins.
+   These routes will be used to query the database.
+
+ */
+
+
 const express = require('express')
 var encrypt = require("sha256");
 const router = new express.Router
