@@ -1,0 +1,1 @@
+import { getProfile} from "../data/data"

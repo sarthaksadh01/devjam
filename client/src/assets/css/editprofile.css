@@ -1,0 +1,15 @@
+.heading{
+    color: rgb(10, 10, 88);
+}
+.lead{
+    line-height:10px;font-family: monospace;
+}
+.personal{
+    color: rgb(10, 10, 88);display: inline-block;
+}
+.hr{
+    height: 0px; 
+    border: none;
+    border-top: 2px solid rgb(10, 10, 88);
+    background-color: rgb(10, 10, 88);
+}

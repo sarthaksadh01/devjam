@@ -1,0 +1,250 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans&family=Roboto:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Inconsolata:700');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+.navbar-custom {
+    z-index: 999 !important;
+    background: #4633af;
+    background: -webkit-linear-gradient(-135deg, #4633af, #c850c0);
+    background: -o-linear-gradient(-145deg, #4633af, #c850c0);
+    background: -moz-linear-gradient(-145deg, #4633af, #c850c0);
+    background: linear-gradient(-135deg, #4633af, #c850c0);
+    box-shadow: 0 0.0625rem 0.375rem 0 rgba(0, 0, 0, 0.1);
+    font-family: 'Archivo', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.navbar-brand {
+    font-size: 22px;
+    margin-left: 20px;
+}
+
+.navbar-custom .navbar-brand.logo-image .img {
+    width: 130px;
+    height: 55px;
+    margin-bottom: 1px;
+    text-decoration: none;
+    -webkit-backface-visibility: hidden;
+}
+
+.navbar-custom .navbar-brand.logo-text {
+    font: 700 2.375rem/1.5rem;
+    color: #fff;
+    letter-spacing: -0.5px;
+    text-decoration: none;
+}
+
+.navbar-custom .navbar-nav {
+    margin-top: 0.75rem;
+}
+
+.navbar-custom .nav-item .nav-link {
+    padding: 0 0.75rem 0 0.75rem;
+    padding-bottom: 10px;
+    color: rgba(202, 206, 221, 0.8);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.navbar-custom .nav-item .nav-link:hover,
+.navbar-custom .nav-item .nav-link.active {
+    color: white
+}
+
+.nav-link .a {
+    padding: 8px;
+    text-decoration: none;
+    display: inline-block;
+    color: rgba(202, 206, 221, 0.8);
+    font-family: "Raleway", sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    outline: none;
+}
+
+.nav-link .menu-active a,
+.nav-link a:hover {
+    color: #fff;
+}
+
+.nav-link a:hover:before,
+.nav-link li:hover>a:before,
+.nav-link .menu-active>a:before {
+    visibility: visible;
+    width: 100%;
+}
+
+.log-btn .a {
+    color: #fff;
+    background: #f82249;
+    padding: 10px 20px;
+    border-radius: 50px;
+    border: 2px solid #f82249;
+    transition: all ease-in-out 0.3s;
+    font-weight: 500;
+    margin-left: 8px;
+    margin-top: 4px;
+    line-height: 1;
+    font-size: 13px;
+}
+
+
+/* Nav Menu */
+
+.nav-menu,
+.nav-menu * {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.nav-menu ul {
+    position: absolute;
+    display: none;
+    top: 100%;
+    left: 0;
+    z-index: 99;
+}
+
+.nav-menu li {
+    top: -5px;
+    position: relative;
+    white-space: nowrap;
+}
+
+.nav-menu>li {
+    float: left;
+}
+
+.nav-menu li:hover>ul,
+.nav-menu li.sfHover>ul {
+    display: block;
+}
+
+.nav-menu ul ul {
+    top: 0;
+    left: 100%;
+}
+
+.nav-menu ul li {
+    min-width: 180px;
+}
+
+
+/* Nav  Styling */
+
+.nav-menu a {
+    padding: 8px;
+    text-decoration: none;
+    display: inline-block;
+    color: rgba(202, 206, 221, 0.8);
+    font-family: "Raleway", sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    outline: none;
+}
+
+.nav-menu .menu-active a,
+.nav-menu a:hover {
+    color: #fff;
+}
+
+.nav-menu>li {
+    margin-left: 8px;
+}
+
+.nav-menu>li>a:before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #f82249;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out 0s;
+}
+
+.nav-menu a:hover:before,
+.nav-menu li:hover>a:before,
+.nav-menu .menu-active>a:before {
+    visibility: visible;
+    width: 100%;
+}
+
+.nav-menu li.log-btn a {
+    color: #fff;
+    background: #f82249;
+    padding: 7px 22px;
+    border-radius: 50px;
+    border: 2px solid #f82249;
+    transition: all ease-in-out 0.3s;
+    font-weight: 500;
+    margin-left: 8px;
+    margin-top: 2px;
+    line-height: 1;
+    font-size: 13px;
+}
+
+.nav-menu li .log-btn a:hover {
+    border-color: white;
+}
+
+.nav-menu li.buy-tickets:hover a:before,
+.nav-menu li.buy-tickets.menu-active a:before {
+    visibility: hidden;
+}
+
+.nav-menu ul {
+    margin: 4px 0 0 0;
+    padding: 10px;
+    box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
+    background: #fff;
+    border-radius: 3px;
+}
+
+.nav-menu ul li {
+    transition: 0.3s;
+}
+
+.nav-menu ul li a {
+    padding: 10px;
+    color: #060c22;
+    transition: 0.3s;
+    display: block;
+    font-size: 13px;
+    text-transform: none;
+    border-radius: 3px;
+}
+
+.nav-menu ul li:hover>a {
+    background: #f82249;
+    color: #fff;
+}
+
+.nav-menu ul ul {
+    margin: 0;
+}
+
+.nav-menu li.log-btn a {
+    color: #fff;
+    background: #f82249;
+    padding: 7px 22px;
+    border-radius: 50px;
+    border: 2px solid #f82249;
+    transition: all ease-in-out 0.3s;
+    font-weight: 500;
+    margin-left: 8px;
+    margin-top: 2px;
+    line-height: 1;
+    font-size: 13px;
+}
+
+.nav-menu li.log-btn a:hover {
+    border-color: white;
+}
+
+.nav-menu li.log-btn:hover a:before,
+.nav-menu li.log-btn.menu-active a:before {
+    visibility: hidden;
+}
