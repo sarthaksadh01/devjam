@@ -31,18 +31,20 @@ to each topic & subtopic. So whenever we drag & rearrange, the priority of initi
 topics gets swapped & this change is reflected in database as well. Also each new topic/subtopic gets 
 the priority of max_priority+1. _
 
-3. **Markdown Editor for Deliverable Page**
+## 🔥 Cherry on the Cake
+
+1. **Markdown Editor for Deliverable Page**
 
 _Admin can create deliverable using Markdown editor to apply various effects to their text
 and not just plain text. It will increase readabilty & user interaction._
 
-4. **Video Upload from Multiple Sources**
+2. **Video Upload from Multiple Sources**
 
 _Admin can now upload videos from not only his local files but also upload it through various
 online storages like Google Drive, Youtube, Vimeo etc. It will help the admin to ease the video 
 uploading from other sources._
 
-5. **Notifications**
+3. **Notifications**
 
 _Admin will get instant notifications and alerts in case of successfull and failed operations._
 
