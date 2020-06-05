@@ -31,6 +31,9 @@ to each topic & subtopic. So whenever we drag & rearrange, the priority of initi
 topics gets swapped & this change is reflected in database as well. Also each new topic/subtopic gets 
 the priority of max_priority+1. _
 
+---
+
+
 ## 🔥 Cherry on the Cake
 
 1. **Markdown Editor for Deliverable Page**
