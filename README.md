@@ -29,7 +29,7 @@ subtopic Sid string to get topic id & subtopic id._
 _Since drag feature was required in this week's challenge, so we implemented it be assigning **Priority**
 to each topic & subtopic. So whenever we drag & rearrange, the priority of initial & final destination
 topics gets swapped & this change is reflected in database as well. Also each new topic/subtopic gets 
-the priority of max_priority+1. _
+the priority of max_priority+1._
 
 ---
 
