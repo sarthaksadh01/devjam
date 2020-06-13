@@ -35,7 +35,7 @@ function VideoPlayer(props) {
                     <option>1.75x</option>
                     <option>2x</option>
                     </select>
-                    <select  className="mr-5 border-white text-dark mb-2">
+                    <select onChange={(e)=>{props.changeVideoQuality(e.target.value)}}  className="mr-5 border-white text-dark mb-2">
                     <option>HD</option>
                     <option>SD</option>
                     </select>

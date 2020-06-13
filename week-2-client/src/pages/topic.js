@@ -30,7 +30,8 @@ class Topic extends React.Component {
             playbackRate: 1,
             privateComment: "",
             fileUrl: "",
-            isSubmitted: true
+            isSubmitted: true,
+            videoUrl:""
         };
         this.renderItem = this.renderItem.bind(this);
         this.changePlayback = this.changePlayback.bind(this);
@@ -39,24 +40,26 @@ class Topic extends React.Component {
 
         this.changeSubmission = this.changeSubmission.bind(this);
         this.uploadFile = this.uploadFile.bind(this);
+        this.changeVideoQuality = this.changeVideoQuality.bind(this);
     }
 
     calculateCurrentSubtopic(data) {
         var currentSubTopic = data.subTopics.filter((subTopic) => {
             return subTopic.subTopicId === this.props.match.params.videoId
         });
+        this.setState({videoUrl:currentSubTopic[0].videoLink});
         var prev = "#";
         var next = "#";
         for(var i=0;i<data.subTopics.length;i++){
             if(data.subTopics[i].subTopicId===this.props.match.params.videoId){
-                // alert("lol")
+
                 if(i!=0){
                     prev = `/topic/${data._id}/subtopic/${data.subTopics[i-1].subTopicId}`
 
                 }
                 if(i!=(data.subTopics.length-1)){
                     next = `/topic/${data._id}/subtopic/${data.subTopics[i+1].subTopicId}`
-                    // alert("hah")
+
                 }
             }
         }
@@ -83,6 +86,18 @@ class Topic extends React.Component {
 
         }
 
+
+    }
+
+    changeVideoQuality(value){
+        if(value==="HD"){
+            this.setState({videoUrl:this.state.currentSubTopic.videoLink})
+
+        }
+        else{
+            this.setState({videoUrl:"https://zaio-videos.s3.ap-south-1.amazonaws.com/y2mate.com+-+Learn+The+MERN+Stack+%5B1%5D+-+Series+Introduction_PBTYxXADG_k_360p.mp4"})
+
+        }
 
     }
 
@@ -215,9 +230,10 @@ class Topic extends React.Component {
                                     ? <VideoPlayer
                                         prev={this.state.prev}
                                         next={this.state.next}
-                                        videoUrl={this.state.currentSubTopic.videoLink}
+                                        videoUrl={this.state.videoUrl}
                                         playbackRate={this.state.playbackRate}
                                         changePlayback ={this.changePlayback}
+                                        changeVideoQuality ={this.changeVideoQuality}
                                     />
                                     : <FileUpload
                                         isSubmitted={this.state.isSubmitted}
