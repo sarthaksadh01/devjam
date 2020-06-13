@@ -19,9 +19,9 @@ _The React Video Player provides only basic functionalities. The controls such a
 
 2. **Video Quality**
 
-_The Video Quality control in our video player is cuurently disabled due to some bug in React-Player. This bug is affecting the video player to play normally in Google Chrome. However, it is working perferctly fine in Safari. Currently we have disabled this feature. So for implementation purposes, toggling the video quality will start another video. To test just un-comment the code in /week-2-client/src/pages/topic.js and try it in Safari._
+_The Video Quality control in our video player can switch between HD and SD quality But a bug in react video player causes video to be restarted in chrome but works fine in safari_
 
-**Or Check out this video** : 
+**Or Check out this video** : https://drive.google.com/file/d/1C-TKBIm6Vr-eG8PzeJDlN7jLLUI0-uzW/view?usp=sharing
 
 
 ---
