@@ -124,11 +124,11 @@ class Login extends React.Component {
 
                 }
                 else {
-                    NotificationManager.error(res.err);
+                    //   NotificationManager.error(res.err);
 
                 }
             }).catch((err) => {
-                NotificationManager.error("Server error");
+                // NotificationManager.error("Server error");
             }).finally(() => {
                 this.props.toggleLoading("Verifying user from github..");
             })

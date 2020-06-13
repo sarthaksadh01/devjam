@@ -76,14 +76,14 @@ class Content extends React.Component {
 
 
                     </div>
-                    <div className="content-wrapper">
+                    <div className="content-wrapper mt-4">
                         {this.state.searchRes.map((value, index) => {
 
                             var color = Math.floor(Math.random() * 4);
                             return <div class="video-card">
                                 <a href="#" class="video-card__card-link"></a>
 
-                                <img class="video-card__image" src={`https://www.w3schools.com/w3css/img_lights.jpg`} alt="Card image" /> alt="Card image" />
+                                <img class="video-card__image" src={value.subTopics[0].thumbNail} alt="Card image" /> alt="Card image" />
                             <div class="video-card__text-wrapper">
                                     {/* <div className="text-center row"> */}
 

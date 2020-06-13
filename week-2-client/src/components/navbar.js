@@ -14,7 +14,7 @@ function NavbarUi(props) {
     return (
 
         <Navbar collapseOnSelect expand="lg" className="shadow shadow-lg navbar navbar-expand-md custom-nav text-white fixed-top">
-            <a class=" text-white navbar-brand" href="/"><b>Cryptx</b></a>
+            <a class=" text-white navbar-brand" href="/"><img style={{height:35}} src="https://www.zaiodev.com/static/media/zaiowhite.76601178.png"/></a>
             <ul class="nav navbar-nav ml-auto">
                 <Dropdown className="float-right">
                     <Dropdown.Toggle variant="" id="dropdown-basic">

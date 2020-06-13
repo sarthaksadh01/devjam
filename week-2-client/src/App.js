@@ -69,6 +69,7 @@ class App extends React.Component {
               <Route  path="/topic/:topicId/subtopic/:videoId" render={(props) =>this.state.isLoggedin ? <Topic {...props} toggleLoading={this.toggleLoading} />:<Login {...props} toggleLoading={this.toggleLoading} />}  />
               <Route  path="/login" render={(props) =>this.state.isLoggedin ? <Content {...props} toggleLoading={this.toggleLoading} />:<Login {...props} toggleLoading={this.toggleLoading} />} />
               <Route  path="/signup" render={(props) =>this.state.isLoggedin ? <Content {...props} toggleLoading={this.toggleLoading} />:<Signup {...props} toggleLoading={this.toggleLoading} />} />
+              <Route  path="/content" render={(props) =>this.state.isLoggedin ? <Content {...props} toggleLoading={this.toggleLoading} />:<Login {...props} toggleLoading={this.toggleLoading} />} />
             </Switch>
           </LoadingOverlay>
         </Router>

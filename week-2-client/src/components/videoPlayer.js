@@ -35,6 +35,10 @@ function VideoPlayer(props) {
                     <option>1.75x</option>
                     <option>2x</option>
                     </select>
+                    <select  className="mr-5 border-white text-dark mb-2">
+                    <option>HD</option>
+                    <option>SD</option>
+                    </select>
                 
                     {props.next=="#"?<div></div>:<a href={props.next}><FontAwesomeIcon style={{fontSize:"25",marginTop:"3px"}} className=" mr-5 border-white text-white"  icon={faArrowRight} /></a>} 
                     
