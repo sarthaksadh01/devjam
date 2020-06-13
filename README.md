@@ -8,7 +8,7 @@
 
 **Server Hosting** : https://devjam-server.herokuapp.com
 
-**Credentials** : guest@zaio.io  123456
+
 
 ---
 ## 🔆 Design Specs 
