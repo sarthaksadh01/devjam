@@ -19,9 +19,9 @@ _The React Video Player provides only basic functionalities. The controls such a
 
 2. **Video Quality**
 
-_The Video Quality control in our video player can switch between HD and SD quality But a bug in react video player causes video to be restarted in chrome but works fine in safari_
+_The Video Quality control in our video player can switch between HD and SD quality. But a bug in react video player causes video to be restarted in chrome but works fine in safari_
 
-**Or Check out this video** : https://drive.google.com/file/d/1C-TKBIm6Vr-eG8PzeJDlN7jLLUI0-uzW/view?usp=sharing
+**See this video** : https://drive.google.com/file/d/1C-TKBIm6Vr-eG8PzeJDlN7jLLUI0-uzW/view?usp=sharing
 
 
 ---
