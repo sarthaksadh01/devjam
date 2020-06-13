@@ -31,9 +31,12 @@ class Content extends React.Component {
     }
 
     componentDidMount() {
+        this.props.toggleLoading("Loading topics..")
         getContent().then((data) => {
             this.setState({ data, searchRes: data })
 
+        }).finally(()=>{
+            this.props.toggleLoading("Loading topics..")
         })
 
     }

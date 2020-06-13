@@ -31,12 +31,11 @@ class Topic extends React.Component {
             privateComment: "",
             fileUrl: "",
             isSubmitted: true,
-            videoUrl:""
+            videoUrl: ""
         };
         this.renderItem = this.renderItem.bind(this);
         this.changePlayback = this.changePlayback.bind(this);
-        
-        
+
 
         this.changeSubmission = this.changeSubmission.bind(this);
         this.uploadFile = this.uploadFile.bind(this);
@@ -47,24 +46,24 @@ class Topic extends React.Component {
         var currentSubTopic = data.subTopics.filter((subTopic) => {
             return subTopic.subTopicId === this.props.match.params.videoId
         });
-        this.setState({videoUrl:currentSubTopic[0].videoLink});
+        this.setState({ videoUrl: currentSubTopic[0].videoLink });
         var prev = "#";
         var next = "#";
-        for(var i=0;i<data.subTopics.length;i++){
-            if(data.subTopics[i].subTopicId===this.props.match.params.videoId){
+        for (var i = 0; i < data.subTopics.length; i++) {
+            if (data.subTopics[i].subTopicId === this.props.match.params.videoId) {
 
-                if(i!=0){
-                    prev = `/topic/${data._id}/subtopic/${data.subTopics[i-1].subTopicId}`
+                if (i != 0) {
+                    prev = `/topic/${data._id}/subtopic/${data.subTopics[i - 1].subTopicId}`
 
                 }
-                if(i!=(data.subTopics.length-1)){
-                    next = `/topic/${data._id}/subtopic/${data.subTopics[i+1].subTopicId}`
+                if (i != (data.subTopics.length - 1)) {
+                    next = `/topic/${data._id}/subtopic/${data.subTopics[i + 1].subTopicId}`
 
                 }
             }
         }
-    
-        this.setState({prev,next});
+
+        this.setState({ prev, next });
         if (currentSubTopic[0].type != "video") {
             var email = reactLocalStorage.getObject("user").email
             getSubmission(email, currentSubTopic[0].subTopicId).then((docs) => {
@@ -89,13 +88,13 @@ class Topic extends React.Component {
 
     }
 
-    changeVideoQuality(value){
-        if(value==="HD"){
-            this.setState({videoUrl:this.state.currentSubTopic.videoLink})
+    changeVideoQuality(value) {
+        if (value === "HD") {
+            this.setState({ videoUrl: this.state.currentSubTopic.videoLink })
 
         }
-        else{
-            this.setState({videoUrl:"https://zaio-videos.s3.ap-south-1.amazonaws.com/y2mate.com+-+Learn+The+MERN+Stack+%5B1%5D+-+Series+Introduction_PBTYxXADG_k_360p.mp4"})
+        else {
+            this.setState({ videoUrl: "https://zaio-videos.s3.ap-south-1.amazonaws.com/y2mate.com+-+Learn+The+MERN+Stack+%5B1%5D+-+Series+Introduction_PBTYxXADG_k_360p.mp4" })
 
         }
 
@@ -132,23 +131,26 @@ class Topic extends React.Component {
 
     }
 
-    changePlayback(val){
+    changePlayback(val) {
         var value = parseFloat(val);
-        this.setState({playbackRate:value})
+        this.setState({ playbackRate: value })
     }
 
-   
+
 
 
     renderItem(index, key) {
 
+
         var icon = this.state.data.subTopics[index].type === "video" ? faPlayCircle : faFileArchive;
+        var duration = this.state.data.subTopics[index].type === "video" ? <span class="duration">{this.state.data.subTopics[index].duration}</span> : <span> </span>;
         var border = this.state.data.subTopics[index].subTopicId === this.props.match.params.videoId ? "border-dark card rounded  mb-3" : "card rounded  mb-3";
         return <div className={border}>
 
             <div className="row shadow rounded">
                 <div className="col-md-6 bg-dark">
                     <img className="p-2 w-100" src="https://images.squarespace-cdn.com/content/v1/5a5906400abd0406785519dd/1552662149940-G6MMFW3JC2J61UBPROJ5/ke17ZwdGBToddI8pDm48kLkXF2pIyv_F2eUT9F60jBl7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z4YTzHvnKhyp6Da-NYroOW3ZGjoBKy3azqku80C789l0iyqMbMesKd95J-X4EagrgU9L3Sa3U8cogeb0tjXbfawd0urKshkc5MgdBeJmALQKw/baelen.jpg?format=1500w" />
+                    {duration}
 
                 </div>
                 <div className="text-center col-md-6 bg-light">
@@ -156,7 +158,7 @@ class Topic extends React.Component {
                         <h5>{this.state.data.subTopics[index].title}</h5>
                     </div>
 
-                    <a href={`/topic/${this.state.data._id}/subtopic/${this.state.data.subTopics[index].subTopicId}`}><FontAwesomeIcon className="border-white " style={{ fontSize: "45",color:"#4633af" }} icon={icon} /></a>
+                    <a href={`/topic/${this.state.data._id}/subtopic/${this.state.data.subTopics[index].subTopicId}`}><FontAwesomeIcon className="border-white " style={{ fontSize: "45", color: "#4633af" }} icon={icon} /></a>
                     <div className="mt-2 row">
                         {this.state.data.subTopics[index].type === "video" ? <div></div> : <div className="text-muted col-md-12 text-center">{this.state.data.subTopics[index].points} points</div>}
                     </div>
@@ -192,7 +194,10 @@ class Topic extends React.Component {
             identifier: this.props.match.params.videoId, //this.props.uniqueId
             title: this.state.currentSubTopic.title //this.props.title
         }
-        var data = this.state.currentSubTopic.type == "video" ? this.state.currentSubTopic.desc : this.state.currentSubTopic.instruction;
+        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        var data = this.state.currentSubTopic.type == "video" ?
+         this.state.currentSubTopic.desc :
+         `${this.state.currentSubTopic.instruction} <br/> **Points** : ${this.state.currentSubTopic.points} <br/> **Due Date** ${new Date(this.state.currentSubTopic.due).toLocaleDateString("en-US", options)} ` ;
         return (
             <div  >
                 <div className="container mb-0">
@@ -232,8 +237,8 @@ class Topic extends React.Component {
                                         next={this.state.next}
                                         videoUrl={this.state.videoUrl}
                                         playbackRate={this.state.playbackRate}
-                                        changePlayback ={this.changePlayback}
-                                        changeVideoQuality ={this.changeVideoQuality}
+                                        changePlayback={this.changePlayback}
+                                        changeVideoQuality={this.changeVideoQuality}
                                     />
                                     : <FileUpload
                                         isSubmitted={this.state.isSubmitted}
@@ -253,7 +258,8 @@ class Topic extends React.Component {
                             <div className="row ">
 
                                 <div className="text-muted col-md-12">
-                                    {this.state.isFullVideoTitle ? <ReactMarkdown escapeHtml={false} source={data} /> : ""}
+                                    {this.state.isFullVideoTitle ?
+                                        <ReactMarkdown escapeHtml={false} source={data} /> : ""}
                                     <FontAwesomeIcon onClick={() => {
                                         var isFullVideoTitle = !this.state.isFullVideoTitle;
                                         this.setState({ isFullVideoTitle })
@@ -273,7 +279,7 @@ class Topic extends React.Component {
                                     <DiscussionEmbed
                                         shortname={disqusShortname}
                                         config={disqusConfig}
-                                        
+
                                     />
                                 </div>
                             </div>
@@ -284,7 +290,7 @@ class Topic extends React.Component {
                     <div className="col-md-4">
                         <div className="container left-side">
                             <h5 className="text-truncate">{this.state.data.title}</h5>
-                            <hr  />
+                            <hr />
                             <div className=" border-dark" style={{ overflow: 'auto', maxHeight: 400 }}>
 
                                 <ReactList
