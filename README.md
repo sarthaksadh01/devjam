@@ -1,5 +1,70 @@
 ## Devjam 2020 - Team Cryptx
 
+## 📍 Week 2 - Learner's Portal
+
+## ℹ️  How to access our solution
+
+**Link** : https://hiii-15fdf.web.app/
+
+**Server Hosting** : https://devjam-server.herokuapp.com
+
+**Credentials** : guest@zaio.io  123456
+
+---
+## 🔆 Design Specs 
+
+1. **Designing the video player**
+
+_The React Video Player provides only basic functionalities. The controls such as Next/Previous, Playback speed and Video Quality is added by us from scratch._ 
+
+2. **Video Quality**
+
+_The Video Quality control in our video player is cuurently disabled due to some bug in React-Player. This bug is affecting the video player to play normally in Google Chrome. However, it is working perferctly fine in Safari. Currently we have disabled this feature. So for implementation purposes, toggling the video quality will start another video. To test just un-comment the code in /week-2-client/src/pages/topic.js and try it in Safari._
+
+**Or Check out this video** : 
+
+
+---
+
+
+## 🔥 Cherry on the Cake
+
+1. **Video Encryption**
+
+_To prevent video from downloading, we have used AWS S3 bucket + CloudFront services. To explain this, consider an 
+example in which we first upload our video to a S3 bucket and an object URL will be generated. Then we create a Cloudfront web distribution which will point to our S3 bucket. This will create a Signed URL which prevent public access and downloading. Cloudfront also caches the content for low latency and high throughput video delivery.This means user doesnot have to wait for the video to load again and again incase of heavy usage!_
+
+
+_For testing purposes, http://localhost:3000/* is allowed for video access._
+
+2. **Rendering Markdown for amazing customer experience**
+
+_To increase readablity and user experience on the client side as well, we incorporated markdown viewer so that the content created by the admin using markdown editor will be well documented._
+
+3. **Topic Thumbnail**
+
+_The content page contains all topics & each topic card has thumbnail of the first video in its playlist instead of generic picture._
+
+4. **Feature Rich Comments Section**
+
+_For comments section, we used DISQUS api which provides amazing, user friendly comments section. It also supports media to be attached with comments._
+
+5. **Tackling unauthorized access**
+
+_To prevent unauthorized access, Github login and Google login is verified on server side._
+
+6. **Only .zip files allowed**
+
+_User can only upload .zip files & he/she will be prompted if any other type of file will be uploaded._
+
+6. **Deliverable Submission allowed once**
+
+_User can only upload the deliverable till the time he/she hasn't marked the submission as COMPLETED. After completing the submission, user cannot change the response. This allows strict submission criteria._
+
+
+## 📍 Week 1 - Allowing Admins to add content
+
+
 ## ℹ️  How to access our solution
 
 **Link** : https://cryptx-1d614.web.app/
