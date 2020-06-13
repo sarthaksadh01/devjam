@@ -31,7 +31,8 @@ class Topic extends React.Component {
             privateComment: "",
             fileUrl: "",
             isSubmitted: true,
-            videoUrl: ""
+            videoUrl: "",
+            played:0
         };
         this.renderItem = this.renderItem.bind(this);
         this.changePlayback = this.changePlayback.bind(this);
@@ -40,6 +41,9 @@ class Topic extends React.Component {
         this.changeSubmission = this.changeSubmission.bind(this);
         this.uploadFile = this.uploadFile.bind(this);
         this.changeVideoQuality = this.changeVideoQuality.bind(this);
+
+        this.onProgress = this.onProgress.bind(this);
+        this.onReady = this.onReady.bind(this);
     }
 
     calculateCurrentSubtopic(data) {
@@ -94,9 +98,22 @@ class Topic extends React.Component {
 
         }
         else {
-            this.setState({ videoUrl: "https://zaio-videos.s3.ap-south-1.amazonaws.com/y2mate.com+-+Learn+The+MERN+Stack+%5B1%5D+-+Series+Introduction_PBTYxXADG_k_360p.mp4" })
+            this.setState({ videoUrl: this.state.currentSubTopic.sdLink })
 
         }
+
+    }
+
+    onProgress(state){
+        this.setState({played:state.played});
+        
+    }
+    ref = player => {
+        this.player = player
+      }
+
+    onReady(){
+        this.player.seekTo(parseFloat(this.state.played))
 
     }
 
@@ -233,12 +250,15 @@ class Topic extends React.Component {
                             {
                                 this.state.currentSubTopic.type === "video"
                                     ? <VideoPlayer
+                                        r = {this.ref}
                                         prev={this.state.prev}
                                         next={this.state.next}
                                         videoUrl={this.state.videoUrl}
                                         playbackRate={this.state.playbackRate}
                                         changePlayback={this.changePlayback}
                                         changeVideoQuality={this.changeVideoQuality}
+                                        onProgress  = {this.onProgress}
+                                        onReady = {this.onReady}
                                     />
                                     : <FileUpload
                                         isSubmitted={this.state.isSubmitted}
