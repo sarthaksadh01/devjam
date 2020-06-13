@@ -32,7 +32,7 @@ class Topic extends React.Component {
             fileUrl: "",
             isSubmitted: true,
             videoUrl: "",
-            played:0
+            played: 0
         };
         this.renderItem = this.renderItem.bind(this);
         this.changePlayback = this.changePlayback.bind(this);
@@ -104,16 +104,18 @@ class Topic extends React.Component {
 
     }
 
-    onProgress(state){
-        this.setState({played:state.played});
-        
+    onProgress(state) {
+        this.setState({ played: state.played });
+
     }
     ref = player => {
         this.player = player
-      }
+    }
 
-    onReady(){
-        this.player.seekTo(parseFloat(this.state.played))
+    onReady() {
+        
+        // this.player.seekTo(parseFloat(this.state.played))
+
 
     }
 
@@ -213,8 +215,8 @@ class Topic extends React.Component {
         }
         var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         var data = this.state.currentSubTopic.type == "video" ?
-         this.state.currentSubTopic.desc :
-         `${this.state.currentSubTopic.instruction} <br/> **Points** : ${this.state.currentSubTopic.points} <br/> **Due Date** ${new Date(this.state.currentSubTopic.due).toLocaleDateString("en-US", options)} ` ;
+            this.state.currentSubTopic.desc :
+            `${this.state.currentSubTopic.instruction} <br/> **Points** : ${this.state.currentSubTopic.points} <br/> **Due Date** ${new Date(this.state.currentSubTopic.due).toLocaleDateString("en-US", options)} `;
         return (
             <div  >
                 <div className="container mb-0">
@@ -250,15 +252,15 @@ class Topic extends React.Component {
                             {
                                 this.state.currentSubTopic.type === "video"
                                     ? <VideoPlayer
-                                        r = {this.ref}
+                                        r={this.ref}
                                         prev={this.state.prev}
                                         next={this.state.next}
                                         videoUrl={this.state.videoUrl}
                                         playbackRate={this.state.playbackRate}
                                         changePlayback={this.changePlayback}
                                         changeVideoQuality={this.changeVideoQuality}
-                                        onProgress  = {this.onProgress}
-                                        onReady = {this.onReady}
+                                        onProgress={this.onProgress}
+                                        onReady={this.onReady}
                                     />
                                     : <FileUpload
                                         isSubmitted={this.state.isSubmitted}

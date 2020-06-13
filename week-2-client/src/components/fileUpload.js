@@ -12,7 +12,15 @@ function FileUpload(props) {
 
         }
         if (!error && result && result.event === "success") {
-            props.changeSubmission("fileUrl", result.info.secure_url)
+            var str = result.info.secure_url;
+            if(str.endsWith(".zip")){
+                props.changeSubmission("fileUrl", result.info.secure_url)
+
+            }
+            else{
+                alert("Invalid File type")
+            }
+            
         }
     })
     return (
