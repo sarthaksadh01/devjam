@@ -1,3 +1,14 @@
+/*
+This file contains functionalities for Topic page having :
+1. Video/deliverable playlist 
+2. Comment section
+3. Video player
+4. Topic Description
+5. Video/Deliverable Description
+
+
+*/
+
 import React from 'react';
 import { faPlayCircle, faEllipsisH, faPlus, faFileArchive, faEllipsisV } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -173,7 +184,7 @@ class Topic extends React.Component {
 
                 </div>
                 <div className="text-center col-md-6 bg-light">
-                    <div className="text-truncate  mb-3">
+                    <div className="text-truncate  mb-3 mt-3">
                         <h5>{this.state.data.subTopics[index].title}</h5>
                     </div>
 

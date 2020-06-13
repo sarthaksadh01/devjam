@@ -1,3 +1,13 @@
+/*
+This file contains file upload functionality
+for Deliverables.
+
+Also contains validation to upload only
+.zip files.
+
+*/
+
+
 import React from 'react';
 import { faPlayCircle, faEllipsisH, faPlus, faFileArchive, faArchive } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

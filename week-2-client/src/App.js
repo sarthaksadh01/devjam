@@ -1,3 +1,16 @@
+/* 
+
+This file checks whether the user is loggedin or not.
+ 
+It also takes cares of any threat 
+to the site since credentials are verified from the database
+each time.
+
+If a user is not logged in then he/she is redirected to 
+login page.
+
+*/
+
 import React from 'react';
 import {
   BrowserRouter as Router,

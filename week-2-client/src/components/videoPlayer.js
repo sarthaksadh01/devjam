@@ -1,3 +1,17 @@
+/*
+
+This file contains the functionalities 
+of Video Player required for Topic videos.
+
+It includes implementation for :
+1. Toggle Full screen
+2. Playback Rate
+3. Video Quality
+4. Configuration Settings
+
+
+*/
+
 import React from 'react';
 import ReactPlayer from 'react-player'
 import { faArrowRight,faArrowLeft,faEllipsisH, faPlus, faFileArchive, faTimesCircle, faStopwatch20, faStopwatch } from '@fortawesome/free-solid-svg-icons'
