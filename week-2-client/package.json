@@ -1,0 +1,58 @@
+{
+  "name": "platform",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.28",
+    "@fortawesome/free-brands-svg-icons": "^5.13.0",
+    "@fortawesome/free-solid-svg-icons": "^5.13.0",
+    "@fortawesome/react-fontawesome": "^0.1.9",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "axios": "^0.19.2",
+    "cloudinary-react": "^1.5.0",
+    "disqus-react": "^1.0.8",
+    "email-validator": "^2.0.4",
+    "react": "^16.13.1",
+    "react-avatar": "^3.9.7",
+    "react-bootstrap": "^1.0.1",
+    "react-dom": "^16.13.1",
+    "react-github-login": "^1.0.3",
+    "react-google-login": "^5.1.20",
+    "react-list": "^0.8.15",
+    "react-loading-overlay": "^1.0.1",
+    "react-markdown": "^4.3.1",
+    "react-notifications": "^1.6.0",
+    "react-player": "^2.2.0",
+    "react-player-controls": "^1.1.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.1",
+    "react-social-login": "^3.4.7",
+    "react-social-login-buttons": "^3.1.0",
+    "react-truncate": "^2.4.0",
+    "reactjs-localstorage": "^1.0.1",
+    "video-react": "^0.14.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

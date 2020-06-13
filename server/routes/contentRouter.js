@@ -1,12 +1,3 @@
-/*
-
-   This file contains routes specific to Week 1 Task i.e
-   Allow admins to add Content.
-   These routes will be used to query the database.
-
- */
-
-
 const express = require('express')
 const Topics = require('../models/topic')
 const db = require("../database")

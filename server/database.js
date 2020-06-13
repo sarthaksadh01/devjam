@@ -1,11 +1,3 @@
-/* 
-
-This file is used to connect to database
-& contain functions to execute all required 
-features.
- 
-*/
-
 const mongoose = require('mongoose')
 var ObjectID = require('mongodb').ObjectID;
 
@@ -18,18 +10,19 @@ mongoose.connect(require("./config").dbUrl, { useNewUrlParser: true, useCreateIn
 const Topics = require("./models/topic")
 const Profiles = require("./models/profile")
 const Admins = require("./models/admin")
+const Users = require("./models/users")
+const Submissions = require("./models/submission")
 
 
 
 /* 
-
-  Function to get all the topics for content route
+  get all the topics for content route
 
 */
 
 async function getContent(id) {
     return new Promise((resolve, reject) => {
-        Topics.find({ createdBy: id }).
+        Topics.find({}).
             sort({ priority: 'desc' }).
             exec((err, topics) => {
                 if (err) reject(err);
@@ -40,9 +33,8 @@ async function getContent(id) {
 }
 
 /* 
-  Function to get single topic based on topic Id
+  get single topic based on topic Id
 */
-
 async function getTopic(_id) {
     return new Promise((resolve, reject) => {
         Topics.findOne({ _id }).then((topic) => {
@@ -57,7 +49,7 @@ async function getTopic(_id) {
 }
 
 /* 
-  Function to get single video based on video Id
+  get single video based on video Id
 */
 
 async function getSubtopic(topicId, subTopicId) {
@@ -76,7 +68,9 @@ async function getSubtopic(topicId, subTopicId) {
 
 /*
 
-  Function to save topic in the topics table
+  function to save topic here the priority of the 
+  new topic is  equal to total number of topics till now plus 1
+  ie new topic is always added last in the list but can be later rearranged
 
 */
 async function saveTopic(topicDetails) {
@@ -102,7 +96,10 @@ async function saveTopic(topicDetails) {
 
 /*
 
-  Function to save new subtopic 
+  Function to save new subtopic based on the isDeliverable flag
+  the subtopic is saved in respected table [video,deliverable]
+  and later the id of that subtopic is saved in the subtopic array
+  in topic table
 
 */
 
@@ -126,7 +123,9 @@ async function insertSubtopic(topicId, detail = {}) {
 
 /*
 
-   Function to remove subtopic from  the subtopic array
+   Function to remove  subtopic based on the isDeliverable flag
+   the subtopic is removed from the respected table [video,deliverable]
+   and later the id of that subtopic is popped from  the subtopic array
    in topic table
 
  */
@@ -142,13 +141,6 @@ async function removeSubTopic(topicId, subTopicId, ) {
     });
 }
 
-/*
-
-   Function to remove topic based on the topic id
-   in topic table
-
- */
-
 async function removeTopic(topicId) {
     return new Promise((resolve, reject) => {
         Topics.deleteOne({ _id: topicId }).then((value) => {
@@ -161,13 +153,6 @@ async function removeTopic(topicId) {
 
 }
 
-/*
-
-   Function to update topic based on the topic id
-   in topic table
-
- */
-
 async function updateTopic(topic) {
     return new Promise((resolve, reject) => {
         Topics.findOneAndUpdate({ _id: topic._id }, topic).then((value) => {
@@ -179,15 +164,6 @@ async function updateTopic(topic) {
     });
 
 }
-
-/*
-
-   Function to update subtopic based first on topic id 
-   to find parent topic & then find the required sub topic 
-   from subtopics array & assign new data
-
- */
-
 async function updateSubtopic(topicId, subTopicId, data) {
     return new Promise((resolve, reject) => {
         Topics.findOne({ _id: topicId }).then((doc) => {
@@ -210,13 +186,6 @@ async function updateSubtopic(topicId, subTopicId, data) {
 
 }
 
-/*
-
-   Function to get all profiles in the profile table
-   of a particular admin based on admin id.
-
- */
-
 async function getProfiles(id) {
     return new Promise((resolve, reject) => {
         Profiles.find({ createdBy: id }).then((doc) => {
@@ -227,13 +196,6 @@ async function getProfiles(id) {
 
     })
 }
-
-/*
-
-   Function to update profile based on profile id 
-
- */
-
 async function updateProfile(doc) {
     return new Promise((resolve, reject) => {
         Profiles.findOneAndUpdate({ _id: doc._id }, doc).then((doc) => {
@@ -244,13 +206,6 @@ async function updateProfile(doc) {
 
     })
 }
-
-/*
-
-   Function to get single profile using its unique profile id
-
- */
-
 async function getSingleProfile(_id) {
     return new Promise((resolve, reject) => {
         Profiles.findOne({ _id }).then((doc) => {
@@ -261,13 +216,6 @@ async function getSingleProfile(_id) {
 
     })
 }
-
-/*
-
-   Function to create new profile
-
- */
-
 async function createProfile(doc) {
     return new Promise((resolve, reject) => {
         var _profile = new Profiles(doc);
@@ -279,13 +227,6 @@ async function createProfile(doc) {
 
     })
 }
-
-/*
-
-   Function to rearrange the topics/subtopics in the
-   database when items are dragged to refect the changes
-   in the backend
- */
 
 async function reArrange(_id1, _id2, p1, p2) {
     return new Promise((resolve, reject) => {
@@ -300,12 +241,6 @@ async function reArrange(_id1, _id2, p1, p2) {
     })
 
 }
-
-/*
-
-   Function to create admin by super admin
-
- */
 
 async function createAdmin(userName, password, name) {
     return new Promise((resolve, reject) => {
@@ -326,13 +261,6 @@ async function createAdmin(userName, password, name) {
     })
 }
 
-/*
-
-   Function to get admin based on username & password
-   from super admin table
-
- */
-
 async function getAdmin(userName, password) {
     return new Promise((resolve, reject) => {
         Admins.find({ userName, password }).then((docs) => {
@@ -343,12 +271,6 @@ async function getAdmin(userName, password) {
         })
     })
 }
-
-/*
-
-   Function to get all admins from super admin table
-
- */
 
 async function getAllAdmins() {
     return new Promise((resolve, reject) => {
@@ -362,12 +284,6 @@ async function getAllAdmins() {
 
 }
 
-/*
-
-   Function to remove admin from super admin table 
-
- */
-
 async function removeAdmin(userName) {
     return new Promise((resolve, reject) => {
         Admins.deleteOne({ userName }).then((docs) => {
@@ -380,19 +296,59 @@ async function removeAdmin(userName) {
 
 }
 
-/*
-
-   Function to remove profile from profiles table 
-   of a particular admin only
-
- */
-
 async function removeProfile(_id) {
 
     return new Promise((resolve, reject) => {
         Profiles.deleteOne({ _id }).then((docs) => {
             resolve(docs);
 
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+
+async function registerUser(data) {
+    return new Promise((resolve, reject) => {
+        var _newUser = Users(data);
+        _newUser.save().then((doc) => {
+            resolve(doc);
+
+        }).catch((err) => {
+            console.log(err)
+            reject(err);
+        })
+    })
+}
+async function loginUser(email) {
+    return new Promise((resolve, reject) => {
+        Users.find({ email }).then((users) => {
+            resolve(users)
+
+        }).catch((err) => {
+            reject(err);
+        })
+
+    });
+}
+
+async function submitFile(data) {
+    return new Promise((resolve, reject) => {
+        var _newFile = Submissions(data);
+        _newFile.save().then((doc) => {
+            resolve(doc);
+
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+async function getSubmissions(email, subTopicId) {
+    return new Promise((resolve, reject) => {
+        Submissions.find({ email, subTopicId }).then((docs) => {
+            resolve(docs);
         }).catch((err) => {
             reject(err);
         })
@@ -420,7 +376,11 @@ module.exports = {
     createAdmin,
     getAllAdmins,
     removeAdmin,
-    removeProfile
+    removeProfile,
+    registerUser,
+    loginUser,
+    submitFile,
+    getSubmissions
 
 }
 

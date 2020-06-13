@@ -1,10 +1,3 @@
-/* 
-
-This file is used to set up the server  
-
-*/
-
-
 const express = require('express')
 var cors = require('cors')
 const profileRouter = require("./routes/profileRouter")
@@ -13,7 +6,7 @@ const loginRouter = require("./routes/loginRouter");
 
 const app = express()
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 4000
 
 
 app.use(cors())

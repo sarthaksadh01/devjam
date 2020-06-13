@@ -1,11 +1,3 @@
-/*
-
-   This file contains routes specific to WarmUp Week Task i.e
-   Profile Creator .
-   These routes will be used to query the database.
-
- */
-
 const express = require('express')
 const profile = require('../models/profile')
 const db = require("../database")
