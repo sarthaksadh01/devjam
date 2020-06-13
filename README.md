@@ -19,7 +19,7 @@ _The React Video Player provides only basic functionalities. The controls such a
 
 2. **Video Quality**
 
-_The Video Quality control in our video player can switch between HD and SD quality.
+_The Video Quality control in our video player can switch between HD and SD quality_
 
 **See this video** : https://drive.google.com/file/d/1C-TKBIm6Vr-eG8PzeJDlN7jLLUI0-uzW/view?usp=sharing
 
