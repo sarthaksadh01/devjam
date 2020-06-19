@@ -170,8 +170,8 @@ class Submission extends React.Component {
                                     return (<div><a onClick={() => { this.chnageUser(index) }} class="dropdown-item  " href="#">
 
                                         <img style={{ height: "30px" }} class="rounded-circle" src={user.imageUrl} />
-                                        <span class="details mx-3">{user.name}</span>
-                                        <span className={`badge float-right ${outline} ml-2 `}>{user.submissionStatus}</span>
+                                        <span class="details mr-2 ml-2">{user.name}</span>
+                                        <span className={`badge float-right ${outline} mt-1 `}>{user.submissionStatus}</span>
 
                                     </a>
                                         <hr />
@@ -223,10 +223,15 @@ class Submission extends React.Component {
 
                         </div>
                         <div class="col-md-4 mt-2 mb-2 col-sm-12 ">
-                            <div class="card shadow">
-                                <h4 class="details text-monospace text-center p-4">Deliverable Stats</h4>
+                            
+                                <h4 class="details text-monospace text-center p-4 ">Deliverable Stats</h4>
                                 <hr />
-
+<div class="my-2 mr-1">
+<i class="fa fa-square late mx-1 displayblock" aria-hidden="true" >Handed in Done Late</i>
+<i class="fa fa-square missing mx-1 displayblock mt-1" aria-hidden="true">Missing</i>
+<i class="fa fa-square handedin mx-1 displayblock mt-1" aria-hidden="true">Handed in</i>
+<i class="fa fa-square notsub mx-1 displayblock mt-1" aria-hidden="true">Not Submitted</i>
+</div>
                                 <PieChart style={{ maxHeight: 180 }} className="card-img-top p-3"
                                     data={[
                                         { title: 'Late', value: this.calculate("Handed in Done late"), color: '#f0ad4e' },
@@ -237,7 +242,7 @@ class Submission extends React.Component {
                                 />;
 
 
-                            </div>
+                    
 
                         </div>
                     </div>

@@ -192,3 +192,27 @@ table {
     }
  
   }
+
+.vertical{
+    vertical-align: middle;
+}
+
+.late{
+    color: #f0ad4e;
+}
+
+.missing{
+   color: #d9534f;
+}
+
+.handedin{
+    color: #5cb85c;
+}
+
+.notsub{
+    color:#a19b9b;
+}
+
+.displayblock{
+    display: block;
+}
