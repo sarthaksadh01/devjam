@@ -180,3 +180,15 @@ table {
 .heading{
     /* background: -webkit-linear-gradient(#4633af, #b663b0); */
 }
+
+
+
+@media (max-width:864px){
+    .sorting{
+      display: none;
+    }
+    .comments{
+        display: "none";
+    }
+ 
+  }

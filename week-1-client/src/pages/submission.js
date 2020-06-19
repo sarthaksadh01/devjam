@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PieChart } from 'react-minimal-pie-chart';
-import { getUsers, getSubTopic, UpdateUser } from '../data/data'
-import SelectSearch from 'react-select-search';
+import { getUsers, getSubTopic, UpdateUser,saveReplyData } from '../data/data'
+
 
 
 class Submission extends React.Component {
@@ -13,11 +13,13 @@ class Submission extends React.Component {
                 title: "lol",
             },
             currentIndex: 0,
+            reply:""
         }
 
         this.chnageUser = this.chnageUser.bind(this);
         this.moveUser = this.moveUser.bind(this);
         this.fillUsers = this.fillUsers.bind(this);
+        this.saveReply = this.saveReply.bind(this);
     }
 
     fillUsers(users) {
@@ -121,6 +123,13 @@ class Submission extends React.Component {
             return user.submissionStatus === type;
         }).length;
     }
+    saveReply(){
+        if(this.state.reply.trim()==="")return;
+        saveReplyData(this.state.users[this.state.currentIndex].email,this.state.reply,this.state.users[this.state.currentIndex].subTopicId).then(()=>{
+            this.setState({reply:""});
+        })
+
+    }
     render() {
         var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
@@ -145,14 +154,14 @@ class Submission extends React.Component {
                     <hr/>
                     <div class="ml-3 mt-5 ">
                         <div class="dropdown ">
-                            <button class="btn shadow dropdown-toggle col-4 bgWhite" type="button" id="dropdownMenuButton"
+                            <button class="btn shadow dropdown-toggle col-md-4 bgWhite" type="button" id="dropdownMenuButton"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img style={{ height: "30px" }} class="rounded-circle float-left" src={this.state.users[this.state.currentIndex].imageUrl} />
                                 <span class="details mx-3 ">{this.state.users[this.state.currentIndex].name}</span>
                                 <span class="badge badge-secondary  bgPink ">{this.state.users[this.state.currentIndex].submissionStatus}</span>
 
                             </button>
-                            <div class="dropdown-menu mt-1 col-4" aria-labelledby="dropdownMenuButton"
+                            <div class="dropdown-menu mt-1 col-md-4" aria-labelledby="dropdownMenuButton"
                                 style={{ maxHeight: "200px", overflowY: "auto" }}>
                                 {this.state.users.map((user, index) => {
                                     var outline;
@@ -182,7 +191,7 @@ class Submission extends React.Component {
                    
 
                     <div class="row my-5">
-                        <div class="col-4 mt-5">
+                        <div class="col-md-4 col-sm-12 mt-5">
                             <span className="ml-2">Files </span><br />
                             {this.state.users[this.state.currentIndex].isSubmitted ?
                                 <h5><span class="text-muted text-truncate badge mb-5 ">Handed on {new Date(this.state.users[this.state.currentIndex].submission.createdAt).toLocaleDateString("en-US", options)}</span></h5> :
@@ -201,7 +210,7 @@ class Submission extends React.Component {
                                 disabled={!this.state.users[this.state.currentIndex].isSubmitted} value={this.state.users[this.state.currentIndex].points} type="number" class="text-center form-control col-6 inline-block" />
                             <button class="btn btn-success bgGradient col-4 mr-3 float-right">{this.state.users[this.state.currentIndex].isMarked?"Update":"Set"}</button>
                         </div>
-                        <div class="col-4">
+                        <div class="col-md-4 col-sm-12 mt-2" >
                             <div class="w-100 rounded  card">
                                 <img src={this.state.users[this.state.currentIndex].isSubmitted ? "https://thomashueblonline.com/wp-content/uploads/2017/01/zip-file-icon.jpg" : "https://img.favpng.com/14/12/17/warning-sign-hazard-symbol-warning-label-png-favpng-36YMUPNeu9W0P0yPVW7FpXqBG.jpg"} class="card-img-top img-thumbnail " />
                                 <div class="card-header text-center">
@@ -214,7 +223,7 @@ class Submission extends React.Component {
                             </div>
 
                         </div>
-                        <div class="col-4 ">
+                        <div class="col-md-4 mt-2 mb-2 col-sm-12 ">
                             <div class="card shadow">
                                 <h4 class="details text-monospace text-center p-4">Deliverable Stats</h4>
                                 <hr />
@@ -234,13 +243,13 @@ class Submission extends React.Component {
                         </div>
                     </div>
                     {this.state.users[this.state.currentIndex].submission.comment === "" || this.state.users[this.state.currentIndex].submission.comment === undefined
-                        ?<div></div>:
-                        <div>
-                            <div class="p-2 row">
-                                <div class="col-md-1">
+                        ?<div className="comments"></div>:
+                        <div className="comments">
+                            <div class="row">
+                                <div class="col-md-1 col-2 p-2 ml-3">
                                     <img class="mr-3 rounded" style={{ height: "40px" }} src={this.state.users[this.state.currentIndex].imageUrl} />
                                 </div>
-                                <div class="col-md-8">
+                                <div class="col-8">
                                     <div class="row">
                                         <span class="details">{this.state.users[this.state.currentIndex].name}</span>
                                     </div>
@@ -249,12 +258,14 @@ class Submission extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <div class="mt-3 mb-5 row col-8">
-                                <div class="col-md-11">
-                                    <input placeholder="Reply to private comment" class="form-control" />
+                            <div class="mt-3 mb-5 row ">
+                                <div class="col-md-11 col-8">
+                                    <input onChange={(e)=>{
+                                        this.setState({reply:e.target.value})
+                                    }} value ={this.state.reply} placeholder="Reply to private comment" class="form-control" />
                                 </div>
-                                <div class="col-md-1">
-                                    <i style={{ fontSize: "30px" }} class="mr-5 fa fa-paper-plane"></i>
+                                <div class="col-md-1 col-4">
+                                    <i onClick={()=>{this.saveReply()}} style={{ fontSize: "30px" }} class="mr-5 fa fa-paper-plane"></i>
 
                                 </div>
 

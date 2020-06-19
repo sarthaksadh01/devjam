@@ -50,6 +50,25 @@ router.post("/api/updateMarks",(req,res)=>{
     })
 })
 
+router.post("/api/saveReply",(req,res)=>{
+    const {email,reply,subTopicId} = req.body;
+    db.loginUser(email).then((users)=>{
+        console.log(users[0])
+        users[0].submissions.forEach((sub)=>{
+            if(sub.subTopicId===subTopicId){
+                sub['reply'] = reply;
+            }
+        })
+        db.updateUser(email,users[0]).then((val)=>{
+            res.status(200).json(val);
+
+        }).catch((err)=>{
+            res.status(500).json(err);
+
+        })
+    })
+})
+
 router.get("/api/usersPaginaton/:number",(req,res)=>{
     var number = req.params.number;
     number = parseInt(number);

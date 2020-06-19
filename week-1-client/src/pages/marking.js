@@ -3,6 +3,8 @@ import { getMarks, UpdateUser } from '../data/data';
 import $ from 'jquery';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEdit } from '@fortawesome/free-solid-svg-icons';
+import Modal from 'react-bootstrap/Modal'
+import { PieChart } from 'react-minimal-pie-chart';
 
 
 class Marking extends React.Component {
@@ -12,13 +14,48 @@ class Marking extends React.Component {
         super(props);
         this.myRef = React.createRef()
         this.myRef2 = React.createRef()
-       
+
         this.state = {
             deliverables: [],
             users: [],
-            userRows: []
+            userRows: [],
+            show: false,
+            missing:0,
+            late:0,
+            handedIn:0,
+            notSubmitted:0,
+            imageUrl:"",
+            name:"",
+            email:""
         }
         this.onMarksChange = this.onMarksChange.bind(this);
+        this.showUserDetail = this.showUserDetail.bind(this);
+
+    }
+
+    showUserDetail(index) {
+        var handedIn = this.state.userRows[index].submission.filter((sub)=>{
+           return sub.status ==="Handed In"
+
+        }).length;
+        var late = this.state.userRows[index].submission.filter((sub)=>{
+            return sub.status ==="Done late"
+
+        }).length;
+        var missing = this.state.userRows[index].submission.filter((sub)=>{
+            return sub.status ==="Missing"
+
+        }).length;
+        var notSubmitted = this.state.userRows[index].submission.filter((sub)=>{
+            return sub.status ===""
+
+        }).length;
+        var userRows = this.state.userRows;
+
+        this.setState({handedIn,late,missing,notSubmitted,name:userRows[index].name,email:userRows[index].email,imageUrl:userRows[index].imageUrl},()=>{
+            this.setState({show:true})
+        })
+
 
     }
 
@@ -83,10 +120,10 @@ class Marking extends React.Component {
             this.setState({ userRows })
 
 
-        }).catch((err)=>{
+        }).catch((err) => {
             alert("Server Error")
 
-        }).finally(()=>{
+        }).finally(() => {
             this.props.toggleLoading();
         })
 
@@ -152,7 +189,7 @@ class Marking extends React.Component {
             sum += user.submission[index].points;
 
         })
-        return Math.round((sum / (total*users.length)) * 100);
+        return Math.round((sum / (total * users.length)) * 100);
     }
     render() {
         return (
@@ -208,7 +245,7 @@ class Marking extends React.Component {
                                 return <tr className="text-center">
                                     <td style={{ height: "70px", width: "100px" }} >
                                         <div style={{ zIndex: 101, backgroundColor: "#F8F9FA" }} className="card  text-dark shadow rounded w-100 h-100">
-                                            <span><img className="mt-1" style={{ height: "30px" }} src={value.imageUrl} /></span> <span className="text-dark"> {value.name}</span>
+                                            <span onClick={()=>{this.showUserDetail(index1)}}><img className="mt-1" style={{ height: "30px" }} src={value.imageUrl} /></span> <span className="text-dark"> {value.name}</span>
                                         </div>
                                     </td>
                                     {value.submission.map((value2, index2) => {
@@ -241,6 +278,27 @@ class Marking extends React.Component {
 
 
                 </div>
+
+                < Modal show={this.state.show} onHide={() => { this.setState({ show: false }) }}>
+                    <Modal.Header closeButton>
+                        <Modal.Title> <span ><img className="mt-1" style={{ height: "30px" }} src={this.state.imageUrl} /></span> <span className="text-dark"> {this.state.name}</span></Modal.Title><br/>
+                        {/* <Modal.Title>{this.state.email}</Modal.Title> */}
+                    </Modal.Header>
+                    <Modal.Body>
+
+                        <PieChart style={{ maxHeight: 180 }} className="card-img-top p-3"
+                            data={[
+                                { title: 'Late', value: this.state.late, color: '#f0ad4e' },
+                                { title: 'Missing', value: this.state.missing, color: '#d9534f' },
+                                { title: 'Handed In', value: this.state.handedIn, color: '#5cb85c' },
+                                { title: 'Not Submitted', value:this.state.notSubmitted , color: '#f7f7f7' },
+                            ]}
+                        />
+
+                </Modal.Body>
+                    <Modal.Footer>
+                    </Modal.Footer>
+                </Modal>
 
 
             </div>

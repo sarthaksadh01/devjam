@@ -296,6 +296,16 @@ async function UpdateUser(email,points,subTopicId){
     })
 
 }
+async function saveReplyData(email,reply,subTopicId){
+    return new Promise((resolve, reject) => {
+        axios.post(`${baseUrl}/saveReply`,{email,reply,subTopicId}).then((res) => {
+            resolve(res.data);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
 export {
     getContent,
     createTopic,
@@ -320,5 +330,6 @@ export {
     removeProfile,
     getUsers,
     getMarks,
-    UpdateUser
+    UpdateUser,
+    saveReplyData
 }

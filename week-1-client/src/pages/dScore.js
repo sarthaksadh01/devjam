@@ -226,7 +226,7 @@ class Dscore extends React.Component {
 
                     <div class="my-5">
                         <div class="row">
-                            <div class="col-6 mt-5">
+                            <div class="col-md-6 col-sm-12 mt-5 sorting">
                                 <button class="filter btn btn-lg btn-block col-6 text-white mx-5 hide"
                                     onclick="toggle_visibility('sort');">
                                     <i class="fa fa-sort mr-2"></i>
@@ -432,7 +432,7 @@ class Dscore extends React.Component {
                                     </article>
                                 </div>
                             </div>
-                            <div class="col-6 ">
+                            <div class="col-md-6 col-sm-12 ">
                                 <div class="card rounded p-1 user-table">
                                     <table class="table text-light text-center bgGradient">
                                         <thead class="bg-light details">
