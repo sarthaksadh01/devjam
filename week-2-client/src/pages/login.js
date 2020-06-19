@@ -1,3 +1,14 @@
+/*
+This file contains login functionalities
+and login UI.
+
+Login can be done through :
+1. Github
+2. Google
+3. Manually
+
+*/
+
 import React from 'react';
 // import { login } from "../data/data"
 import { reactLocalStorage } from 'reactjs-localstorage';

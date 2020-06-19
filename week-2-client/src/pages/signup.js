@@ -1,3 +1,14 @@
+/*
+This file contains Signup functionalities
+and Signup UI.
+
+Signup can be done through :
+1. Github
+2. Google
+3. Manually
+
+*/
+
 import React from 'react';
 
 import { reactLocalStorage } from 'reactjs-localstorage';

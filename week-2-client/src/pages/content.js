@@ -1,3 +1,11 @@
+/*
+This file contains all Topics uploaded by admin.
+
+It fetches all topics from the database and 
+renders it as a page. 
+
+*/
+
 import React from 'react';
 import { faVideoSlash, faEdit, faSearch, faVideo, faPlayCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
