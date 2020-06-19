@@ -18,6 +18,8 @@ class Dscore extends React.Component {
             },
             isSingle: false,
             isMultiple: false,
+            isNumericFilter:false,
+            isSort:false
 
 
         }
@@ -58,24 +60,24 @@ class Dscore extends React.Component {
                 isSubmitted,
                 isLate,
                 name: user.name == "" ? "cryptx" : user.name,
-                imageUrl:user.imageUrl==="" || user.imageUrl===undefined?"https://bootdey.com/img/Content/user_1.jpg":user.imageUrl,
+                imageUrl: user.imageUrl === "" || user.imageUrl === undefined ? "https://api.adorable.io/avatars/285/abott@adorable.png" : user.imageUrl,
 
             });
             // alert(JSON.stringify(modifiedUser))
             this.setState({ users: modifiedUser, queryUsers: modifiedUser })
 
         })
-       
+
 
     }
-    avg(){
+    avg() {
         var sum = 0;
-        this.state.users.forEach((user)=>{
-            sum+=user.points;
+        this.state.users.forEach((user) => {
+            sum += user.points;
         })
         // alert(sum)
 
-        return Math.round(sum/(this.state.deliverable.points*this.state.users.length))
+        return Math.round(sum / (this.state.deliverable.points * this.state.users.length))
     }
 
     componentDidMount() {
@@ -114,7 +116,7 @@ class Dscore extends React.Component {
                 })
                 break;
             case "asc":
-                queryUsers =[...this.state.users];
+                queryUsers = [...this.state.users];
                 queryUsers.sort((user1, user2) => {
                     return user1.points - user2.points
 
@@ -195,10 +197,10 @@ class Dscore extends React.Component {
                 <div class="container ">
 
                     <div class="title text-dark ">
-                        <a href = {`/deliverable/${this.props.match.params.id}`}><h2 class="details text-monospace inline-block">{this.state.deliverable.title}</h2></a>
+                        <a href={`/deliverable/${this.props.match.params.id}`}><h2 class="details text-monospace inline-block">{this.state.deliverable.title}</h2></a>
                         <h3 class="text-muted float-right"> X {this.state.deliverable.points} Points</h3>
                     </div>
-<hr/>
+                    <hr />
                     <div class="mt-5">
                         <div class="card shadow-lg rounded p-3">
                             <div class="px-3">
@@ -228,209 +230,236 @@ class Dscore extends React.Component {
                         <div class="row">
                             <div class="col-md-6 col-sm-12 mt-5 sorting">
                                 <button class="filter btn btn-lg btn-block col-6 text-white mx-5 hide"
-                                    onclick="toggle_visibility('sort');">
+                                    onClick={()=>{
+                                        var isSort = this.state.isSort;
+                                        this.setState({isSort:!isSort});
+    
+                                    }}
+                                    >
                                     <i class="fa fa-sort mr-2"></i>
                                 Sort
                             </button>
-                                <div id="sort" class="sort-filter">
-                                    <div class="card rounded shadow p-3 col-6 mx-5 mt-1">
-                                        <label class="form-check">
-                                            <input checked={this.state.sort === "unmarked"} value="unmarked" onChange={this.onSortChange} class="form-check-input" type="radio" />
-                                            <span class="form-check-label">
-                                                Unmarked
-                                            </span>
-                                        </label>
-                                        <label class="form-check">
-                                            <input checked={this.state.sort === "late"} value="late" onChange={this.onSortChange} class="form-check-input" type="radio" />
-                                            <span class="form-check-label">
-                                                Late
-                                            </span>
-                                        </label>
-                                        <label class="form-check">
-                                            <input checked={this.state.sort === "notSubmitted"} onChange={this.onSortChange} value="notSubmitted" class="form-check-input" type="radio" />
-                                            <span class="form-check-label">
-                                                Not Submitted
-                                            </span>
-                                        </label>
-                                        <label class="form-check">
-                                            <input checked={this.state.sort === "desc"} onChange={this.onSortChange} value="desc" class="form-check-input" type="radio" />
-                                            <span class="form-check-label">
-                                                Descending
-                                            </span>
-                                        </label>
-                                        <label class="form-check">
-                                            <input checked={this.state.sort === "asc"} onChange={this.onSortChange} value="asc" class="form-check-input" type="radio" />
-                                            <span class="form-check-label">
-                                                Ascending
-                                            </span>
-                                        </label>
-                                        <label class="form-check">
-                                            <input checked={this.state.sort === "clear"} onChange={this.onSortChange} value="clear" class="form-check-input" type="radio" />
-                                            <span class="form-check-label">
-                                                Clear
-                                            </span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <button class="filter btn btn-lg btn-block col-6 text-white mx-5 mt-5 mb-1"
-                                    onclick="toggle_visibility('filter');">
+                            {this.state.isSort?
+                            <div id="sort" class="sort-filter">
+                            <div class="card rounded shadow p-3 col-6 mx-5 mt-1">
+                                <label class="form-check">
+                                    <input checked={this.state.sort === "unmarked"} value="unmarked" onChange={this.onSortChange} class="form-check-input" type="radio" />
+                                    <span class="form-check-label">
+                                        Unmarked
+                                    </span>
+                                </label>
+                                <label class="form-check">
+                                    <input checked={this.state.sort === "late"} value="late" onChange={this.onSortChange} class="form-check-input" type="radio" />
+                                    <span class="form-check-label">
+                                        Late
+                                    </span>
+                                </label>
+                                <label class="form-check">
+                                    <input checked={this.state.sort === "notSubmitted"} onChange={this.onSortChange} value="notSubmitted" class="form-check-input" type="radio" />
+                                    <span class="form-check-label">
+                                        Not Submitted
+                                    </span>
+                                </label>
+                                <label class="form-check">
+                                    <input checked={this.state.sort === "desc"} onChange={this.onSortChange} value="desc" class="form-check-input" type="radio" />
+                                    <span class="form-check-label">
+                                        Descending
+                                    </span>
+                                </label>
+                                <label class="form-check">
+                                    <input checked={this.state.sort === "asc"} onChange={this.onSortChange} value="asc" class="form-check-input" type="radio" />
+                                    <span class="form-check-label">
+                                        Ascending
+                                    </span>
+                                </label>
+                                <label class="form-check">
+                                    <input checked={this.state.sort === "clear"} onChange={this.onSortChange} value="clear" class="form-check-input" type="radio" />
+                                    <span class="form-check-label">
+                                        Clear
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                            :<div></div>
+                        }
+                                
+                                <button onClick={()=>{
+                                    var isNumericFilter = this.state.isNumericFilter;
+                                    this.setState({isNumericFilter:!isNumericFilter});
+
+                                }} class="filter btn btn-lg btn-block col-6 text-white mx-5 mt-1 mb-1"
+                                    >
                                     <i class="fa fa-filter mr-2"></i>
                                 Numeric Filters
                             </button>
+                               {this.state.isNumericFilter?
                                 <div class="card rounded   p-2 col-8 mx-5 mt-1 numeric-filter" id="filter">
-                                    <article class=" card-group-item">
+                                <article class=" card-group-item">
 
-                                        <div class="filter-content">
-                                            <div class="card-body">
-                                                <div class="custom-control custom-checkbox">
+                                    <div class="filter-content">
+                                        <div class="">
+                                            <div class="custom-control custom-checkbox">
 
-                                                    <label class="form-check">
-                                                        <input checked={this.state.sort === "greaterThan"} onChange={this.onSortChange} value="greaterThan" class="form-check-input" type="radio" />
-                                                        <span class="form-check-label">
-                                                            Greater Than
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div class="custom-control custom-checkbox">
+                                                <label class="form-check">
+                                                    <input checked={this.state.sort === "greaterThan"} onChange={this.onSortChange} value="greaterThan" class="form-check-input" type="radio" />
+                                                    <span class="form-check-label">
+                                                        Greater Than
+                                                    </span>
+                                                </label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
 
-                                                    <label class="form-check">
-                                                        <input checked={this.state.sort === "lessThan"} onChange={this.onSortChange} value="lessThan" class="form-check-input" type="radio" />
-                                                        <span class="form-check-label">
-                                                            Less Than
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div class="custom-control custom-checkbox">
+                                                <label class="form-check">
+                                                    <input checked={this.state.sort === "lessThan"} onChange={this.onSortChange} value="lessThan" class="form-check-input" type="radio" />
+                                                    <span class="form-check-label">
+                                                        Less Than
+                                                    </span>
+                                                </label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
 
-                                                    <label class="form-check">
-                                                        <input checked={this.state.sort === "greaterThanEqual"} onChange={this.onSortChange} value="greaterThanEqual" class="form-check-input" type="radio" />
-                                                        <span class="form-check-label">
-                                                            Greater than or equal
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div class="custom-control custom-checkbox">
+                                                <label class="form-check">
+                                                    <input checked={this.state.sort === "greaterThanEqual"} onChange={this.onSortChange} value="greaterThanEqual" class="form-check-input" type="radio" />
+                                                    <span class="form-check-label">
+                                                        Greater than or equal
+                                                    </span>
+                                                </label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
 
-                                                    <label class="form-check">
-                                                        <input checked={this.state.sort === "lessThanEqual"} onChange={this.onSortChange} value="lessThanEqual" class="form-check-input" type="radio" />
-                                                        <span class="form-check-label">
-                                                            Less than or equal
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div class="custom-control custom-checkbox">
+                                                <label class="form-check">
+                                                    <input checked={this.state.sort === "lessThanEqual"} onChange={this.onSortChange} value="lessThanEqual" class="form-check-input" type="radio" />
+                                                    <span class="form-check-label">
+                                                        Less than or equal
+                                                    </span>
+                                                </label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
 
-                                                    <label class="form-check">
-                                                        <input checked={this.state.sort === "isEqual"} onChange={this.onSortChange} value="isEqual" class="form-check-input" type="radio" />
-                                                        <span class="form-check-label">
-                                                            Is Equal
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div class="custom-control custom-checkbox">
+                                                <label class="form-check">
+                                                    <input checked={this.state.sort === "isEqual"} onChange={this.onSortChange} value="isEqual" class="form-check-input" type="radio" />
+                                                    <span class="form-check-label">
+                                                        Is Equal
+                                                    </span>
+                                                </label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
 
-                                                    <label class="form-check">
-                                                        <input checked={this.state.sort === "isNotEqual"} onChange={this.onSortChange} value="isNotEqual" class="form-check-input" type="radio" />
-                                                        <span class="form-check-label">
-                                                            Is Not Equal
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div class="custom-control custom-checkbox">
+                                                <label class="form-check">
+                                                    <input checked={this.state.sort === "isNotEqual"} onChange={this.onSortChange} value="isNotEqual" class="form-check-input" type="radio" />
+                                                    <span class="form-check-label">
+                                                        Is Not Equal
+                                                    </span>
+                                                </label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
 
-                                                    <label class="form-check">
-                                                        <input checked={this.state.sort === "isBetween"} onChange={this.onSortChange} value="isBetween" class="form-check-input" type="radio" />
-                                                        <span class="form-check-label">
-                                                            Is Between
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                                <div class="custom-control custom-checkbox">
+                                                <label class="form-check">
+                                                    <input checked={this.state.sort === "isBetween"} onChange={this.onSortChange} value="isBetween" class="form-check-input" type="radio" />
+                                                    <span class="form-check-label">
+                                                        Is Between
+                                                    </span>
+                                                </label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
 
-                                                    <label class="form-check">
-                                                        <input checked={this.state.sort === "isNotbetween"} onChange={this.onSortChange} value="isNotbetween" class="form-check-input" type="radio" />
-                                                        <span class="form-check-label">
-                                                            Is not between
-                                                        </span>
-                                                    </label>
-                                                    <label class="form-check">
-                                                        <input checked={this.state.sort === "clear"} onChange={this.onSortChange} value="clear" class="form-check-input" type="radio" />
-                                                        <span class="form-check-label">
-                                                            Clear
-                                                        </span>
-                                                    </label>
-                                                </div>
+                                                <label class="form-check">
+                                                    <input checked={this.state.sort === "isNotbetween"} onChange={this.onSortChange} value="isNotbetween" class="form-check-input" type="radio" />
+                                                    <span class="form-check-label">
+                                                        Is not between
+                                                    </span>
+                                                </label>
+                                                <label class="form-check">
+                                                    <input checked={this.state.sort === "clear"} onChange={this.onSortChange} value="clear" class="form-check-input" type="radio" />
+                                                    <span class="form-check-label">
+                                                        Clear
+                                                    </span>
+                                                </label>
+                                            </div>
 
-                                                {/* <form> */}
-                                                {this.state.isMultiple ?
-                                                    <div>
-                                                        <div class="form-group">
-                                                            <label for="exampleInputEmail1">From</label>
-                                                            <input onChange={(e) => {
-                                                                var range = this.state.range
-                                                                range.from = parseInt(e.target.value);
-                                                                this.setState({ range }, () => {
-                                                                    this.onSortChange({
-                                                                        target: {
-                                                                            value: this.state.sort
-                                                                        }
-                                                                    })
-                                                                })
-                                                            }} 
-                                                            value ={this.state.range.from}
-                                                            type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
-
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleInputPassword1">To</label>
-                                                            <input onChange={(e) => {
-                                                                var range = this.state.range
-                                                                range.to = parseInt(e.target.value);
-                                                                this.setState({ range }, () => {
-                                                                    this.onSortChange({
-                                                                        target: {
-                                                                            value: this.state.sort
-                                                                        }
-                                                                    })
-                                                                })
-                                                            }}
-                                                            value ={this.state.range.to}
-                                                             type="number" class="form-control" id="exampleInputPassword1" />
-                                                        </div>
-                                                    </div> : <div></div>}
-
-                                                {this.state.isSingle ?
+                                            
+                                            {this.state.isMultiple ?
+                                                <div>
                                                     <div class="form-group">
-                                                        <label for="exampleInputEmail1">Value</label>
+                                                        <label for="exampleInputEmail1">From</label>
                                                         <input onChange={(e) => {
-                                                            var singleInput = this.state.singleInput
-                                                            singleInput = parseInt(e.target.value);
-                                                            this.setState({ singleInput }, () => {
+                                                            var range = this.state.range
+                                                            range.from = parseInt(e.target.value);
+                                                            this.setState({ range }, () => {
                                                                 this.onSortChange({
                                                                     target: {
                                                                         value: this.state.sort
                                                                     }
                                                                 })
                                                             })
-                                                        }} 
-                                                        value ={this.state.singleInput}
-                                                        type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+                                                        }}
+                                                            value={this.state.range.from}
+                                                            type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
 
                                                     </div>
-                                                    : <div></div>
+                                                    <div class="form-group">
+                                                        <label for="exampleInputPassword1">To</label>
+                                                        <input onChange={(e) => {
+                                                            var range = this.state.range
+                                                            range.to = parseInt(e.target.value);
+                                                            this.setState({ range }, () => {
+                                                                this.onSortChange({
+                                                                    target: {
+                                                                        value: this.state.sort
+                                                                    }
+                                                                })
+                                                            })
+                                                        }}
+                                                            value={this.state.range.to}
+                                                            type="number" class="form-control" id="exampleInputPassword1" />
+                                                    </div>
+                                                </div> : <div></div>}
 
-                                                }
+                                            {this.state.isSingle ?
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Value</label>
+                                                    <input onChange={(e) => {
+                                                        var singleInput = this.state.singleInput
+                                                        singleInput = parseInt(e.target.value);
+                                                        this.setState({ singleInput }, () => {
+                                                            this.onSortChange({
+                                                                target: {
+                                                                    value: this.state.sort
+                                                                }
+                                                            })
+                                                        })
+                                                    }}
+                                                        value={this.state.singleInput}
+                                                        type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+
+                                                </div>
+                                                : <div></div>
+
+                                            }
 
 
 
 
-
-                                            </div>
 
                                         </div>
 
-                                    </article>
-                                </div>
+                                    </div>
+
+                                </article>
+                            </div>
+                            
+                            :<div></div>
+                            }
+                                <button class="filter btn btn-lg btn-block col-6 text-white mx-5 mt-2 mb-1"
+                                    onClick={()=>{
+                                        this.onSortChange({
+                                            target:{
+                                                value:"clear"
+                                            }
+                                        })
+                                    }}>
+                                    Clear
+                            </button>
                             </div>
                             <div class="col-md-6 col-sm-12 ">
                                 <div class="card rounded p-1 user-table">

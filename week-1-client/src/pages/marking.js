@@ -20,13 +20,13 @@ class Marking extends React.Component {
             users: [],
             userRows: [],
             show: false,
-            missing:0,
-            late:0,
-            handedIn:0,
-            notSubmitted:0,
-            imageUrl:"",
-            name:"",
-            email:""
+            missing: 0,
+            late: 0,
+            handedIn: 0,
+            notSubmitted: 0,
+            imageUrl: "",
+            name: "",
+            email: ""
         }
         this.onMarksChange = this.onMarksChange.bind(this);
         this.showUserDetail = this.showUserDetail.bind(this);
@@ -34,26 +34,26 @@ class Marking extends React.Component {
     }
 
     showUserDetail(index) {
-        var handedIn = this.state.userRows[index].submission.filter((sub)=>{
-           return sub.status ==="Handed In"
+        var handedIn = this.state.userRows[index].submission.filter((sub) => {
+            return sub.status === "Handed In"
 
         }).length;
-        var late = this.state.userRows[index].submission.filter((sub)=>{
-            return sub.status ==="Done late"
+        var late = this.state.userRows[index].submission.filter((sub) => {
+            return sub.status === "Done late"
 
         }).length;
-        var missing = this.state.userRows[index].submission.filter((sub)=>{
-            return sub.status ==="Missing"
+        var missing = this.state.userRows[index].submission.filter((sub) => {
+            return sub.status === "Missing"
 
         }).length;
-        var notSubmitted = this.state.userRows[index].submission.filter((sub)=>{
-            return sub.status ===""
+        var notSubmitted = this.state.userRows[index].submission.filter((sub) => {
+            return sub.status === ""
 
         }).length;
         var userRows = this.state.userRows;
 
-        this.setState({handedIn,late,missing,notSubmitted,name:userRows[index].name,email:userRows[index].email,imageUrl:userRows[index].imageUrl},()=>{
-            this.setState({show:true})
+        this.setState({ handedIn, late, missing, notSubmitted, name: userRows[index].name, email: userRows[index].email, imageUrl: userRows[index].imageUrl }, () => {
+            this.setState({ show: true })
         })
 
 
@@ -94,7 +94,7 @@ class Marking extends React.Component {
                     var userDetail = {
                         name: user.name == "" ? "cryptx" : user.name,
                         email: user.email,
-                        imageUrl: user.imageUrl === "" || user.imageUrl === undefined ? "https://bootdey.com/img/Content/user_1.jpg" : user.imageUrl,
+                        imageUrl: user.imageUrl === "" || user.imageUrl === undefined ? "https://api.adorable.io/avatars/285/abott@adorable.png" : user.imageUrl,
                         submission: []
                     }
                     deliverables.forEach((deliverable) => {
@@ -245,7 +245,7 @@ class Marking extends React.Component {
                                 return <tr className="text-center">
                                     <td style={{ height: "70px", width: "100px" }} >
                                         <div style={{ zIndex: 101, backgroundColor: "#F8F9FA" }} className="card  text-dark shadow rounded w-100 h-100">
-                                            <span onClick={()=>{this.showUserDetail(index1)}}><img className="mt-1" style={{ height: "30px" }} src={value.imageUrl} /></span> <span className="text-dark"> {value.name}</span>
+                                            <span onClick={() => { this.showUserDetail(index1) }}><img className="mt-1" style={{ height: "30px" }} src={value.imageUrl} /></span> <span className="text-dark"> {value.name}</span>
                                         </div>
                                     </td>
                                     {value.submission.map((value2, index2) => {
@@ -281,21 +281,28 @@ class Marking extends React.Component {
 
                 < Modal show={this.state.show} onHide={() => { this.setState({ show: false }) }}>
                     <Modal.Header closeButton>
-                        <Modal.Title> <span ><img className="mt-1" style={{ height: "30px" }} src={this.state.imageUrl} /></span> <span className="text-dark"> {this.state.name}</span></Modal.Title><br/>
+                        <Modal.Title> <span ><img className="mt-1" style={{ height: "30px" }} src={this.state.imageUrl} /></span> <span className="text-dark"> {this.state.name}</span></Modal.Title><br />
                         {/* <Modal.Title>{this.state.email}</Modal.Title> */}
                     </Modal.Header>
                     <Modal.Body>
+
+                        <div class="my-2 mr-1">
+                            <i class="fa fa-square late mx-1 displayblock" aria-hidden="true" >Handed in Done Late</i>
+                            <i class="fa fa-square missing mx-1 displayblock mt-1" aria-hidden="true">Missing</i>
+                            <i class="fa fa-square handedin mx-1 displayblock mt-1" aria-hidden="true">Handed in</i>
+                            <i class="fa fa-square notsub mx-1 displayblock mt-1" aria-hidden="true">Not Submitted</i>
+                        </div>
 
                         <PieChart style={{ maxHeight: 180 }} className="card-img-top p-3"
                             data={[
                                 { title: 'Late', value: this.state.late, color: '#f0ad4e' },
                                 { title: 'Missing', value: this.state.missing, color: '#d9534f' },
                                 { title: 'Handed In', value: this.state.handedIn, color: '#5cb85c' },
-                                { title: 'Not Submitted', value:this.state.notSubmitted , color: '#f7f7f7' },
+                                { title: 'Not Submitted', value: this.state.notSubmitted, color: '#f7f7f7' },
                             ]}
                         />
 
-                </Modal.Body>
+                    </Modal.Body>
                     <Modal.Footer>
                     </Modal.Footer>
                 </Modal>

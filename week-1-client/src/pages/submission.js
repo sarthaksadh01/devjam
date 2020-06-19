@@ -42,7 +42,7 @@ class Submission extends React.Component {
                 email: user.email,
                 subTopicId: submission.length ? submission[0].subTopicId : "",
                 isSubmitted: submission.length > 0,
-                imageUrl: user.imageUrl === "" || user.imageUrl === undefined ? "https://bootdey.com/img/Content/user_1.jpg" : user.imageUrl,
+                imageUrl: user.imageUrl === "" || user.imageUrl === undefined ? "https://api.adorable.io/avatars/285/abott@adorable.png" : user.imageUrl,
                 submissionStatus: this.currentSubmission(user),
                 points: (submission.length && submission[0]['points'] != undefined) ? submission[0].points : 0,
                 isMarked:(submission.length && submission[0]['points'] != undefined) ? true : false,
