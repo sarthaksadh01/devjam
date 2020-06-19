@@ -18,20 +18,20 @@ _The Showstopper of our site, custom made & responsive data grid allowing any ty
 
 2. **Loading time reduced**
 
-_And to make things better, this custom grid speeds up the loading time, hence admins dont have to wait long to see the data.
+_And to make things better, this custom grid speeds up the loading time, hence admins dont have to wait long to see the data._
 
 
-**How this grid speeds up the loading time ?**
+_**How this grid speeds up the loading time ?**_
 
 
-To populate the grid, data is being fetched in batches i.e we have done pagination of users to decrease load on server. This loads only that amount of users required to fill the first view of grid.As we scroll, api gets called and results are fetched simultaneously. 
+_To populate the grid, data is being fetched in batches i.e we have done pagination of users to decrease load on server. This loads only that amount of users required to fill the first view of grid.As we scroll, api gets called and results are fetched simultaneously._ 
 
 
-To try this funcationality,
+_To try this funcationality,_
 
-Visit our API : http://devjam-server.herokuapp.com/api/usersPaginaton/1
+_Visit our API : http://devjam-server.herokuapp.com/api/usersPaginaton/1_
 
-Replace page parameter with (1) with any other number,which will then give number of user = page * 3._ 
+_Replace page parameter with (1) with any other number,which will then give number of user = page * 3._ 
 
 3. **Deliverable Statistics**
 
