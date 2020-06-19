@@ -87,7 +87,7 @@ class Marking extends React.Component {
             deliverables.sort((d1, d2) => {
                 var x = new Date(d1.due);
                 var y = new Date(d2.due);
-                return x <= y;
+                return x - y;
             })
             this.setState({ deliverables }, () => {
                 data.users.forEach((user) => {

@@ -116,7 +116,7 @@ class Dscore extends React.Component {
             case "asc":
                 queryUsers =[...this.state.users];
                 queryUsers.sort((user1, user2) => {
-                    return user1.points >= user2.points
+                    return user1.points - user2.points
 
                 })
                 break;
@@ -124,7 +124,7 @@ class Dscore extends React.Component {
             case "desc":
                 queryUsers = [...this.state.users];
                 queryUsers.sort((user1, user2) => {
-                    return user1.points <= user2.points
+                    return user2.points - user1.points
 
                 })
                 break;
