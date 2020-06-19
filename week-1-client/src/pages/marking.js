@@ -178,8 +178,9 @@ class Marking extends React.Component {
 
     onMarksChange(e, index1, index2) {
         var userRows = this.state.userRows;
-        userRows[index1].submission[index2].points = parseInt(e.target.value);
-        UpdateUser(userRows[index1].email, parseInt(e.target.value), userRows[index1].submission[index2].subTopicId);
+        var maxMarks = this.state.deliverables[index2].points
+        userRows[index1].submission[index2].points = Math.min(maxMarks,parseInt(e.target.value));
+        UpdateUser(userRows[index1].email, Math.min(maxMarks,parseInt(e.target.value)), userRows[index1].submission[index2].subTopicId);
         this.setState({ userRows });
 
     }

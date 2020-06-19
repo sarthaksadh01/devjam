@@ -61,6 +61,7 @@ class Dscore extends React.Component {
                 isLate,
                 name: user.name == "" ? "cryptx" : user.name,
                 imageUrl: user.imageUrl === "" || user.imageUrl === undefined ? "https://api.adorable.io/avatars/285/abott@adorable.png" : user.imageUrl,
+                email:user.email
 
             });
             // alert(JSON.stringify(modifiedUser))
@@ -484,7 +485,7 @@ class Dscore extends React.Component {
                                                     <td>
                                                         <img src={user.imageUrl} class="avatar-2"
                                                             alt="" />
-                                                        <h6 class="user-link padding-top">{user.name}</h6>
+                                                        <a className="user-link text-white padding-top" href  = {`/submission/${this.props.match.params.id}/${user.email}`}>{user.name}</a>
 
                                                     </td>
                                                     <td>
