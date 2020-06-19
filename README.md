@@ -31,7 +31,7 @@ _To try this funcationality,_
 
 _Visit our API : http://devjam-server.herokuapp.com/api/usersPaginaton/1_
 
-_Replace page parameter with (1) with any other number,which will then give number of user = page * 3._ 
+_Replace page parameter (1) with  with any other number,which will then give number of user = page * 3._ 
 
 3. **Deliverable Statistics**
 
