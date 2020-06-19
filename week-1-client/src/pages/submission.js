@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PieChart } from 'react-minimal-pie-chart';
-import { getUsers, getSubTopic, UpdateUser,saveReplyData } from '../data/data'
+import { getUsers, getSubTopic, UpdateUser, saveReplyData } from '../data/data'
 
 
 
@@ -13,7 +13,7 @@ class Submission extends React.Component {
                 title: "lol",
             },
             currentIndex: 0,
-            reply:""
+            reply: ""
         }
 
         this.chnageUser = this.chnageUser.bind(this);
@@ -45,7 +45,7 @@ class Submission extends React.Component {
                 imageUrl: user.imageUrl === "" || user.imageUrl === undefined ? "https://api.adorable.io/avatars/285/abott@adorable.png" : user.imageUrl,
                 submissionStatus: this.currentSubmission(user),
                 points: (submission.length && submission[0]['points'] != undefined) ? submission[0].points : 0,
-                isMarked:(submission.length && submission[0]['points'] != undefined) ? true : false,
+                isMarked: (submission.length && submission[0]['points'] != undefined) ? true : false,
                 submission: temp
 
             })
@@ -122,10 +122,10 @@ class Submission extends React.Component {
             return user.submissionStatus === type;
         }).length;
     }
-    saveReply(){
-        if(this.state.reply.trim()==="")return;
-        saveReplyData(this.state.users[this.state.currentIndex].email,this.state.reply,this.state.users[this.state.currentIndex].subTopicId).then(()=>{
-            this.setState({reply:""});
+    saveReply() {
+        if (this.state.reply.trim() === "") return;
+        saveReplyData(this.state.users[this.state.currentIndex].email, this.state.reply, this.state.users[this.state.currentIndex].subTopicId).then(() => {
+            this.setState({ reply: "" });
         })
 
     }
@@ -147,11 +147,11 @@ class Submission extends React.Component {
                         <h2 class="details text-monospace inline-block">{this.state.deliverable.title}</h2>
                         <h5 class="text-muted inline-block ml-3"> X {this.state.deliverable.points} Points</h5>
                         <h3 class="float-right details2 ml-5">
-                           {this.state.currentIndex!=0?<i onClick={() => { this.moveUser("left") }} class="fa fa-chevron-left mr-2"></i>:<i></i>} 
-                           {this.state.currentIndex!=(this.state.users.length-1) ? <i onClick={() => { this.moveUser("right") }} class="fa fa-chevron-right"></i> :<i></i>}
-                            </h3>
+                            {this.state.currentIndex != 0 ? <i onClick={() => { this.moveUser("left") }} class="fa fa-chevron-left mr-2"></i> : <i></i>}
+                            {this.state.currentIndex != (this.state.users.length - 1) ? <i onClick={() => { this.moveUser("right") }} class="fa fa-chevron-right"></i> : <i></i>}
+                        </h3>
                     </div>
-                    <hr/>
+                    <hr />
                     <div class="ml-3 mt-5 ">
                         <div class="dropdown ">
                             <button class="btn shadow dropdown-toggle col-md-4 bgWhite" type="button" id="dropdownMenuButton"
@@ -186,9 +186,9 @@ class Submission extends React.Component {
 
                             </div>
                         </div>
-                        
+
                     </div>
-                   
+
 
                     <div class="row my-5">
                         <div class="col-md-4 col-sm-12 mt-5">
@@ -208,7 +208,7 @@ class Submission extends React.Component {
 
                                 }}
                                 disabled={!this.state.users[this.state.currentIndex].isSubmitted} value={this.state.users[this.state.currentIndex].points} type="number" class="text-center form-control col-6 inline-block" />
-                            <button class="btn btn-success bgGradient col-4 mr-3 float-right">{this.state.users[this.state.currentIndex].isMarked?"Update":"Set"}</button>
+                            <button class="btn btn-success bgGradient col-4 mr-3 float-right">{this.state.users[this.state.currentIndex].isMarked ? "Update" : "Set"}</button>
                         </div>
                         <div class="col-md-4 col-sm-12 mt-2" >
                             <div class="w-100 rounded  card">
@@ -224,31 +224,31 @@ class Submission extends React.Component {
 
                         </div>
                         <div class="col-md-4 mt-2 mb-2 col-sm-12 ">
-                            
-                                <h4 class="details text-monospace text-center p-4 ">Deliverable Stats</h4>
-                                <hr />
-<div class="my-2 mr-1">
-<i class="fa fa-square late mx-1 displayblock" aria-hidden="true" >Handed in Done Late</i>
-<i class="fa fa-square missing mx-1 displayblock mt-1" aria-hidden="true">Missing</i>
-<i class="fa fa-square handedin mx-1 displayblock mt-1" aria-hidden="true">Handed in</i>
-<i class="fa fa-square notsub mx-1 displayblock mt-1" aria-hidden="true">Not Submitted</i>
-</div>
-                                <PieChart style={{ maxHeight: 180 }} className="card-img-top p-3"
-                                    data={[
-                                        { title: 'Late', value: this.calculate("Handed in Done late"), color: '#f0ad4e' },
-                                        { title: 'Missing', value: this.calculate("Missing"), color: '#d9534f' },
-                                        { title: 'Handed In', value: this.calculate("Handed In"), color: '#5cb85c' },
-                                        { title: 'Not Submitted', value: this.calculate(""), color: '#f7f7f7' },
-                                    ]}
-                                />;
+
+                            <h4 class="details text-monospace text-center p-4 ">Deliverable Stats</h4>
+                            <hr />
+                            <div class="my-2 mr-1">
+                                <i class="fa fa-square late mx-1 displayblock" aria-hidden="true" >Handed in Done Late</i>
+                                <i class="fa fa-square missing mx-1 displayblock mt-1" aria-hidden="true">Missing</i>
+                                <i class="fa fa-square handedin mx-1 displayblock mt-1" aria-hidden="true">Handed in</i>
+                                <i class="fa fa-square notsub mx-1 displayblock mt-1" aria-hidden="true">Not Submitted</i>
+                            </div>
+                            <PieChart style={{ maxHeight: 180 }} className="card-img-top p-3"
+                                data={[
+                                    { title: 'Late', value: this.calculate("Handed in Done late"), color: '#f0ad4e' },
+                                    { title: 'Missing', value: this.calculate("Missing"), color: '#d9534f' },
+                                    { title: 'Handed In', value: this.calculate("Handed In"), color: '#5cb85c' },
+                                    { title: 'Not Submitted', value: this.calculate(""), color: '#f7f7f7' },
+                                ]}
+                            />
 
 
-                    
+
 
                         </div>
                     </div>
                     {this.state.users[this.state.currentIndex].submission.comment === "" || this.state.users[this.state.currentIndex].submission.comment === undefined
-                        ?<div className="comments"></div>:
+                        ? <div className="comments"></div> :
                         <div className="comments">
                             <div class="row">
                                 <div class="col-md-1 col-2 p-2 ml-3">
@@ -265,20 +265,20 @@ class Submission extends React.Component {
                             </div>
                             <div class="mt-3 mb-5 row ">
                                 <div class="col-md-11 col-8">
-                                    <input onChange={(e)=>{
-                                        this.setState({reply:e.target.value})
-                                    }} value ={this.state.reply} placeholder="Reply to private comment" class="form-control" />
+                                    <input onChange={(e) => {
+                                        this.setState({ reply: e.target.value })
+                                    }} value={this.state.reply} placeholder="Reply to private comment" class="form-control" />
                                 </div>
                                 <div class="col-md-1 col-4">
-                                    <i onClick={()=>{this.saveReply()}} style={{ fontSize: "30px" }} class="mr-5 fa fa-paper-plane"></i>
+                                    <i onClick={() => { this.saveReply() }} style={{ fontSize: "30px" }} class="mr-5 fa fa-paper-plane"></i>
 
                                 </div>
 
                             </div>
                         </div>
-           
+
                     }
-                    
+
                 </div>
 
             </div>);
