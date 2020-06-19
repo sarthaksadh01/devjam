@@ -1,3 +1,16 @@
+/* 
+
+This file contains routing for Task : Marking system on Admin Portal.
+It contains the the methods to implement:
+1. Fetch topicwise marks of user 
+2. Fetch user details
+3. pagination
+4. update marks
+5. save reply to private comments
+
+
+*/
+
 const express = require('express')
 const Topics = require('../models/topic')
 const Users = require('../models/users')
