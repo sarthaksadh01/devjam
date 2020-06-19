@@ -37,7 +37,6 @@ class Submission extends React.Component {
                 return val.subTopicId == this.state.deliverable.subTopicId;
             })
             var temp = submission.length ? submission[0] : {}
-            // alert(JSON.stringify(temp))
             modifiedUsers.push({
                 name: user.name == "" ? "cryptx" : user.name,
                 email: user.email,
