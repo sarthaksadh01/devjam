@@ -1,3 +1,17 @@
+
+/* 
+
+This file is used to develop the Markings page.
+It contains the the methods to implement:
+1. Custom grid component
+2. Fixing leftmost column and topmost row fixed
+3. All User with their scores in all deliverables
+4. Visit Edit Deliverable page 
+5. Visit Deliverable score page
+6. Visit Submissions page
+7. Can edit marks of users
+
+*/
 import React from 'react';
 import { getMarks, UpdateUser } from '../data/data';
 import $ from 'jquery';

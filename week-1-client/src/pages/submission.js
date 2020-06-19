@@ -1,3 +1,16 @@
+/* 
+
+This file is used to develop the Submissions page.
+It contains the the methods to implement:
+1. To view submission of a deliverable
+2. Deliverable Stats
+3. Mark set & update
+4. Reply to private comment
+5. Download submission
+6. Visit edit deliverable page
+
+*/
+
 import React, { useState } from 'react';
 import { PieChart } from 'react-minimal-pie-chart';
 import { getUsers, getSubTopic, UpdateUser, saveReplyData } from '../data/data'

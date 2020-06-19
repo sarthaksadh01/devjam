@@ -1,6 +1,67 @@
 ## Devjam 2020 - Team Cryptx
 
-## 📍 Week 2 - Learner's Portal
+## 📍 Week 5 - Marking system on Admin Portal
+
+## ℹ️  How to access our solution
+
+**Link** : https://sarthak-493c6.web.app
+
+**Server Hosting** : https://devjam-server.herokuapp.com/api
+
+
+---
+## 🔆 Bonus & Extra Features
+
+1. **Designing the Custom Grid : Bonus 2**
+
+_The Showstopper of our site, custom made & responsive data grid allowing any type of media in its cells and not just text!._
+
+2. **Loading time reduced : Bonus 2**
+
+_And to make things better, this custom grid speeds up the loading time, hence admins dont have to wait long to see the data._
+
+
+_**How this grid speeds up the loading time ?**_
+
+
+_To populate the grid, data is being fetched in batches i.e we have done pagination of users to decrease load on server. This loads only that amount of users required to fill the first view of grid.As we scroll, api gets called and results are fetched simultaneously._ 
+
+
+_To try this funcationality,_
+
+_Visit our API : http://devjam-server.herokuapp.com/api/usersPaginaton/1_
+
+_Replace page parameter (1) with  with any other number,which will then give number of user = page * 3._ 
+
+3. **Deliverable Statistics : Bonus 2**
+
+_To make it easier for the teacher to analyse performance and submission of students for a particular delievrable, we have added a pie chart to depict the submission for a particular deliverable.This graphic data will ease the understanding of the
+deliverable for the teacher by visiting the Submissions page._
+
+4. **Student Performance Statistics :Bonus 2**
+
+_To make it easier for the teacher to analyse performance and submission of students, we have added a pie chart to depict the submission of deliverables by a particular student. This graphic data will ease the understanding of the
+student submission for the teacher by just clicking on the user name in the Marks table.(A modal will open)_
+
+5. **Student Avatar : Bonus 1**
+
+_Avatars have been added to appear for the students names in the dropdown on the submission page, the marks
+page and commenting part._
+
+6. **Redirects to Edit Deliverable Page : Bonus 2**
+
+_To enable teachers to edit the deliverable easily, we added redirect to the edit deliverable page by just clicked on the Edit icon in the deliverable header in the marks table._
+
+7. **Redirects to Submission Page : Bonus 2**
+
+_It is possible that the teacher might want to see the submission of the student while he/she is on deliverable scores page. So we added this functionality where the teacher can click on the student name in the table and redirection to the submission page happens._
+
+---
+
+
+
+
+## 📍 Week 4 - Learner's Portal
 
 ## ℹ️  How to access our solution
 
@@ -62,7 +123,7 @@ _User can only upload .zip files & he/she will be prompted if any other type of 
 _User can only upload the deliverable till the time he/she hasn't marked the submission as COMPLETED. After completing the submission, user cannot change the response. This allows strict submission criteria._
 
 
-## 📍 Week 1 - Allowing Admins to add content
+## 📍 Week 2,3 - Allowing Admins to add content
 
 
 ## ℹ️  How to access our solution

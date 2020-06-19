@@ -1,3 +1,15 @@
+/* 
+
+This file is used to develop the deliverables score page.
+It contains the the methods to implement:
+1. Deliverable details
+2. Deliverable due date  & points
+3. List of all users with scores
+4. Numeric filters
+5. Sort filters.
+
+*/
+
 import React from 'react';
 import { getSubTopic, getUsers } from '../data/data'
 const ReactMarkdown = require('react-markdown')
