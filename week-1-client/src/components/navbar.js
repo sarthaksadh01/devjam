@@ -34,8 +34,11 @@ function NavbarUi() {
                     <li class="nav-item">
                         <a class="nav-link" href="/marking">Marks</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://hiii-15fdf.web.app">Student Portal</a>
+                    </li>
                     
-
+                    
 
                     <li class="nav-item">
 

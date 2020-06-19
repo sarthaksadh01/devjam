@@ -147,8 +147,9 @@ class Submission extends React.Component {
                         <h2 class="details text-monospace inline-block">{this.state.deliverable.title}</h2>
                         <h5 class="text-muted inline-block ml-3"> X {this.state.deliverable.points} Points</h5>
                         <h3 class="float-right details2 ml-5">
-                            <i onClick={() => { this.moveUser("left") }} class="fa fa-chevron-left mr-2"></i>
-                            <i onClick={() => { this.moveUser("right") }} class="fa fa-chevron-right"></i></h3>
+                           {this.state.currentIndex!=0?<i onClick={() => { this.moveUser("left") }} class="fa fa-chevron-left mr-2"></i>:<i></i>} 
+                           {this.state.currentIndex!=(this.state.users.length-1) ? <i onClick={() => { this.moveUser("right") }} class="fa fa-chevron-right"></i> :<i></i>}
+                            </h3>
                     </div>
                     <hr/>
                     <div class="ml-3 mt-5 ">
