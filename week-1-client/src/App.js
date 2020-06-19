@@ -38,6 +38,10 @@ import EditProfile from "./pages/editProfile"
 import AllProfiles from './pages/allprofiles';
 import { verifyLogin, verifySuperLogin } from "./data/data"
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import Marking from './pages/marking';
+import Submission from './pages/submission';
+import './assets/css/main.css'
+import Dscore from './pages/dScore';
 
 class App extends React.Component {
   state = {
@@ -118,6 +122,9 @@ class App extends React.Component {
               <Route path="/createprofile" render={(props) => this.state.isLoggedin ? <EditProfile  {...props} toggleLoading={this.toggleLoading} userName={this.state.userName} isCreated={false} isEditable={true} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
               <Route path="/profile/:id" render={(props) => <EditProfile {...props} toggleLoading={this.toggleLoading} isCreated={true} userName={this.state.userName} isEditable={false} />} />
               <Route path="/profiles" render={(props) => this.state.isLoggedin ? <AllProfiles {...props} toggleLoading={this.toggleLoading} userName={this.state.userName} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
+              <Route path="/marking" render={(props) => this.state.isLoggedin ? <Marking {...props} toggleLoading={this.toggleLoading} userName={this.state.userName} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
+              <Route path="/submission/:id/:email" render={(props) => this.state.isLoggedin ? <Submission {...props} toggleLoading={this.toggleLoading} userName={this.state.userName} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
+              <Route path="/dscore/:id" render={(props) => this.state.isLoggedin ? <Dscore {...props} toggleLoading={this.toggleLoading} userName={this.state.userName} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
             </Switch>
           </LoadingOverlay>
         </Router>

@@ -7,8 +7,8 @@ to database & functionalities.
 */
 
 import axios from 'axios';
-var baseUrl = "https://devjam-server.herokuapp.com/api";
-// var baseUrl = "http://localhost:3000/api";
+// var baseUrl = "https://devjam-server.herokuapp.com/api";
+var baseUrl = "http://localhost:4000/api";
 async function getContent(id) {
     return new Promise((resolve, reject) => {
         axios.get(`${baseUrl}/content/${id}`).then((content) => {
@@ -229,7 +229,7 @@ async function getAllAdmins() {
 
 async function createAdmin(userName, password) {
     return new Promise((resolve, reject) => {
-        axios.post(`${baseUrl}/registerAdmin`,{userName,password}).then((res) => {
+        axios.post(`${baseUrl}/registerAdmin`, { userName, password }).then((res) => {
             resolve(res.data);
         }).catch((err) => {
             reject(err);
@@ -239,7 +239,7 @@ async function createAdmin(userName, password) {
 }
 async function removeAdmin(userName) {
     return new Promise((resolve, reject) => {
-        axios.post(`${baseUrl}/removeAdmin`,{userName}).then((res) => {
+        axios.post(`${baseUrl}/removeAdmin`, { userName }).then((res) => {
             resolve(res.data);
         }).catch((err) => {
             reject(err);
@@ -249,9 +249,46 @@ async function removeAdmin(userName) {
 }
 
 async function removeProfile(id) {
-    
+
     return new Promise((resolve, reject) => {
-        axios.post(`${baseUrl}/removeProfile`,{id}).then((res) => {
+        axios.post(`${baseUrl}/removeProfile`, { id }).then((res) => {
+            resolve(res.data);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+
+
+async function getMarks() {
+    return new Promise((resolve, reject) => {
+        axios.get(`${baseUrl}/marks`).then((res) => {
+            resolve(res.data);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+
+
+
+async function getUsers() {
+    return new Promise((resolve, reject) => {
+        axios.get(`${baseUrl}/users`).then((res) => {
+            resolve(res.data);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+
+}
+
+async function UpdateUser(email,points,subTopicId){
+    return new Promise((resolve, reject) => {
+        axios.post(`${baseUrl}/updateMarks`,{email,points,subTopicId}).then((res) => {
             resolve(res.data);
         }).catch((err) => {
             reject(err);
@@ -280,5 +317,8 @@ export {
     getAllAdmins,
     removeAdmin,
     createAdmin,
-    removeProfile
+    removeProfile,
+    getUsers,
+    getMarks,
+    UpdateUser
 }

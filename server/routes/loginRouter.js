@@ -189,8 +189,10 @@ router.post("/api/userSignup", (req, res) => {
 
 router.post("/api/submitFile", (req, res) => {
     var data = req.body.data;
-    console.log(data)
-    db.submitFile(data).then((doc) => {
+    var email = req.body.email;
+    console.log(data);
+    console.log(email);
+    db.submitFile(data,email).then((doc) => {
         console.log(doc);
         res.status(200).json(doc);
     }).catch((err) => {

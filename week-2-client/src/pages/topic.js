@@ -32,6 +32,7 @@ class Topic extends React.Component {
             fileUrl: "",
             isSubmitted: true,
             videoUrl: "",
+            fileName:"",
             played: 0
         };
         this.renderItem = this.renderItem.bind(this);
@@ -45,6 +46,8 @@ class Topic extends React.Component {
         this.onProgress = this.onProgress.bind(this);
         this.onReady = this.onReady.bind(this);
     }
+     i = 0;
+     x = 0;
 
     calculateCurrentSubtopic(data) {
         var currentSubTopic = data.subTopics.filter((subTopic) => {
@@ -93,19 +96,32 @@ class Topic extends React.Component {
     }
 
     changeVideoQuality(value) {
+        this.x =this.i;
         if (value === "HD") {
+           
             this.setState({ videoUrl: this.state.currentSubTopic.videoLink })
+            // setTimeout(()=>{
+               
+            //     this.player.seekTo(parseFloat(x))
+
+            // },3000)
+            
 
         }
         else {
             this.setState({ videoUrl: this.state.currentSubTopic.sdLink })
+            // setTimeout(()=>{
+            //     this.player.seekTo(parseFloat(x))
+
+            // },3000)
 
         }
 
     }
 
     onProgress(state) {
-        this.setState({ played: state.played });
+        this.i = state.played;
+        // this.setState({ played: state.played });
 
     }
     ref = player => {
@@ -113,8 +129,12 @@ class Topic extends React.Component {
     }
 
     onReady() {
-        
-        // this.player.seekTo(parseFloat(this.state.played))
+        // alert(this.i)
+        if(this.x!=0){
+             this.player.seekTo(parseFloat(this.x))
+
+        }
+       
 
 
     }
@@ -126,6 +146,9 @@ class Topic extends React.Component {
         }
         if (type == "privateComment") {
             this.setState({ privateComment: value });
+        }
+        if(type=="fileName"){
+            this.setState({fileName:value})
         }
 
     }
@@ -141,8 +164,11 @@ class Topic extends React.Component {
             subTopicId: this.state.currentSubTopic.subTopicId,
             fileUrl: this.state.fileUrl,
             comment: this.state.privateComment,
+            fileName:this.state.fileName,
+            createdAt:new Date()
         };
-        submitFile(data).then((doc) => {
+        var email = reactLocalStorage.getObject("user").email;
+        submitFile(data,email).then((doc) => {
             this.setState({ isSubmitted: true });
         }).finally(() => {
             this.props.toggleLoading("Uploading..")

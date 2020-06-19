@@ -8,20 +8,27 @@ var submissions = new Schema({
 
 
     },
- 
     subTopicId: {
         type: String,
         required: [true, "can't be blank"],
         index: true,
 
     },
-    fileUrl:{
-        type:String,
-        default:""
+    fileUrl: {
+        type: String,
+        default: ""
     },
-    comment:{
-        type:String,
-        default:""
+    fileName: {
+        type: String,
+        default: ""
+    },
+    comment: {
+        type: String,
+        default: ""
+    },
+    commentReply: {
+        type: String,
+        default: ""
     }
 
 

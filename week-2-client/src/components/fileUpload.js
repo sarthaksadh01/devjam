@@ -15,6 +15,7 @@ function FileUpload(props) {
             var str = result.info.secure_url;
             if(str.endsWith(".zip")){
                 props.changeSubmission("fileUrl", result.info.secure_url)
+                props.changeSubmission("fileName",result.info.original_filename)
 
             }
             else{

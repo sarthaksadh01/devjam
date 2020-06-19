@@ -7,7 +7,7 @@ function VideoPlayer(props) {
     return (
         <div  className="player "> 
             <ReactPlayer
-                onReady ={props.onReady}
+                onStart ={()=>{props.onReady()}}
                 ref = {props.r}
                 onProgress ={(state)=>{props.onProgress(state)}}
                 showNext={true}

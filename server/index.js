@@ -3,6 +3,7 @@ var cors = require('cors')
 const profileRouter = require("./routes/profileRouter")
 const contentRouter = require("./routes/contentRouter");
 const loginRouter = require("./routes/loginRouter");
+const marksRouter = require('./routes/marking')
 
 const app = express()
 
@@ -16,6 +17,7 @@ app.use(express.json())
 app.use(profileRouter)
 app.use(contentRouter)
 app.use(loginRouter)
+app.use(marksRouter)
 
 
 

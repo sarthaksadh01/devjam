@@ -26,6 +26,10 @@ var users = new Schema({
     password: {
         type: String,
         default:""
+    },
+    submissions:{
+        type:[{}],
+        default:[]
     }
 
 }, { timestamps: true });

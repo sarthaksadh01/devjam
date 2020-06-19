@@ -1,6 +1,6 @@
 import axios from 'axios';
-var baseUrl = "https://devjam-server.herokuapp.com/api";
-// var baseUrl = "http://localhost:4000/api";
+// var baseUrl = "https://devjam-server.herokuapp.com/api";
+var baseUrl = "http://localhost:4000/api";
 async function signupWithEmailPassword(data) {
     return new Promise((resolve, reject) => {
         axios.post(`${baseUrl}/userLogin`, { data }).then((data) => {
@@ -44,9 +44,9 @@ async function getTopic(_id) {
     })
 }
 
-async function submitFile(data) {
+async function submitFile(data,email) {
     return new Promise((resolve, reject) => {
-        axios.post(`${baseUrl}/submitFile`, { data }).then((data) => {
+        axios.post(`${baseUrl}/submitFile`, { data ,email}).then((data) => {
             resolve(data.data);
         }).catch((err) => {
 

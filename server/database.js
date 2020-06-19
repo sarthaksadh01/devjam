@@ -7,11 +7,17 @@ mongoose.connect(require("./config").dbUrl, { useNewUrlParser: true, useCreateIn
     console.log(err)
 })
 
+
+
+
 const Topics = require("./models/topic")
 const Profiles = require("./models/profile")
 const Admins = require("./models/admin")
 const Users = require("./models/users")
 const Submissions = require("./models/submission")
+
+// Users.collection.drop();
+
 
 
 
@@ -333,13 +339,18 @@ async function loginUser(email) {
     });
 }
 
-async function submitFile(data) {
+async function submitFile(data, email) {
+    console.log("lol")
     return new Promise((resolve, reject) => {
-        var _newFile = Submissions(data);
-        _newFile.save().then((doc) => {
-            resolve(doc);
-
+        Users.findOneAndUpdate({ email }, {
+            $push: {
+                submissions: data
+            }
+        }).then((doc) => {
+            console.log(doc);
+            resolve(doc)
         }).catch((err) => {
+            console.log(err);
             reject(err);
         })
     })
@@ -354,6 +365,57 @@ async function getSubmissions(email, subTopicId) {
         })
     })
 
+}
+
+
+async function getUsers() {
+    return new Promise((resolve, reject) => {
+        Users.find({}).
+            sort({ name: 'asc' }).exec((err, res) => {
+                if (err) reject(err);
+                resolve(res);
+            })
+    })
+
+}
+
+async function updateSubmission(email, data) {
+    return new Promise((resolve, reject) => {
+        loginUser(email).then((users) => {
+            for (var i = 0; i < users[0].submissions.length; i++) {
+                if (users[0].submissions[i].subTopicId === data.subTopicId) {
+                    users[0].submissions[i] = data;
+                    break;
+                }
+            }
+            Users.updateOne({ email }, users[0]).then((doc) => {
+                resolve(doc);
+            })
+        })
+    })
+
+}
+
+async function updateUser(email, user) {
+    return new Promise((resolve, reject) => {
+        Users.findOneAndUpdate({ email }, user).then((user) => {
+            resolve(user);
+
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+}
+
+async function userPagination(pageNumber) {
+    return new Promise((resolve, reject) => {
+        Users.find({}).limit(3).
+        skip(3 * pageNumber).exec((err, doc) => {
+            if(err)reject(err);
+            resolve(doc);
+
+        })
+    })
 }
 
 
@@ -380,7 +442,11 @@ module.exports = {
     registerUser,
     loginUser,
     submitFile,
-    getSubmissions
+    getSubmissions,
+    getUsers,
+    updateSubmission,
+    updateUser,
+    userPagination
 
 }
 
