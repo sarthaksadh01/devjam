@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { PieChart } from 'react-minimal-pie-chart';
 import { getUsers, getSubTopic, UpdateUser } from '../data/data'
+import SelectSearch from 'react-select-search';
+
 
 class Submission extends React.Component {
     constructor(props) {
@@ -42,6 +44,7 @@ class Submission extends React.Component {
                 imageUrl: user.imageUrl === "" || user.imageUrl === undefined ? "https://bootdey.com/img/Content/user_1.jpg" : user.imageUrl,
                 submissionStatus: this.currentSubmission(user),
                 points: (submission.length && submission[0]['points'] != undefined) ? submission[0].points : 0,
+                isMarked:(submission.length && submission[0]['points'] != undefined) ? true : false,
                 submission: temp
 
             })
@@ -58,7 +61,7 @@ class Submission extends React.Component {
         if (submission.length) {
 
             if (submission[0].createdAt > this.state.deliverable.due) {
-                return "Done late"
+                return "Handed in Done late"
             }
             else {
                 return "Handed In"
@@ -154,7 +157,7 @@ class Submission extends React.Component {
                                 {this.state.users.map((user, index) => {
                                     var outline;
                                     if (user.submissionStatus === "Missing") outline = "badge-danger";
-                                    else if (user.submissionStatus === "Done late") outline = "badge-warning"
+                                    else if (user.submissionStatus === "Handed in Done late") outline = "badge-warning"
                                     else outline = "badge-success";
                                     return (<div><a onClick={() => { this.chnageUser(index) }} class="dropdown-item  " href="#">
 
@@ -174,7 +177,9 @@ class Submission extends React.Component {
 
                             </div>
                         </div>
+                        
                     </div>
+                   
 
                     <div class="row my-5">
                         <div class="col-4 mt-5">
@@ -194,7 +199,7 @@ class Submission extends React.Component {
 
                                 }}
                                 disabled={!this.state.users[this.state.currentIndex].isSubmitted} value={this.state.users[this.state.currentIndex].points} type="number" class="text-center form-control col-6 inline-block" />
-                            <button class="btn btn-success bgGradient col-4 mr-3 float-right">Update</button>
+                            <button class="btn btn-success bgGradient col-4 mr-3 float-right">{this.state.users[this.state.currentIndex].isMarked?"Update":"Set"}</button>
                         </div>
                         <div class="col-4">
                             <div class="w-100 rounded  card">
@@ -216,7 +221,7 @@ class Submission extends React.Component {
 
                                 <PieChart style={{ maxHeight: 180 }} className="card-img-top p-3"
                                     data={[
-                                        { title: 'Late', value: this.calculate("Done late"), color: '#f0ad4e' },
+                                        { title: 'Late', value: this.calculate("Handed in Done late"), color: '#f0ad4e' },
                                         { title: 'Missing', value: this.calculate("Missing"), color: '#d9534f' },
                                         { title: 'Handed In', value: this.calculate("Handed In"), color: '#5cb85c' },
                                         { title: 'Not Submitted', value: this.calculate(""), color: '#f7f7f7' },

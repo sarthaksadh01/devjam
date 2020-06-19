@@ -32,7 +32,7 @@ function NavbarUi() {
                         <a class="nav-link" href="/content">Content</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/marking">Marking</a>
+                        <a class="nav-link" href="/marking">Marks</a>
                     </li>
                     
 
