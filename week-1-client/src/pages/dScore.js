@@ -198,7 +198,7 @@ class Dscore extends React.Component {
                         <a href = {`/deliverable/${this.props.match.params.id}`}><h2 class="details text-monospace inline-block">{this.state.deliverable.title}</h2></a>
                         <h3 class="text-muted float-right"> X {this.state.deliverable.points} Points</h3>
                     </div>
-
+<hr/>
                     <div class="mt-5">
                         <div class="card shadow-lg rounded p-3">
                             <div class="px-3">
