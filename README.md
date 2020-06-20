@@ -11,6 +11,8 @@
 **Server Hosting** : https://devjam-server.herokuapp.com/api
 
 
+
+
 ---
 ## 🔆 Bonus & Extra Features
 
@@ -44,6 +46,7 @@ deliverable for the teacher by visiting the Submissions page._
 
 _To make it easier for the teacher to analyse performance and submission of students, we have added a pie chart to depict the submission of deliverables by a particular student. This graphic data will ease the understanding of the
 student submission for the teacher by just clicking on the user name in the Marks table.(A modal will open)_
+![User Stats](https://res.cloudinary.com/sarthaksadh/image/upload/v1592639310/Screenshot_2020-06-20_at_1.16.35_PM_iu7h1y.png)
 
 5. **Student Avatar : Bonus 1**
 
