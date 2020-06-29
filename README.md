@@ -108,9 +108,10 @@ _Edit test page is disabled after the test is published to prevent database erro
 9. **Alert while adding event**
 _When adding an event if admin forgets to add video/delverable/test an alert is shown_
 
+**Note To add time to the event switch to day view in the calendar**
 ---
 
-**Note To add time to the event switch to day view in the calendar**
+
 
 
 ## 📍 Week 5 - Marking system on Admin Portal
