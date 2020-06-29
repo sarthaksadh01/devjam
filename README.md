@@ -108,6 +108,8 @@ _Edit test page is disabled after the test is published to prevent database erro
 9. **Alert while adding event**
 _When adding an event if admin forgets to add video/delverable/test an alert is shown_
 
+10. **For custom/generic event we have added Markdown editor so not only links but video/images/tables... can be added**
+
 **Note To add time to the event, switch to day view in the calendar**
 
 
