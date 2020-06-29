@@ -99,6 +99,7 @@ async function reminder() {
 
 }
 ```
+visit http://devjam-server.herokuapp.com/api/reminder to directly trigger the reminder function
 
 8. **Disabled Edit test page**
 
