@@ -55,6 +55,16 @@ class ViewCourse extends React.Component {
         this.setState({ upComingEvents })
     }
 
+     monthDiff(d1, d2) {
+        var months;
+        d1 = new Date(d1);
+        d2 = new Date(d2);
+        months = (d2.getFullYear() - d1.getFullYear()) * 12;
+        months -= d1.getMonth();
+        months += d2.getMonth();
+        return months <= 0 ? 0 : months;
+    }
+
 
     render() {
         if (this.state.course === null) return null;
@@ -68,7 +78,7 @@ class ViewCourse extends React.Component {
         return (<div style={{ marginTop: "80px" }} className="container">
             <div className="row">
                 <div className="col-12">
-                    <div className="col-md-10"><h4 className=" text-truncate text-topic">{this.state.course.title}<button onClick={() => { this.setState({ upcomingModal: true }) }} className="btn filter ml-3 text-white float-right">Upcoming Events</button></h4></div>
+    <div className="col-md-10"><h4 className=" text-truncate text-topic">{this.state.course.title} <span className="badge ml-2 badge-info">X {this.monthDiff(this.state.course.startDate,this.state.course.endDate)}</span>Months <button onClick={() => { this.setState({ upcomingModal: true }) }} className="btn filter ml-3 text-white float-right">Upcoming Events</button></h4></div>
                     <hr className="hr" />
                     <br />
                 </div>

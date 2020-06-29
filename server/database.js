@@ -594,7 +594,7 @@ function sendMail(users, title, link) {
         from: 'cryptxsadh@gmail.com', // sender address
         to: users, // list of receivers
         subject: 'New Test Released', // Subject line
-        html: `<p>${title}</p><p><a href = "http://hiii-15fdf.web.app/test/${link}">View Result</a></p>`// plain text body
+        html: `<p>${title}</p><p><a href = "http://hiii-15fdf.web.app/test/${link}">View</a></p>`// plain text body
     };
     transporter.sendMail(mailOptions, function (err, info) {
         if (err)
@@ -611,12 +611,12 @@ function sendResultMail(submissions, test) {
 
     submissions.forEach((submission) => {
         var title = `Result Released for test ${test.title}`;
-        var text = "You have not submitted the test <br/> your final score is 0";
+        var text = "You have not submitted the test \n your final score is 0";
         var email = submission.email;
         var isUrl = false;
         var url = ""
         if (submission.isReleased) return;
-        if (submission.isStarted === false) {
+        if (submission.isStarted === true) {
             text = `Your Test score is ${calculateFinalMarks(submission)}`;
             url = submission._id;
         }
@@ -624,7 +624,7 @@ function sendResultMail(submissions, test) {
             from: 'cryptxsadh@gmail.com', // sender address
             to: email, // list of receivers
             subject: 'Test Result', // Subject line
-            html: `<p>${title}</p><p>${text}</p><p><a href = "http://hiii-15fdf.web.app/result/${submission._id}">View Result</a></p>`// plain text body
+            html: `<p>${title}</p><p>${text}</p><p><a href = "http://hiii-15fdf.web.app/result/${submission._id}">View</a></p>`// plain text body
         };
         transporter.sendMail(mailOptions, function (err, info) {
             if (err)
@@ -777,7 +777,7 @@ async function sendCourseMail(data) {
             from: 'cryptxsadh@gmail.com', // sender address
             to: user, // list of receivers
             subject: 'New Course', // Subject line
-            html: `<p>${data.title}</p><p><a href = "http://hiii-15fdf.web.app/course/${data._id}">View Course</a></p>`// plain text body
+            html: `<p>${data.title}</p><p><a href = "http://hiii-15fdf.web.app/course/${data._id}">View</a></p>`// plain text body
         };
 
         transporter.sendMail(mailOptions, function (err, info) {
@@ -804,6 +804,59 @@ function sendCourseNotification(users, data) {
 
     })
 
+}
+
+function sendReminder(notifications){
+    console.log(notifications)
+    notifications.forEach((notification)=>{
+        var html = '';
+        var text = ''
+        notification.events.forEach((event)=>{
+            html+= `<p>${event.title}</p>`
+            text+= `${event.title}\n`
+            console.log(html)
+        });
+        html += `<a href = "http://hiii-15fdf.web.app/course/${notification.courseId}">View</a>`
+        notification.receivers.forEach((email)=>{
+            var _notification = new Notifications({
+                title: "Reminder",
+                text,
+                email,
+                isUrl: true,
+                url: `/course/${notification.courseId}`
+            });
+            _notification.save();
+
+
+        const mailOptions = {
+            from: 'cryptxsadh@gmail.com', // sender address
+            to: email, // list of receivers
+            subject: 'Reminder', // Subject line
+            html
+        };
+
+        transporter.sendMail(mailOptions, function (err, info) {
+            if (err)
+                console.log(err)
+            else
+                console.log(info);
+        });
+
+        })
+        
+
+    })
+}
+
+async function testSubmissionPagination(pageNumber) {
+    return new Promise((resolve, reject) => {
+        SubmissionsTest.find({}).limit(3).
+            skip(3 * pageNumber).exec((err, doc) => {
+                if (err) reject(err);
+                resolve(doc);
+
+            })
+    })
 }
 
 
@@ -859,7 +912,9 @@ module.exports = {
     getCourseById,
     updateCourse,
     getAllCourse,
-    publishCourse
+    publishCourse,
+    sendReminder,
+    testSubmissionPagination
 
 
 }

@@ -115,5 +115,13 @@ router.post("/api/releaseResult",(req,res)=>{
 
 })
 
+router.get("/api/submissionPagination/:id",(req,res)=>{
+    var page = Math.abs(parseInt(req.params.id));
+    db.testSubmissionPagination(page).then((docs)=>{
+        res.json(docs)
+    }).catch((err)=>{
+        res.json(err);
+    })
+})
 
 module.exports = router

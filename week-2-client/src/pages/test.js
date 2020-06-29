@@ -65,6 +65,10 @@ class ViewTest extends React.Component {
 
     componentDidMount() {
         getTest(this.props.match.params.id).then((test) => {
+            var currentIndex = 0;
+            if(test.isShuffled){
+                currentIndex = Math.floor(Math.random() * test.questions.length); 
+            }
             if (test.staus === "closed") {
                 this.setState({ test, isLoading: false });
                 return;
@@ -80,6 +84,8 @@ class ViewTest extends React.Component {
             var email = user.email;
 
             getTestSubmission(email, test._id).then((submissionSaved) => {
+                
+                
                 if (submissionSaved === null) {
 
                     var submission = {
@@ -135,7 +141,7 @@ class ViewTest extends React.Component {
                         }
 
                     })
-                    this.setState({ test, submission, isLoading: false }, () => {
+                    this.setState({ test, submission, isLoading: false ,currentIndex}, () => {
                         this.onFilterChange({
                             target: {
                                 value: "Clear"
@@ -144,7 +150,7 @@ class ViewTest extends React.Component {
                     })
                 }
                 else {
-                    this.setState({ test, submission: submissionSaved, isLoading: false, isStarted: true }, () => {
+                    this.setState({ test, submission: submissionSaved, isLoading: false, isStarted: true,currentIndex }, () => {
                         this.onFilterChange({
                             target: {
                                 value: "Clear"
@@ -296,7 +302,7 @@ class ViewTest extends React.Component {
 
         return (
             (
-                <div>
+                <div style={{ marginTop: "80px" }}>
                     {this.state.isStarted === false ?
                         <TestInstruction
                             title={this.state.test.title}
@@ -349,13 +355,13 @@ class ViewTest extends React.Component {
                                 <div className="col-12">
                                     <div className="card-body rounded">
                                         <div className="card-img-top text-center">
-                                         {this.state.test.questions[this.state.currentIndex].imageUrl===""?<div></div>:<img style={{maxHeight:"300px"}} src={this.state.test.questions[this.state.currentIndex].imageUrl} />}   
+                                            {this.state.test.questions[this.state.currentIndex].imageUrl === "" ? <div></div> : <img style={{ maxHeight: "300px" }} src={this.state.test.questions[this.state.currentIndex].imageUrl} />}
                                         </div>
                                         <h3>{this.state.test.questions[this.state.currentIndex].title}</h3>
                                         <hr className="hr" />
                                         {this.state.test.questions[this.state.currentIndex].type === "Multiple choice" ?
                                             <Mcq
-                                               
+
                                                 disabled={false}
                                                 selectAns={this.selectAns}
                                                 ansValue={this.state.submission.ans[this.state.currentIndex].ansValue}
@@ -390,6 +396,13 @@ class ViewTest extends React.Component {
                                         this.state.currentIndex != (this.state.test.questions.length - 1) ? <i onClick={() => { this.moveQuestion("right") }} style={{ fontSize: 30 }} class="fa mt-1 fa-chevron-right ml-5"></i> : <i></i>
                                     }
                                 </div>
+                            </div>
+
+                            <div class="my-2 mt-4 mr-1">
+                                <i class="fa fa-square late mx-1 displayblock" aria-hidden="true" >Not Submitted</i>
+
+                                <i class="fa fa-square handedin mx-1 displayblock mt-1" aria-hidden="true">Submitted</i>
+
                             </div>
 
 

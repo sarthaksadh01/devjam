@@ -5,6 +5,7 @@ import McqGrid from '../components/mcqGrid'
 import Paragraph from '../components/paragraph'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCopy } from '@fortawesome/free-solid-svg-icons'
+import TestFinish from '../components/testFinish';
 class ViewSingleTestResult extends React.Component {
     constructor(props) {
         super(props)
@@ -114,6 +115,10 @@ class ViewSingleTestResult extends React.Component {
 
     onSortChange(query) {
         var queryAns = [];
+        if (this.state.modifiedUsers[this.state.currentIndex].testSubmission.isStarted === false) {
+            // alert("lol")
+            return;
+        }
         var anss = this.state.modifiedUsers[this.state.currentIndex].testSubmission.ans;
         switch (query) {
             case "Right":
@@ -163,6 +168,7 @@ class ViewSingleTestResult extends React.Component {
         if (!this.state.modifiedUsers[this.state.currentIndex].testSubmission.isStarted) message = "Not Submitted"
         else if (this.state.modifiedUsers[this.state.currentIndex].testSubmission.completedOnTime) message = "On Time";
         else message = "Not on Time";
+        // if (this.state.modifiedUser[this.state.currentIndex])
 
 
         return (
@@ -285,15 +291,18 @@ class ViewSingleTestResult extends React.Component {
                                     : <button class="filter btn btn-lg ml-5  text-white text-right float-right mr-4"
 
                                         onClick={() => {
-                                            releaseResult(this.state.test, [this.state.modifiedUsers[this.state.currentIndex].testSubmission]).then((doc) => {
-                                                alert(JSON.stringify(doc))
+                                            var submissions = [];
+                                            submissions.push(this.state.modifiedUsers[this.state.currentIndex].testSubmission);
+                                            releaseResult(this.state.test, submissions).then((doc) => {
+                                                var modifiedUsers = this.state.modifiedUsers;
+                                                modifiedUsers[this.state.currentIndex].testSubmission.isReleased = true;
+                                                this.setState({ modifiedUsers });
 
                                             }).catch((err) => {
-                                                alert(JSON.stringify(err))
-                                            });
-                                            var modifiedUsers = this.state.modifiedUsers;
-                                            modifiedUsers[this.state.currentIndex].testSubmission.isReleased = true;
-                                            this.setState({ modifiedUsers })
+
+                                            }).finally(() => {
+
+                                            })
                                         }}
 
                                     >
@@ -308,107 +317,116 @@ class ViewSingleTestResult extends React.Component {
                     </div>
 
                 </div>
-                <ol>
-                    {this.state.queryAns.map((index) => {
-                        var value = this.state.modifiedUsers[this.state.currentIndex].testSubmission.ans[index];
-                        var icon = "";
-                        // if (this.state.test.questions[index].type === "Multiple choice") {
-                        if (value.isSubmitted) {
-                            if (value.marksObtained === value.finalMakrs) icon = "fa fa-check mr-2 text-success";
-                            else icon = "fa fa-times mr-2 text-danger";
-
-                        }
-                        // }
-
-                        return <li>
-                            <div className="row mt-2 text-left">
-                                <div className="col-12">
-                                    <div className="card-body rounded">
-                                        <div className="card-img-top text-center">
-                                            {this.state.test.questions[index].imageUrl === "" ? <div></div> : <img style={{ maxHeight: "300px" }} src={this.state.test.questions[index].imageUrl} />}
-                                        </div>
-                                        <h3><i className={icon}></i>{this.state.test.questions[index].title}</h3>
-                                        <hr className="hr" />
-                                        {this.state.test.questions[index].type === "Multiple choice" ?
-                                            <Mcq
-                                                marksObtained={value.marksObtained}
-                                                isAutoGraded={this.state.test.questions[index].isAutoGraded}
-                                                isSubmitted={value.isSubmitted}
-                                                finalMakrs={value.finalMakrs}
-                                                correctOption={this.state.test.questions[index].correctOption}
-                                                showColor={true}
-                                                disabled={true}
-                                                ansValue={value.ansValue}
-                                                options={this.state.test.questions[index].options}
-                                            /> : <div></div>}
-                                        {this.state.test.questions[index].type === "Multiple choice grid" ?
-                                            <McqGrid
-                                                disabled={true}
-                                                ansValue={value.ansValue}
-                                                rows={this.state.test.questions[index].rows}
-                                                columns={this.state.test.questions[index].columns}
-                                            />
-                                            : <div></div>}
-                                        {this.state.test.questions[index].type === "Paragraph" ?
-                                            <Paragraph
-                                                disabled={true}
-                                                ansValue={value.ansValue}
-                                            />
-                                            : <div></div>}
-                                        <hr className="hr" />
-                                        <div className="row">
-                                            <div className="col-8">
-                                                <label>Feedback</label>
-                                                <input
-                                                    value={value.feedBack}
-                                                    onChange={(e) => {
-                                                        var modifiedUsers = this.state.modifiedUsers;
-                                                        var currentIndex = this.state.currentIndex;
-                                                        modifiedUsers[currentIndex].testSubmission.ans[index].feedBack = e.target.value;
-                                                        this.setState({ modifiedUsers }, () => {
-                                                            this.onClickUpdate(modifiedUsers[currentIndex].testSubmission);
-                                                        })
+                {this.state.modifiedUsers[this.state.currentIndex].testSubmission.isStarted === false ?
+                    <TestFinish
+                        image="fa fa-times text-danger"
+                        message="Not Submitted"
+                    />
+                    :
 
 
-                                                    }}
+                    <ol>
+                        {this.state.queryAns.map((index) => {
+                            var value = this.state.modifiedUsers[this.state.currentIndex].testSubmission.ans[index];
+                            var icon = "";
 
-                                                    placeholder="Feedback" className="form-control w-100" />
+                            if (value.isSubmitted) {
+                                if (value.finalMakrs == 1) icon = "fa fa-check mr-2 text-success";
+                                else icon = "fa fa-times mr-2 text-danger";
+
+                            }
+
+
+                            return <li>
+                                <div className="row mt-2 text-left">
+                                    <div className="col-12">
+                                        <div className="card-body rounded">
+                                            <div className="card-img-top text-center">
+                                                {this.state.test.questions[index].imageUrl === "" ? <div></div> : <img style={{ maxHeight: "300px" }} src={this.state.test.questions[index].imageUrl} />}
+                                            </div>
+                                            <h3><i className={icon}></i>{this.state.test.questions[index].title}</h3>
+                                            <hr className="hr" />
+                                            {this.state.test.questions[index].type === "Multiple choice" ?
+                                                <Mcq
+                                                    marksObtained={value.marksObtained}
+                                                    isAutoGraded={this.state.test.questions[index].isAutoGraded}
+                                                    isSubmitted={value.isSubmitted}
+                                                    finalMakrs={value.finalMakrs}
+                                                    correctOption={this.state.test.questions[index].correctOption}
+                                                    showColor={true}
+                                                    disabled={true}
+                                                    ansValue={value.ansValue}
+                                                    options={this.state.test.questions[index].options}
+                                                /> : <div></div>}
+                                            {this.state.test.questions[index].type === "Multiple choice grid" ?
+                                                <McqGrid
+                                                    disabled={true}
+                                                    ansValue={value.ansValue}
+                                                    rows={this.state.test.questions[index].rows}
+                                                    columns={this.state.test.questions[index].columns}
+                                                />
+                                                : <div></div>}
+                                            {this.state.test.questions[index].type === "Paragraph" ?
+                                                <Paragraph
+                                                    disabled={true}
+                                                    ansValue={value.ansValue}
+                                                />
+                                                : <div></div>}
+                                            <hr className="hr" />
+                                            <div className="row">
+                                                <div className="col-8">
+                                                    <label>Feedback</label>
+                                                    <input
+                                                        value={value.feedBack}
+                                                        onChange={(e) => {
+                                                            var modifiedUsers = this.state.modifiedUsers;
+                                                            var currentIndex = this.state.currentIndex;
+                                                            modifiedUsers[currentIndex].testSubmission.ans[index].feedBack = e.target.value;
+                                                            this.setState({ modifiedUsers }, () => {
+                                                                this.onClickUpdate(modifiedUsers[currentIndex].testSubmission);
+                                                            })
+
+
+                                                        }}
+
+                                                        placeholder="Feedback" className="form-control w-100" />
+
+                                                </div>
+                                                <div className="col-4">
+                                                    <label>Marks</label>
+                                                    <select className="w-100"
+                                                        onChange={(e) => {
+                                                            var marks = parseInt(e.target.value);
+                                                            var modifiedUsers = this.state.modifiedUsers;
+                                                            var currentIndex = this.state.currentIndex;
+                                                            modifiedUsers[currentIndex].testSubmission.ans[index].finalMakrs = marks;
+                                                            this.setState({ modifiedUsers }, () => {
+                                                                this.onClickUpdate(modifiedUsers[currentIndex].testSubmission);
+                                                            })
+
+                                                        }}
+                                                        value={value.finalMakrs}>
+                                                        <option value={1}>1</option>
+                                                        <option value={0}>0</option>
+                                                    </select>
+
+                                                </div>
 
                                             </div>
-                                            <div className="col-4">
-                                                <label>Marks</label>
-                                                <select className="w-100"
-                                                    onChange={(e) => {
-                                                        var marks = parseInt(e.target.value);
-                                                        var modifiedUsers = this.state.modifiedUsers;
-                                                        var currentIndex = this.state.currentIndex;
-                                                        modifiedUsers[currentIndex].testSubmission.ans[index].finalMakrs = marks;
-                                                        this.setState({ modifiedUsers }, () => {
-                                                            this.onClickUpdate(modifiedUsers[currentIndex].testSubmission);
-                                                        })
 
-                                                    }}
-                                                    value={value.finalMakrs}>
-                                                    <option value={1}>1</option>
-                                                    <option value={0}>0</option>
-                                                </select>
 
-                                            </div>
 
                                         </div>
-
-
 
                                     </div>
 
+
                                 </div>
+                            </li>
 
-
-                            </div>
-                        </li>
-
-                    })}
-                </ol>
+                        })}
+                    </ol>
+                }
 
             </div>
         )

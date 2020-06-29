@@ -26,26 +26,60 @@ app.use(TestRouter)
 app.use(CourseRouter)
 
 var j = schedule.scheduleJob('0 18 * 1-12 0-6', function () {
-    var date  = new Date();
-    var today = `${date.getDay()}-${date.getMonth()}-${date.getFullYear()}`
+    reminder().then((notifications) => {
+        db.sendReminder(notifications);
+    })
+});
 
-    db.getAllCourse().then((courses)=>{
-        courses.forEach((course)=>{
-            course.events.forEach((event)=>{
-                var eventDate = new Date(event.start);
-                eventDateFormat = `${eventDate.getDay()}-${eventDate.getMonth()}-${eventDate.getFullYear()}`;
-                if(today === eventDateFormat){
-                    // send notification here---
+async function reminder() {
 
+    return new Promise((resolve, reject) => {
+        var date = new Date();
+        var today = `${date.getDay()}-${date.getMonth()}-${date.getFullYear()}`
+        var notifications = [];
+
+        db.getAllCourse().then((courses) => {
+            courses.forEach((course) => {
+                var events = [];
+                course.events.forEach((event) => {
+                    var eventDate = new Date(event.start);
+                    eventDateFormat = `${eventDate.getDay()}-${eventDate.getMonth()}-${eventDate.getFullYear()}`;
+                    if (today === eventDateFormat) {
+                        events.push(event);
+                    }
+
+                })
+                if (events.length !== 0) {
+                    notifications.push({
+                        events,
+                        receivers: course.courseFor,
+                        courseId: course._id
+                    })
                 }
-
             })
+            resolve(notifications);
+
+
+        }).catch((err) => {
+            reject(err);
         })
     })
 
 
-});
+}
 
+
+app.get("/api/reminder", (req, res) => {
+    reminder().then((notifications) => {
+        db.sendReminder(notifications)
+        res.json(notifications)
+        
+
+    }).catch((err) => {
+        res.json(err);
+    })
+
+})
 
 
 app.get('/', (req, res) => {

@@ -17,6 +17,7 @@ import MarkdownIt from 'markdown-it'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ReactPlayer from 'react-player'
+import { NotificationManager } from 'react-notifications'
 const ReactMarkdown = require('react-markdown')
 
 
@@ -159,6 +160,7 @@ class EditCourse extends React.Component {
 
     onClickUpdateCourse() {
         updateCourse(this.state.course).then((docs) => {
+            NotificationManager.success("Course Updated");
 
         }).catch((err) => {
 
@@ -186,49 +188,54 @@ class EditCourse extends React.Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-12">
-                        <div className="col-md-8">
-                            <form>
-                                <div class="form-group">
-                                    <label for="exampleFormControlTextarea1">Course Title</label>
-                                    <input onChange={(e) => {
-                                        var course = this.state.course;
-                                        course.title = e.target.value;
-                                        this.setState({ course });
-                                    }} value={this.state.course.title} type="text" class="form-control" id="exampleFormControlInput1" placeholder="" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleFormControlTextarea1">Course Description</label>
-                                    <textarea onChange={(e) => {
-                                        var course = this.state.course;
-                                        course.desc = e.target.value;
-                                        this.setState({ course });
-                                    }} value={this.state.course.desc} class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                </div>
-                            </form>
-                        </div>
+                    {/* <div className="col-md-12"> */}
+                    <div className="col-6">
+                        <form>
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1">Course Title</label>
+                                <input onChange={(e) => {
+                                    var course = this.state.course;
+                                    course.title = e.target.value;
+                                    this.setState({ course });
+                                }} value={this.state.course.title} type="text" class="form-control" id="exampleFormControlInput1" placeholder="" />
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1">Course Description</label>
+                                <textarea onChange={(e) => {
+                                    var course = this.state.course;
+                                    course.desc = e.target.value;
+                                    this.setState({ course });
+                                }} value={this.state.course.desc} class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+                        </form>
                     </div>
-                </div>
-                <div className="row">
-                    <DatePicker
-                        className="ml-3 mb-3"
-                        startDate={new Date()}
-                        selected={new Date(this.state.course.startDate)}
-                        onChange={(date) => { var course = this.state.course; course.startDate = date; this.setState({ course }) }}
-                    />
-                    <DatePicker
-                        className="ml-3 mb-3"
-                        startDate={new Date()}
-                        selected={new Date(this.state.course.endDate)}
-                        onChange={(date) => {
-                            // alert(date)
-                            var course = this.state.course; course.endDate = date; this.setState({ course })
-                        }}
-                    />
+                    <div className="col-3 ">
+                        <DatePicker
+                            className="mb-3"
+                            startDate={new Date()}
+                            selected={new Date(this.state.course.startDate)}
+                            onChange={(date) => { var course = this.state.course; course.startDate = date; this.setState({ course }) }}
+                        />
 
+                    </div>
+                    <div className="col-3">
+                        <DatePicker
+                            className="ml-3 mb-3"
+                            startDate={new Date()}
+                            selected={new Date(this.state.course.endDate)}
+                            onChange={(date) => {
+                                // alert(date)
+                                var course = this.state.course; course.endDate = date; this.setState({ course })
+                            }}
+                        />
+                    </div>
+                    {/* </div> */}
                 </div>
+
+
                 <div >
-                    <div className='mb-3'>
+                    <hr />
+                    <div style={{ marginTop: "80px" }} className='mb-3'>
                         <FullCalendar
                             eventColor={'#c850c0'}
                             validRange={
@@ -449,11 +456,15 @@ class EditCourse extends React.Component {
                                         </div>
 
                                     </div>
-                                    <DateTimePicker
+                                    <DatePicker
+                                        showTimeSelect
                                         className="mt-3"
-                                        onChange={(d) => { this.setState({ date: d }) }}
-                                        value={this.state.date}
+                                        startDate={new Date()}
+                                        selected={new Date(this.state.date)}
+                                        onChange={(d) => { this.setState({ date: d }) }
+                                        }
                                     />
+
                                     <br />
                                     <button onClick={() => {
 
@@ -707,9 +718,22 @@ class EditCourse extends React.Component {
                                     if (editEvent.extendedProps.type === "generic") {
                                         editEvent.title = editEvent.extendedProps.value.title;
                                     }
+
                                     course.events[this.state.editEventIndex] = editEvent;
-                                    this.setState({ course, showEditEventModal: false });
-                                    this.handleEvents(course.events);
+                                    this.setState({ course, showEditEventModal: false }, () => {
+                                        this.props.toggleLoading();
+
+                                        updateCourse(this.state.course).then((docs) => {
+
+                                            window.location.reload();
+
+                                        }).catch((err) => {
+
+                                        })
+
+                                    });
+
+
                                 }} className="btn mt-3 filter rounded w-100 text-center text-white">Save</button>
 
                             </div>
@@ -744,6 +768,7 @@ class EditCourse extends React.Component {
     // extendedProps":{"randomValue":"lol"}
 
     handleEventClick = (clickInfo) => {
+        // console.log(clickInfo)
         var course = this.state.course
         var i = 0;
         course.events.forEach((event, index) => {
@@ -801,6 +826,7 @@ class EditCourse extends React.Component {
                         </div>
                         <div className="w-100 mb-3">
                             <DatePicker
+                                showTimeSelect
                                 className="ml-3 mb-3"
                                 startDate={new Date()}
                                 selected={new Date(this.state.editEvent.extendedProps.dueDate)}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEye, faImage, faCopy, faPlusSquare, faTrash, faCross, faTimes, faLeaf } from '@fortawesome/free-solid-svg-icons'
+import { faEye, faImage, faCopy, faPlusSquare, faTrash, faCross, faTimes, faLeaf, faEllipsisH } from '@fortawesome/free-solid-svg-icons'
 import { getTest, updateTest } from '../data/data'
 import { NotificationManager } from 'react-notifications';
 import BootstrapSwitchButton from 'bootstrap-switch-button-react'
@@ -292,7 +292,7 @@ class EditTest extends React.Component {
                             return <li> <div className="border mt-2 p-2 rounded  card">
                                 <div className="row text-center">
                                     <div className="mb-2 col-12">
-                                        <section className="btn text-white button-edit">Drag</section>
+                                        <section className="">    <FontAwesomeIcon  icon={faEllipsisH}/></section>
                                     </div>
 
 

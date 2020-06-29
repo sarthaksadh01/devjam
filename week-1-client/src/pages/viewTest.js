@@ -60,9 +60,29 @@ class ViewTest extends React.Component {
 
 
     }
+    shuffle(array) {
+        var currentIndex = array.length, temporaryValue, randomIndex;
+
+        // While there remain elements to shuffle...
+        while (0 !== currentIndex) {
+
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+
+            // And swap it with the current element.
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+
+        return array;
+    }
 
     componentDidMount() {
         getTest(this.props.match.params.id).then((test) => {
+            test.questions = this.shuffle(test.questions);
+
             if (test.staus === "closed") {
                 this.setState({ test, isLoading: false });
                 return;
@@ -219,7 +239,7 @@ class ViewTest extends React.Component {
 
         return (
             (
-                <div>
+                <div style={{ marginTop: "80px" }}>
                     {this.state.isStarted === false ?
                         <TestInstruction
                             title={this.state.test.title}
@@ -270,9 +290,9 @@ class ViewTest extends React.Component {
                             <div className="row mt-5 text-left">
                                 <div className="col-12">
                                     <div className="card-body rounded">
-                                    <div className="card-img-top text-center">
-                                         {this.state.test.questions[this.state.currentIndex].imageUrl===""?<div></div>:<img style={{maxHeight:"300px"}} src={this.state.test.questions[this.state.currentIndex].imageUrl} />}   
-                                    </div>
+                                        <div className="card-img-top text-center">
+                                            {this.state.test.questions[this.state.currentIndex].imageUrl === "" ? <div></div> : <img style={{ maxHeight: "300px" }} src={this.state.test.questions[this.state.currentIndex].imageUrl} />}
+                                        </div>
                                         <h3>{this.state.test.questions[this.state.currentIndex].title}</h3>
                                         <hr className="hr" />
                                         {this.state.test.questions[this.state.currentIndex].type === "Multiple choice" ?
@@ -312,6 +332,13 @@ class ViewTest extends React.Component {
                                     }
 
                                 </div>
+                            </div>
+
+                            <div class="my-2 mt-4 mr-1">
+                                <i class="fa fa-square late mx-1 displayblock" aria-hidden="true" >Not Submitted</i>
+
+                                <i class="fa fa-square handedin mx-1 displayblock mt-1" aria-hidden="true">Submitted</i>
+
                             </div>
 
 
