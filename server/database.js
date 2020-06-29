@@ -586,9 +586,6 @@ function releaseResult(test, submissions) {
 
         }
 
-
-
-
     })
 }
 
@@ -596,8 +593,8 @@ function sendMail(users, title, link) {
     const mailOptions = {
         from: 'cryptxsadh@gmail.com', // sender address
         to: users, // list of receivers
-        subject: 'Result Released Test', // Subject line
-        html: `<p>${title}</p><p>${link}</p>`// plain text body
+        subject: 'New Test Released', // Subject line
+        html: `<p>${title}</p><p><a href = "http://hiii-15fdf.web.app/test/${link}">View Result</a></p>`// plain text body
     };
     transporter.sendMail(mailOptions, function (err, info) {
         if (err)
@@ -626,8 +623,8 @@ function sendResultMail(submissions, test) {
         const mailOptions = {
             from: 'cryptxsadh@gmail.com', // sender address
             to: email, // list of receivers
-            subject: 'New Test', // Subject line
-            html: `<p>${title}</p><p>${text}</p><p><a href = ${url}>View Result</a></p>`// plain text body
+            subject: 'Test Result', // Subject line
+            html: `<p>${title}</p><p>${text}</p><p><a href = "http://hiii-15fdf.web.app/result/${submission._id}">View Result</a></p>`// plain text body
         };
         transporter.sendMail(mailOptions, function (err, info) {
             if (err)
@@ -664,7 +661,7 @@ function resultNotification(test, submissions) {
 
 }
 function calculateFinalMarks(submission) {
-    if (submission.isStarted === false) return -1;
+    if (submission.isStarted === false) return 0;
     var marks = 0;
     submission.ans.forEach((ans, index) => {
        marks+=ans.finalMakrs;
@@ -780,7 +777,7 @@ async function sendCourseMail(data) {
             from: 'cryptxsadh@gmail.com', // sender address
             to: user, // list of receivers
             subject: 'New Course', // Subject line
-            html: `<p>${data.title}</p><p><a href = ${data._id}>View Result</a></p>`// plain text body
+            html: `<p>${data.title}</p><p><a href = "http://hiii-15fdf.web.app/course/${data._id}">View Course</a></p>`// plain text body
         };
 
         transporter.sendMail(mailOptions, function (err, info) {
