@@ -390,6 +390,18 @@ class ViewSingleTestResult extends React.Component {
                                                         }}
 
                                                         placeholder="Feedback" className="form-control w-100" />
+                                                        <button 
+                                                        onClick={()=>{
+                                                            var modifiedUsers = this.state.modifiedUsers;
+                                                            var currentIndex = this.state.currentIndex;
+                                                            modifiedUsers[currentIndex].testSubmission.ans[index].feedBack = "";
+                                                            this.setState({ modifiedUsers }, () => {
+                                                                this.onClickUpdate(modifiedUsers[currentIndex].testSubmission);
+                                                            })
+
+                                                        }}
+                                                        
+                                                        className="btn btn-danger mt-2 text-white">Delete</button>
 
                                                 </div>
                                                 <div className="col-4">

@@ -1,6 +1,8 @@
 import React from 'react';
 import { getAllTests, createTest, updateTest } from '../data/data';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCopy } from '@fortawesome/free-solid-svg-icons'
 import history from "../components/history"
 
 class Tests extends React.Component {
@@ -158,10 +160,10 @@ class Tests extends React.Component {
                                         <span>
                                             <span onClick ={()=>{
                                                  navigator.clipboard.writeText(`http://sarthak-493c6.web.app/view-test/${test._id}`)
-                                            }} className="badge ml-3 mr-3 badge-info">Admin Link</span>
+                                            }} className="badge ml-3 mr-3 badge-info"><FontAwesomeIcon icon={faCopy} />SAdmin Link</span>
                                             <span  onClick ={()=>{
                                                  navigator.clipboard.writeText(`http://hiii-15fdf.web.app/result/test/${test._id}`)
-                                            }}  className="badge badge-info">Student Link</span>
+                                            }}  className="badge badge-info"><FontAwesomeIcon icon={faCopy} />SStudent Link</span>
                                         </span>
                                         :<span></span>
                                         }

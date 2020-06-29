@@ -10,7 +10,7 @@ class Publish extends React.Component {
             searchUsers: [],
             test: null,
             isSelectAll: false,
-            publishModal:false
+            publishModal: false
         }
         this.addRemoveUser = this.addRemoveUser.bind(this);
         this.selectAll = this.selectAll.bind(this);
@@ -90,7 +90,7 @@ class Publish extends React.Component {
         }
     }
     render() {
-        if(this.state.test===null)return null;
+        if (this.state.test === null) return null;
 
         return (
             <div class="container mb-5 ">
@@ -105,7 +105,7 @@ class Publish extends React.Component {
                         <div class="row text-dark ml-4 my-4">
                             <div class="col-6"><h3 class="details2 text-monospace inline-block font-weight-bold">STUDENTS</h3></div>
                             <div class="col-6">
-                                <button onClick={() => { this.setState({publishModal:true}) }} class="btn btn-success bgGradient col-3 mr-3 float-right">PUBLISH</button>
+                                <button onClick={() => { this.setState({ publishModal: true }) }} class="btn btn-success bgGradient col-3 mr-3 float-right">PUBLISH</button>
                             </div>
                         </div>
                         <div class="row">
@@ -164,37 +164,40 @@ class Publish extends React.Component {
                     </Modal.Header>
                     <Modal.Body>
                         <div className="container text-center">
-                        <div class="row mt-5">
-                            {/* <div class="col-3"></div> */}
-                            <div class="col-12 ">
-                                <div class="card p-1 user-table">
-                                    <div class="list-group checkbox-list-group">
-                                        {this.state.test.testFor.map((user, index) => {
-                                            
-                                            return <div class="list-group-item">
-                                                <label>
-                                                    <span class="list-group-item-text">
-                                                        <i class="fa fa-fw"></i>
-                                                      {user}
-                                                    </span>
-                                                </label>
-                                            </div>
-                                        })}
+                            <div class="row mt-5">
+                                {/* <div class="col-3"></div> */}
+                                <div class="col-12 ">
+                                    <div class="card p-1 user-table text-left">
+                                        <div class="list-group checkbox-list-group">
+                                            {this.state.test.testFor.map((user, index) => {
+                                                var userDetail = this.state.users.find((u) => {
+                                                    return u.email === user;
+                                                })
 
+                                                return <div class="list-group-item">
+                                                    <label>
+                                                        <span class="list-group-item-text">
+                                                            <i class="fa fa-fw"></i>
+                                                            <img style={{ height: "30px" }} class="rounded-circle mr-3" src={userDetail.imageUrl === "" ? "https://api.adorable.io/avatars/285/abott@adorable.png" : userDetail.imageUrl} />{userDetail.name === "" ? "Cryptx" : userDetail.name}
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            })}
+
+
+                                        </div>
 
                                     </div>
-
                                 </div>
-                            </div>
 
-                            {/* <div class="col-3"></div> */}
-                        </div>
+                                {/* <div class="col-3"></div> */}
+                            </div>
 
                         </div>
 
                     </Modal.Body>
                     <Modal.Footer>
-                        <button onClick={()=>{this.onPublishTest(); this.setState({publishModal:false})}} className="btn text-white filter">Publish</button>
+                        <button onClick={() => { this.onPublishTest(); this.setState({ publishModal: false }) }} className="btn text-white filter">Publish</button>
                     </Modal.Footer>
                 </Modal>
 

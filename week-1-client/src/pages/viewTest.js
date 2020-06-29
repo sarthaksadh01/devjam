@@ -81,7 +81,11 @@ class ViewTest extends React.Component {
 
     componentDidMount() {
         getTest(this.props.match.params.id).then((test) => {
-            test.questions = this.shuffle(test.questions);
+            if(test.isShuffle){
+                test.questions = this.shuffle(test.questions);
+
+            }
+           
 
             if (test.staus === "closed") {
                 this.setState({ test, isLoading: false });

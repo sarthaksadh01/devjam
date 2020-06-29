@@ -75,17 +75,18 @@ class ViewCourse extends React.Component {
         //     />
 
         // }
+        if(this.state.course.events.length===0)return null;
         return (<div style={{ marginTop: "80px" }} className="container">
             <div className="row">
                 <div className="col-12">
-    <div className="col-md-10"><h4 className=" text-truncate text-topic">{this.state.course.title} <span className="badge ml-2 badge-info">X {this.monthDiff(this.state.course.startDate,this.state.course.endDate)}</span>Months <button onClick={() => { this.setState({ upcomingModal: true }) }} className="btn filter ml-3 text-white float-right">Upcoming Events</button></h4></div>
+    <div className="col-md-10"><h4 className=" text-truncate text-topic">{this.state.course.title} <span className="badge ml-2 badge-info">X {this.monthDiff(this.state.course.startDate,this.state.course.endDate)}</span> <button onClick={() => { this.setState({ upcomingModal: true }) }} className="btn filter ml-3 text-white float-right">Upcoming Events</button></h4></div>
                     <hr className="hr" />
                     <br />
                 </div>
             </div>
             <div className="row">
                 <div className="col-12">
-                    <div className="col-12"><p className=" text-truncate text-topic">{this.state.course.desc}</p></div>
+                    <div className="col-12"><p className="text-topic">{this.state.course.desc}</p></div>
                     <hr className="" />
                     <br />
                 </div>

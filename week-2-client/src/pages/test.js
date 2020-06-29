@@ -66,7 +66,7 @@ class ViewTest extends React.Component {
     componentDidMount() {
         getTest(this.props.match.params.id).then((test) => {
             var currentIndex = 0;
-            if(test.isShuffled){
+            if(test.isShuffle){
                 currentIndex = Math.floor(Math.random() * test.questions.length); 
             }
             if (test.staus === "closed") {

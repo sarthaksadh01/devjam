@@ -51,8 +51,8 @@ class Result extends React.Component {
         return (
             <div style={{ marginTop: "80px" }} className="container">
                 <h3 className="ml-5 mb-3">{this.state.test.title} <span className="badge badge-info ml-3">Result</span></h3>
-        <h3 className="ml-5 mb-3">Marks: {this.calculateMarks(this.state.submission)}/{this.state.test.questions.length}</h3>
-                
+                <h3 className="ml-5 mb-3">Marks: {this.calculateMarks(this.state.submission)}/{this.state.test.questions.length}</h3>
+
                 <ol>
                     {this.state.submission.ans.map((value, index) => {
 
@@ -100,10 +100,15 @@ class Result extends React.Component {
                                         <hr className="hr" />
                                         <div className="row">
 
-                                            <div className="col-12">
-                                                <label>feedBack</label>
-                                                <input value={value.feedBack} disabled={true} className="form-control w-100" />
-                                            </div>
+                                            {value.feedBack.trim() === "" ? <div></div>
+
+                                                : <div className="col-12">
+                                                    <label>feedback</label>
+                                                    <input value={value.feedBack} disabled={true} className="form-control w-100" />
+                                                </div>
+                                            }
+
+
 
                                         </div>
 

@@ -18,6 +18,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ReactPlayer from 'react-player'
 import { NotificationManager } from 'react-notifications'
+import history from '../components/history'
 const ReactMarkdown = require('react-markdown')
 
 
@@ -62,6 +63,7 @@ class EditCourse extends React.Component {
 
     }
     componentDidMount() {
+        this.props.toggleLoading();
         getCourse(this.props.match.params.id).then((course) => {
             getContent("cryptx").then((topics) => {
                 getAllTests().then((tests) => {
@@ -71,6 +73,8 @@ class EditCourse extends React.Component {
                         this.onSearchTest("")
                     })
 
+                }).finally(()=>{
+                    this.props.toggleLoading();
                 })
 
 
@@ -127,6 +131,45 @@ class EditCourse extends React.Component {
         this.setState({ queryVideos })
 
     }
+    buttonText = {
+        draft: "Publish",
+        published: "Close",
+        closed: "View"
+    }
+    functionCall = {
+        draft: () => {
+            history.push(`/publish-course/${this.state.course._id}`)
+            window.location.reload();
+        },
+        published: () => {
+            if (window.confirm("Are you sure you want to close the Course")) {
+                this.props.toggleLoading("loading....");
+                var course = this.state.course;
+                course.status = "closed";
+                
+                updateCourse(course).then(() => {
+                    NotificationManager.success("Course Closed");
+                    this.setState({ course })
+
+                }).catch((err) => {
+                    NotificationManager.error("Cannot connect to the Server!");
+
+                }).finally(() => {
+                    this.props.toggleLoading();
+
+                })
+
+            }
+
+        },
+        closed: () => {
+            history.push(`/view-course/${this.state.course._id}`)
+            window.location.reload();
+           
+
+
+        }
+    }
 
     onSearchDeliverable(query) {
         var queryDeliverables = [];
@@ -159,11 +202,14 @@ class EditCourse extends React.Component {
     }
 
     onClickUpdateCourse() {
+        this.props.toggleLoading();
         updateCourse(this.state.course).then((docs) => {
             NotificationManager.success("Course Updated");
 
         }).catch((err) => {
 
+        }).finally(()=>{
+            this.props.toggleLoading();
         })
     }
 
@@ -174,17 +220,18 @@ class EditCourse extends React.Component {
         return (
             <div className="container">
                 <div style={{ marginTop: "90px" }} className="row">
-                    <div className="col-md-8">
+                    <div className="col-md-6">
                         <div className="col-md-10"><h4 className=" text-truncate text-topic">{this.state.course.title}<span className="badge float-right rounded text-white badge-info">X {this.state.course.events.length}</span></h4></div>
                         <hr className="hr" />
                         <br />
                     </div>
 
-                    <div className="col-md-4">
+                    <div className="col-md-6">
 
                         <a href={`/view-course/${this.state.course._id}`} className="btn float-left round-shape-btn  ml-3"><FontAwesomeIcon className="text-white mr-1" icon={faEye} /></a>
                         <button onClick={() => { this.onClickUpdateCourse() }} className="btn float-left round-shape-btn  ml-3">Save</button>
-                        <a href={`/publish-course/${this.state.course._id}`} className="btn text-white float-left round-shape-btn  ml-3">Publish</a>
+                        <button onClick ={()=>{this.functionCall[this.state.course.status]()}} className="btn text-white float-left round-shape-btn  ml-3">{this.buttonText[this.state.course.status]}</button>
+                        <a href={`https://devjam-server.herokuapp.com/api/reminder`} className="btn text-white float-left round-shape-btn  ml-3">Reminder</a>
                     </div>
                 </div>
                 <div className="row">
@@ -882,6 +929,7 @@ class EditCourse extends React.Component {
             case "tests":
                 return (
                     <div>
+                        To change test timing switch to day view in the calendar and drag the test to required timing.
 
                     </div>
                 )

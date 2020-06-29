@@ -2,6 +2,8 @@ import React from 'react';
 import { getAllTests, createTest, updateTest, getAllCourses, updateCourse, createCourse } from '../data/data';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import history from "../components/history"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCopy } from '@fortawesome/free-solid-svg-icons'
 import { reactLocalStorage } from 'reactjs-localstorage';
 
 class Courses extends React.Component {
@@ -29,7 +31,7 @@ class Courses extends React.Component {
     buttonText = {
         draft: "Publish",
         published: "Close",
-        closed: "View Result"
+        closed: "View"
     }
     functionCall = {
         draft: (index) => {
@@ -63,6 +65,8 @@ class Courses extends React.Component {
 
         },
         closed: (index) => {
+            history.push(`/view-course/${this.state.courses[index]._id}`)
+            window.location.reload();
             // history.push(`/view-results/${this.state.courses[index]._id}`);
             // window.location.reload()
 
@@ -152,15 +156,15 @@ class Courses extends React.Component {
                             {this.state.filterCourses.map((course, index) => {
                                 return <li key={course._id} className="topic">
                                     <div className="row">
-                                        <div className="col-md-10"><h4 className=" text-truncate text-dark text-topic"><a href={course.status === "draft" ? `/edit-course/${course._id}` : undefined} className="text-truncate text-dark text-topic">{course.title}</a><span className="badge rounded text-white ml-1 badge-warning">{course.status}</span>
+                                        <div className="col-md-10"><h4 className=" text-truncate text-dark text-topic"><a href={`/edit-course/${course._id}`} className="text-truncate text-dark text-topic">{course.title}</a><span className="badge rounded text-white ml-1 badge-warning">{course.status}</span>
                                         {course.status==="published"?
                                         <span>
                                             <span onClick ={()=>{
                                                  navigator.clipboard.writeText(`http://sarthak-493c6.web.app/view-course/${course._id}`)
-                                            }} className="badge ml-3 mr-3 badge-info">Admin Link</span>
+                                            }} className="badge ml-3 mr-3 badge-info"><FontAwesomeIcon icon={faCopy} />Admin Link</span>
                                             <span  onClick ={()=>{
                                                  navigator.clipboard.writeText(`http://hiii-15fdf.web.app/result/course/${course._id}`)
-                                            }}  className="badge badge-info">Student Link</span>
+                                            }}  className="badge badge-info"><FontAwesomeIcon icon={faCopy} />Student Link</span>
                                         </span>
                                         :<span></span>
                                         }

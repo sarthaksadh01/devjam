@@ -2,13 +2,13 @@ import React from 'react';
 import { getNotification,updateNotification } from '../data/data';
 import { reactLocalStorage } from 'reactjs-localstorage';
 import history from '../components/history';
-import { getAllTests } from '../data/data';
+import { getAllTests,getTestSubmission } from '../data/data';
 class AllTests extends React.Component {
     constructor(props){
         super(props);
         
         this.state ={
-            tests:null
+            tests:[]
         }
     }
     componentDidMount() {
@@ -20,14 +20,30 @@ class AllTests extends React.Component {
             isSocialLogin: false
       
           }, true);
-      
-        getAllTests().then((tests)=>{
+          
+        getAllTests().then(async(tests)=>{
             var modifiedTests = tests.filter((test)=>{
                 return test.testFor.find((email)=>{
                     return email===user.email
                 })!==undefined
             })
-            this.setState({tests:modifiedTests})
+            modifiedTests.forEach((test)=>{
+                 getTestSubmission(user.email,test._id).then((submission)=>{
+                     if(submission!==null && submission.isReleased){
+                       var tests = this.state.tests;
+                        test['result'] = submission;
+                        tests.push(test);
+                        this.setState({tests});
+                        
+
+                     }
+                     
+                    
+                    
+                })
+            })
+            
+            
         }).catch((err)=>{
 
         }).finally(()=>{
@@ -52,7 +68,7 @@ class AllTests extends React.Component {
                         <hr />
                         <p class="mb-0"><a onClick ={(e)=>{
                         
-                        }} className="text-dark" href={`/test/${test._id}`}>View</a></p>
+                        }} className="text-dark" href={`/result/${test.result._id}`}>View</a></p>
 
                     </div>
 

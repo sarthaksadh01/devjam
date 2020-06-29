@@ -164,15 +164,19 @@ class PublishCourse extends React.Component {
                             <div class="row mt-5">
                                 {/* <div class="col-3"></div> */}
                                 <div class="col-12 ">
-                                    <div class="card p-1 user-table">
+                                    <div class="card p-1 user-table text-left">
                                         <div class="list-group checkbox-list-group">
                                             {this.state.course.courseFor.map((user, index) => {
+
+                                                var userDetail = this.state.users.find((u) => {
+                                                    return u.email === user;
+                                                })
 
                                                 return <div class="list-group-item">
                                                     <label>
                                                         <span class="list-group-item-text">
                                                             <i class="fa fa-fw"></i>
-                                                            {user}
+                                                            <img style={{ height: "30px" }} class="rounded-circle mr-3" src={userDetail.imageUrl === "" ? "https://api.adorable.io/avatars/285/abott@adorable.png" : userDetail.imageUrl} />{userDetail.name === "" ? "Cryptx" : userDetail.name}
                                                         </span>
                                                     </label>
                                                 </div>

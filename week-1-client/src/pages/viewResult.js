@@ -125,24 +125,24 @@ class ViewResult extends React.Component {
 
         this.setState({ modifiedUser: newUsers, queryUsers, isAllReleased });
     }
-    avgAutoGraded(){
+    avgAutoGraded() {
         var modifiedUser = this.state.modifiedUser;
         var marks = 0;
-        modifiedUser.forEach((user)=>{
-            var mark = this.calculateMarks(user.testSubmission)==-1?0:this.calculateMarks(user.testSubmission);
-            marks+=mark;
+        modifiedUser.forEach((user) => {
+            var mark = this.calculateMarks(user.testSubmission) == -1 ? 0 : this.calculateMarks(user.testSubmission);
+            marks += mark;
         })
-        return Math.round((marks/this.state.modifiedUser.length))
+        return Math.round((marks / this.state.modifiedUser.length))
 
     }
-    avgFinal(){
+    avgFinal() {
         var modifiedUser = this.state.modifiedUser;
         var marks = 0;
-        modifiedUser.forEach((user)=>{
-            var mark = this.calculateMarks(user.testSubmission)==-1?0:this.calculateFinalMarks(user.testSubmission);
-            marks+=mark;
+        modifiedUser.forEach((user) => {
+            var mark = this.calculateMarks(user.testSubmission) == -1 ? 0 : this.calculateFinalMarks(user.testSubmission);
+            marks += mark;
         })
-        return Math.round((marks/this.state.modifiedUser.length))
+        return Math.round((marks / this.state.modifiedUser.length))
     }
 
     componentDidMount() {
@@ -198,7 +198,7 @@ class ViewResult extends React.Component {
         switch (e.target.value) {
             case "Ran out of time":
                 modifiedUser.forEach((user, index) => {
-                    if (user['testSubmission'].isStarted === true && (user['testSubmission'].completedOnTime === false || user['testSubmission'].isOver===false))
+                    if (user['testSubmission'].isStarted === true && (user['testSubmission'].completedOnTime === false || user['testSubmission'].isOver === false))
                         queryUsers.push(index);
 
                 })
@@ -230,18 +230,33 @@ class ViewResult extends React.Component {
                 break;
             case "asc":
 
-                modifiedUser.sort((user1, user2) => {
-                    return this.calculateFinalMarks(user1.testSubmission) - this.calculateFinalMarks(user2.testSubmission)
-                })
+
                 modifiedUser.forEach((user, index) => {
-                    queryUsers.push(index);
+                    user.testSubmission["lolIndex"] = index;
+
+                })
+
+                modifiedUser.sort((user1, user2) => {
+                    return (this.calculateFinalMarks(user1.testSubmission) - this.calculateFinalMarks(user2.testSubmission))
+                });
+
+
+                modifiedUser.forEach((user, index) => {
+                    // alert(user.testSubmission.lolIndex);
+
+                    queryUsers.push(user.testSubmission.lolIndex);
 
                 })
                 break;
 
             case "desc":
+                modifiedUser.forEach((user, index) => {
+                    user.testSubmission["lolIndex"] = index;
+
+                })
+
                 modifiedUser.sort((user1, user2) => {
-                    return this.calculateFinalMarks(user2.testSubmission) - this.calculateFinalMarks(user1.testSubmission)
+                    return (this.calculateFinalMarks(user2.testSubmission) - this.calculateFinalMarks(user1.testSubmission))
                 })
                 modifiedUser.forEach((user, index) => {
                     queryUsers.push(index);
@@ -649,7 +664,7 @@ class ViewResult extends React.Component {
 
                                                 </td>
                                                 <td>
-                                                {this.avgFinal()}/{this.state.test.questions.length}
+                                                    {this.avgFinal()}/{this.state.test.questions.length}
 
                                                 </td>
                                                 <td>
@@ -674,15 +689,25 @@ class ViewResult extends React.Component {
                                                         <h6 class="text-center">{this.state.modifiedUser[user].testSubmission.isStarted === false ? -1 : this.calculateFinalMarks(this.state.modifiedUser[user].testSubmission)}/{this.state.test.questions.length}</h6>
                                                     </td>
                                                     <td>
-                                                        <h6 class="text-center">{this.state.modifiedUser[user].testSubmission.isReleased === false ? <div><button onClick={() => { this.onClickreleaseResult(user) }} className="btn btn-success">Release</button></div> : <div>
+                                                        <h6 class="text-center">{this.state.modifiedUser[user].testSubmission.isReleased === false ? <div
+                                                        ><button onClick={() => { this.onClickreleaseResult(user) }} className="btn btn-success">Release</button></div> :
+                                                            <div>
+                                                                <span>
 
-                                                            <button onClick={() => {
-                                                                navigator.clipboard.writeText(`http://hiii-15fdf.web.app/result/${this.state.modifiedUser[user].testSubmission._id}`)
-                                                            }} class="filter btn  text-white">
+                                                                    <span onClick={() => {
+                                                                        navigator.clipboard.writeText(`http://hiii-15fdf.web.app/result/${this.state.modifiedUser[user].testSubmission._id}`)
+                                                                    }} class="badge badge-info">
 
-                                                                <FontAwesomeIcon icon={faCopy} />
-                                                            </button>
-                                                        </div>}</h6>
+                                                                        User
+                                                            </span>
+                                                                    <span onClick={() => {
+                                                                        navigator.clipboard.writeText(`https://sarthak-493c6.web.app/test-submission/test/${this.state.test._id}/submission/${this.state.modifiedUser[user].testSubmission._id}`)
+                                                                    }} class="badge badge-info">
+
+                                                                        Admin
+                                                            </span>
+                                                                </span>
+                                                            </div>}</h6>
                                                     </td>
                                                 </tr>
                                             })}
