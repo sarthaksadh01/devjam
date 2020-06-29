@@ -1,5 +1,117 @@
 ## Devjam 2020 - Team Cryptx
 
+## 📍 Week 6 - Testing system & Megabonus challenge
+
+## ℹ️  How to access our solution
+
+**Admin Portal** : https://sarthak-493c6.web.app
+
+**Student Portal** : https://hiii-15fdf.web.app/
+
+**Admin Credentials** : guest@zaio.io 123456
+
+**Server Hosting** : https://devjam-server.herokuapp.com/api
+
+
+
+
+---
+## 🔆 Bonus & Extra Features
+
+1. **Redirect to test/course page after publishing test/course**
+
+2. **Loading time reduced :**
+
+
+_To populate the submissions and users section, data is being fetched in batches i.e we have done pagination of users and test submissions to decrease load on server._ 
+
+
+_To try this funcationality,_
+
+_Visit our APIs_
+(users) : http://devjam-server.herokuapp.com/api/usersPaginaton/1_ 
+(submissions) : http://devjam-server.herokuapp.com/api/submissionPagination/1
+
+_Replace page parameter (1) with  with any other number,which will then give number of user/submission = page * 3._ 
+
+3. **Select drop down in view test submission section**
+
+_To Prevent Admins from giving more marks than 1 in each question instead of a text field a drop down is added_
+
+4. **Saving Test Submissions**
+
+_Submission of the test answers are done as soon as user select the answer ie Submissions are auto saved_
+
+5. **Saving Test Progress**
+
+_Test progress is saved after every 1 minute which reduces the load on the server_
+
+6. **Reminder system**
+
+_For remider system we have used linux Cron job which wakes the server at exactly 6 pm every day_
+
+```javascript
+// every day 6 pm
+var j = schedule.scheduleJob('0 18 * 1-12 0-6', function () {
+    reminder().then((notifications) => {
+       // send notification
+        db.sendReminder(notifications);
+    })
+});
+
+async function reminder() {
+
+    return new Promise((resolve, reject) => {
+        var date = new Date();
+        var today = `${date.getDay()}-${date.getMonth()}-${date.getFullYear()}`
+        var notifications = [];
+
+        db.getAllCourse().then((courses) => {
+            courses.forEach((course) => {
+                var events = [];
+                course.events.forEach((event) => {
+                    var eventDate = new Date(event.start);
+                    eventDateFormat = `${eventDate.getDay()}-${eventDate.getMonth()}-${eventDate.getFullYear()}`;
+                    
+                    // save all the events with today's date
+                    if (today === eventDateFormat) {
+                        events.push(event);
+                    }
+
+                })
+                // No event found
+                if (events.length !== 0) {
+                    notifications.push({
+                        events,
+                        receivers: course.courseFor,
+                        courseId: course._id
+                    })
+                }
+            })
+            resolve(notifications);
+
+
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+
+}
+```
+
+8. **Disabled Edit test page**
+
+_Edit test page is disabled after the test is published to prevent database errors._
+
+9. **Alert while adding event**
+_When adding an event if admin forgets to add video/delverable/test an alert is shown_
+
+---
+
+**Note To add time to the event switch to day view in the calendar**
+
+
 ## 📍 Week 5 - Marking system on Admin Portal
 
 ## ℹ️  How to access our solution
