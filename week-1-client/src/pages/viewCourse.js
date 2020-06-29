@@ -1,4 +1,13 @@
 
+/* 
+
+This file is used to develop the View course  page for admin.
+
+
+
+*/
+
+
 import FullCalendar, { formatDate } from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'

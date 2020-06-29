@@ -1,3 +1,15 @@
+/* 
+
+This file is used to develop the All course  page.
+It contains the the methods to implement:
+1. Filter Test
+2. Publish Test
+3. Edit test
+4. View test
+
+
+*/
+
 import React from 'react';
 import { getAllTests, createTest, updateTest } from '../data/data';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
