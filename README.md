@@ -29,7 +29,7 @@ _To populate the submissions and users section, data is being fetched in batches
 _To try this funcationality,_
 
 _Visit our APIs_
-(users) : http://devjam-server.herokuapp.com/api/usersPaginaton/1_ 
+(users) : http://devjam-server.herokuapp.com/api/usersPaginaton/1_ <br>
 (submissions) : http://devjam-server.herokuapp.com/api/submissionPagination/1
 
 _Replace page parameter (1) with  with any other number,which will then give number of user/submission = page * 3._ 
