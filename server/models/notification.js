@@ -1,40 +1,37 @@
 let mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var users = new Schema({
+var notifications = new Schema({
     email: {
         type: String,
         required: [true, "can't be blank"],
         index: true,
-        unique: true
-
-
     },
- 
-    name: {
-        type: String,
-        default:""
-
-    },
-    imageUrl:{
+    notificationType:{
         type:String,
         default:""
     },
-    isSocialLogin:{
+    title:{
+        type:String,
+        default:""
+    },
+    text: {
+        type: String,
+        default:""
+
+    },
+    isUrl:{
         type:Boolean,
         default:false
     },
-    password: {
+    url: {
         type: String,
         default:""
     },
-    submissions:{
-        type:[{}],
-        default:[]
-    },
-    tests:{
-        type:[{}],
-        default:[]
+    isRead:{
+        type:Boolean,
+        default:false
     }
+  
 
 }, { timestamps: true });
-module.exports = mongoose.model('Users', users);
+module.exports = mongoose.model('Notifications', notifications);

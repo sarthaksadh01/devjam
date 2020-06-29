@@ -43,7 +43,7 @@ class Content extends React.Component {
         getContent().then((data) => {
             this.setState({ data, searchRes: data })
 
-        }).finally(()=>{
+        }).finally(() => {
             this.props.toggleLoading("Loading topics..")
         })
 
@@ -94,11 +94,10 @@ class Content extends React.Component {
                             return <div class="video-card">
                                 <a href="#" class="video-card__card-link"></a>
 
-                                <img class="video-card__image" src={value.subTopics[0].thumbNail} alt="Card image" /> alt="Card image" />
+                                <img class="video-card__image"
+                                    src={value.subTopics[0].thumbNail}
+                                    alt="Card image" /> alt="Card image" />
                             <div class="video-card__text-wrapper">
-                                    {/* <div className="text-center row"> */}
-
-
                                     <h2 class="video-card__title text-center">{value.title}</h2>
                                     <div class="video-card__post-date">
                                         <div className="col-sm-4">

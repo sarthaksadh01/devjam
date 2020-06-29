@@ -7,8 +7,8 @@ to database & functionalities.
 */
 
 import axios from 'axios';
-var baseUrl = "https://devjam-server.herokuapp.com/api";
-// var baseUrl = "http://localhost:4000/api";
+// var baseUrl = "https://devjam-server.herokuapp.com/api";
+var baseUrl = "http://localhost:4000/api";
 async function getContent(id) {
     return new Promise((resolve, reject) => {
         axios.get(`${baseUrl}/content/${id}`).then((content) => {
@@ -306,6 +306,169 @@ async function saveReplyData(email,reply,subTopicId){
     })
 
 }
+
+async function getAllTests(){
+    return new Promise((resolve, reject) => {
+        axios.get(`${baseUrl}/tests`).then((res) => {
+            resolve(res.data);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+async function createTest(){
+    return new Promise((resolve, reject) => {
+        axios.get(`${baseUrl}/createTest`).then((res) => {
+            resolve(res.data);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+async function getTest(id){
+    return new Promise((resolve, reject) => {
+        axios.get(`${baseUrl}/test/${id}`).then((res) => {
+            resolve(res.data);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+async function updateTest(data){
+    return new Promise((resolve, reject) => {
+        axios.post(`${baseUrl}/updateTest/`,{data}).then((res) => {
+            resolve(res.data);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+async function publishTest(data){
+    return new Promise((resolve, reject) => {
+        axios.post(`${baseUrl}/publishTest/`,{data}).then((res) => {
+            resolve(res.data);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+async function saveTestSubmission(data){
+    return new Promise((resolve, reject) => {
+        axios.post(`${baseUrl}/saveTestSubmission/`,{data}).then((res) => {
+            resolve(res.data);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+async function updateTestSubmission(data){
+    return new Promise((resolve, reject) => {
+        axios.post(`${baseUrl}/updateTestSubmission/`,{data}).then((res) => {
+            resolve(res.data);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+async function getTestSubmission(email,testId){
+    return new Promise((resolve, reject) => {
+        axios.post(`${baseUrl}/getTestSubmission/`,{email,testId}).then((res) => {
+            resolve(res.data);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+async function getSubmissionById(id){
+    return new Promise((resolve, reject) => {
+        axios.get(`${baseUrl}/submission/${id}`).then((res) => {
+            resolve(res.data);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+async function getsubmissionByTestId(id){
+    return new Promise((resolve, reject) => {
+        axios.get(`${baseUrl}/submissionByTestId/${id}`).then((res) => {
+            resolve(res.data);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+async function releaseResult(test,submissions){
+    return new Promise((resolve, reject) => {
+        axios.post(`${baseUrl}/releaseResult/`,{test,submissions}).then((res) => {
+            resolve(res.data);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+async function createCourse(){
+    return new Promise((resolve, reject) => {
+        axios.get(`${baseUrl}/createCourse`).then((res) => {
+            resolve(res.data);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+async function getCourse(id){
+    return new Promise((resolve, reject) => {
+        axios.get(`${baseUrl}/course/${id}`).then((res) => {
+            resolve(res.data);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+async function updateCourse(data){
+    return new Promise((resolve, reject) => {
+        axios.post(`${baseUrl}/updateCourse/`,{data}).then((res) => {
+            resolve(res.data);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+async function getAllCourses(){
+    return new Promise((resolve, reject) => {
+        axios.get(`${baseUrl}/courses`).then((res) => {
+            resolve(res.data);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+
+async function publishCourse(data){
+    return new Promise((resolve, reject) => {
+        axios.post(`${baseUrl}/publishCourse/`,{data}).then((res) => {
+            resolve(res.data);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+
 export {
     getContent,
     createTopic,
@@ -331,5 +494,21 @@ export {
     getUsers,
     getMarks,
     UpdateUser,
-    saveReplyData
+    saveReplyData,
+    getAllTests,
+    createTest,
+    getTest,
+    updateTest,
+    publishTest,
+    getTestSubmission,
+    updateTestSubmission,
+    saveTestSubmission,
+    getSubmissionById,
+    getsubmissionByTestId,
+    releaseResult,
+    updateCourse,
+    getCourse,
+    createCourse,
+    getAllCourses,
+    publishCourse
 }

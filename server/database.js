@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 var ObjectID = require('mongodb').ObjectID;
+var nodemailer = require('nodemailer');
 
 mongoose.connect(require("./config").dbUrl, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }, () => {
     console.log('connected to db')
@@ -14,7 +15,18 @@ const Topics = require("./models/topic")
 const Profiles = require("./models/profile")
 const Admins = require("./models/admin")
 const Users = require("./models/users")
-const Submissions = require("./models/submission")
+const Tests = require('./models/test')
+const SubmissionsTest = require('./models/testSubmission')
+const Notifications = require('./models/notification')
+const Courses = require('./models/courses')
+
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'cryptxsadh@gmail.com',
+        pass: 'sarthak01'
+    }
+});
 
 // Users.collection.drop();
 
@@ -410,13 +422,397 @@ async function updateUser(email, user) {
 async function userPagination(pageNumber) {
     return new Promise((resolve, reject) => {
         Users.find({}).limit(3).
-        skip(3 * pageNumber).exec((err, doc) => {
-            if(err)reject(err);
+            skip(3 * pageNumber).exec((err, doc) => {
+                if (err) reject(err);
+                resolve(doc);
+
+            })
+    })
+}
+async function getTest(_id) {
+    return new Promise((resolve, reject) => {
+        Tests.findOne({ _id }).then((test) => {
+            resolve(test);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+async function getAllTest() {
+    return new Promise((resolve, reject) => {
+        Tests.find({}).then((test) => {
+            resolve(test);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+
+async function updateTest(data) {
+    return new Promise((resolve, reject) => {
+        Tests.findOneAndUpdate({ _id: data._id }, data).then((test) => {
+            // console.log(test)
+            resolve(test);
+        }).catch((err) => {
+            console.log(err)
+            reject(err);
+        })
+    })
+
+
+}
+async function createTest(data) {
+    return new Promise((resolve, reject) => {
+        var _test = new Tests(data);
+        _test.save().then((doc) => {
+            resolve(doc);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+
+async function publishTest(data) {
+    return new Promise((resolve, reject) => {
+        sendMail(data.testFor, data.title, data._id);
+        saveNotification(data.testFor, data.title, data._id)
+        updateTest(data).then((doc) => {
+            resolve(doc);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+    s
+}
+async function saveTestSubmission(data) {
+    return new Promise((resolve, reject) => {
+        var _submission = new SubmissionsTest(data);
+        _submission.save().then((doc) => {
+            resolve(doc);
+        }).catch((err) => {
+            console.log(err)
+            reject(err);
+        })
+    })
+
+
+}
+
+async function updateTestSubmission(data) {
+    return new Promise((resolve, reject) => {
+        SubmissionsTest.findOneAndUpdate({ _id: data._id }, data).then((doc) => {
             resolve(doc);
 
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+
+}
+async function getTestSubmissions(testId) {
+    return new Promise((resolve, reject) => {
+        SubmissionsTest.findOne({ testId }).then((doc) => {
+            resolve(doc);
+
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+async function getTestSubmission(email, testId) {
+    return new Promise((resolve, reject) => {
+        SubmissionsTest.findOne({ email, testId }).then((doc) => {
+            resolve(doc);
+
+        }).catch((err) => {
+            reject(err);
         })
     })
 }
+async function getTestSubmissionsAll(email, testId) {
+    return new Promise((resolve, reject) => {
+        SubmissionsTest.find({}).then((doc) => {
+            resolve(doc);
+
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+}
+
+async function getTestSubmissionById(_id) {
+    return new Promise((resolve, reject) => {
+        SubmissionsTest.findOne({ _id }).then((doc) => {
+            resolve(doc);
+
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+}
+
+async function getTestSubmissionByTestId(id) {
+    return new Promise((resolve, reject) => {
+        SubmissionsTest.find({ testId: id }).then((doc) => {
+            resolve(doc);
+
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+
+function releaseResult(test, submissions) {
+    resultNotification(test, submissions)
+    sendResultMail(submissions, test);
+    submissions.forEach((submission) => {
+
+        if (submission.isReleased === false) {
+            submission.isReleased = true;
+            if (submission.isStarted) {
+                updateTestSubmission(submission)
+
+            }
+            else {
+                saveTestSubmission(submission);
+            }
+
+
+        }
+
+
+
+
+    })
+}
+
+function sendMail(users, title, link) {
+    const mailOptions = {
+        from: 'cryptxsadh@gmail.com', // sender address
+        to: users, // list of receivers
+        subject: 'Result Released Test', // Subject line
+        html: `<p>${title}</p><p>${link}</p>`// plain text body
+    };
+    transporter.sendMail(mailOptions, function (err, info) {
+        if (err)
+            console.log(err)
+        else
+            console.log(info);
+    });
+
+
+
+}
+
+function sendResultMail(submissions, test) {
+
+    submissions.forEach((submission) => {
+        var title = `Result Released for test ${test.title}`;
+        var text = "You have not submitted the test <br/> your final score is 0";
+        var email = submission.email;
+        var isUrl = false;
+        var url = ""
+        if (submission.isReleased) return;
+        if (submission.isStarted === false) {
+            text = `Your Test score is ${calculateFinalMarks(submission)}`;
+            url = submission._id;
+        }
+        const mailOptions = {
+            from: 'cryptxsadh@gmail.com', // sender address
+            to: email, // list of receivers
+            subject: 'New Test', // Subject line
+            html: `<p>${title}</p><p>${text}</p><p><a href = ${url}>View Result</a></p>`// plain text body
+        };
+        transporter.sendMail(mailOptions, function (err, info) {
+            if (err)
+                console.log(err)
+            else
+                console.log(info);
+        });
+
+    })
+
+}
+function resultNotification(test, submissions) {
+    submissions.forEach((submission) => {
+        var title = `Result Released for test ${test.title}`;
+        var text = "You have not submitted the test <br/> your final score is 0";
+        var email = submission.email;
+        var isUrl = false;
+        var url = ""
+        if (submission.isReleased) return;
+        if (submission.isStarted === true) {
+            text = `Your Test score is ${calculateFinalMarks(submission)}`;
+            url = `/result/${submission._id}`;
+        }
+        var _notification = new Notifications({
+            title,
+            text,
+            email,
+            isUrl,
+            url
+        });
+        _notification.save();
+
+    })
+
+}
+function calculateFinalMarks(submission) {
+    if (submission.isStarted === false) return -1;
+    var marks = 0;
+    submission.ans.forEach((ans, index) => {
+       marks+=ans.finalMakrs;
+    })
+    return marks
+}
+
+
+function saveNotification(users, title, link) {
+    users.forEach((user) => {
+        var _notification = Notifications(
+            {
+                title: "New Test Released",
+                email: user,
+                text: `New test ${title}`,
+                isLink: true,
+                url: `/test/${link}`
+            }
+        );
+        _notification.save();
+    })
+
+}
+
+async function getNotification(email) {
+    return new Promise((resolve, reject) => {
+        Notifications.find({ email }).sort({createdAt:'desc'}).exec((err,docs)=>{
+            if(err)reject(err);
+            resolve(docs);
+
+        })
+    });
+}
+async function updateNotification(data) {
+    return new Promise((resolve, reject) => {
+        Notifications.findOneAndUpdate({ _id: data._id }, data).then((notifications) => {
+            resolve(notifications);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+
+async function saveCourse(data) {
+    return new Promise((resolve, reject) => {
+        var _course = new Courses(data);
+        _course.save().then((doc) => {
+            resolve(doc);
+        }).catch((err) => {
+            console.log(err)
+            reject(err);
+        })
+    })
+
+
+}
+async function getCourseById(_id) {
+    return new Promise((resolve, reject) => {
+        Courses.findOne({ _id }).then((doc) => {
+            resolve(doc);
+
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+async function getAllCourse() {
+    return new Promise((resolve, reject) => {
+        Courses.find({}).then((doc) => {
+            resolve(doc);
+
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+
+async function updateCourse(data) {
+    return new Promise((resolve, reject) => {
+        Courses.findOneAndUpdate({ _id: data._id }, data).then((doc) => {
+            resolve(doc);
+
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+
+}
+
+async function publishCourse(data) {
+    sendCourseNotification(data.courseFor, data);
+    sendCourseMail(data)
+    return new Promise((resolve, reject) => {
+        Courses.findOneAndUpdate({ _id: data._id }, data).then((doc) => {
+            resolve(doc);
+
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+
+async function sendCourseMail(data) {
+
+    data.courseFor.forEach((user) => {
+
+        const mailOptions = {
+            from: 'cryptxsadh@gmail.com', // sender address
+            to: user, // list of receivers
+            subject: 'New Course', // Subject line
+            html: `<p>${data.title}</p><p><a href = ${data._id}>View Result</a></p>`// plain text body
+        };
+
+        transporter.sendMail(mailOptions, function (err, info) {
+            if (err)
+                console.log(err)
+            else
+                console.log(info);
+        });
+
+    })
+
+}
+
+function sendCourseNotification(users, data) {
+    users.forEach((user) => {
+        var _notification = new Notifications({
+            title: "New Course Released",
+            text: `New Course ${data.title} `,
+            email: user,
+            isUrl: true,
+            url: `/course/${data._id}`
+        });
+        _notification.save();
+
+    })
+
+}
+
+
+
+// async function ShowNotification()
+
 
 
 module.exports = {
@@ -446,7 +842,28 @@ module.exports = {
     getUsers,
     updateSubmission,
     updateUser,
-    userPagination
+    userPagination,
+    publishTest,
+    getAllTest,
+    getTest,
+    updateTest,
+    createTest,
+    getTestSubmission,
+    getTestSubmissions,
+    updateTestSubmission,
+    saveTestSubmission,
+    getTestSubmissionsAll,
+    getTestSubmissionById,
+    getNotification,
+    updateNotification,
+    getTestSubmissionByTestId,
+    releaseResult,
+    saveCourse,
+    getCourseById,
+    updateCourse,
+    getAllCourse,
+    publishCourse
+
 
 }
 

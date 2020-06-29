@@ -31,7 +31,8 @@ class Dscore extends React.Component {
             isSingle: false,
             isMultiple: false,
             isNumericFilter:false,
-            isSort:false
+            isSort:false,
+            avgMarks:0
 
 
         }
@@ -77,7 +78,9 @@ class Dscore extends React.Component {
 
             });
             // alert(JSON.stringify(modifiedUser))
-            this.setState({ users: modifiedUser, queryUsers: modifiedUser })
+            this.setState({ users: modifiedUser, queryUsers: modifiedUser },()=>{
+                this.avg()
+            })
 
         })
 
@@ -88,9 +91,14 @@ class Dscore extends React.Component {
         this.state.users.forEach((user) => {
             sum += user.points;
         })
+        var total = this.state.deliverable.points;
         // alert(sum)
+        var ans =((sum / (total * this.state.users.length))*100);
+        // alert(ans);
+        this.setState({avgMarks:Math.round(ans)})
 
-        return Math.round(sum / (this.state.deliverable.points * this.state.users.length))
+
+        // return Math.round(sum / (this.state.deliverable.points * this.state.users.length))
     }
 
     componentDidMount() {
@@ -489,7 +497,7 @@ class Dscore extends React.Component {
                                             <tr>
                                                 <td><h6 class="user-link padding-top">Average</h6></td>
                                                 <td>
-                                                    {this.avg()}
+                                                    {this.state.avgMarks}%
                                                 </td>
                                             </tr>
                                             {this.state.queryUsers.map((user) => {

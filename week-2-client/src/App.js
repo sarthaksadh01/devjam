@@ -19,6 +19,7 @@ import {
 } from "react-router-dom";
 import './assets/css/bootstrap.min.css';
 import './assets/css/main.css';
+import './assets/css/main2.css';
 import 'react-notifications/lib/notifications.css';
 import NavbarUi from './components/navbar';
 import LoadingOverlay from 'react-loading-overlay';
@@ -29,6 +30,13 @@ import history from "./components/history"
 import Topic from './pages/topic';
 import Login from './pages/login';
 import Signup from './pages/signup';
+import { getNotification } from './data/data';
+import Notification from './pages/notification';
+import ViewTest from './pages/test'
+import Course from './pages/course';
+import AllTests from './pages/allTest';
+import Allcourses from './pages/allCourses';
+import Result from './pages/result';
 
 class App extends React.Component {
   state = {
@@ -36,12 +44,13 @@ class App extends React.Component {
     loadingText: "loading...",
     isLoggedin: false,
     loadingCred: true,
-    user:{
-      email:"",
-      imageUrl:"",
-      isLoggedin:false,
-      isSocialLogin:false
-    }
+    user: {
+      email: "",
+      imageUrl: "",
+      isLoggedin: false,
+      isSocialLogin: false
+    },
+    notifications: []
   }
   constructor(props) {
     super(props)
@@ -52,40 +61,58 @@ class App extends React.Component {
     this.setState({ isLoading: !currentState, loadingText: text });
   }
   componentDidMount() {
-    var user = reactLocalStorage.getObject('user',{
-      email:"",
-      imageUrl:"",
-      isLoggedin:false,
-      isSocialLogin:false
+    var user = reactLocalStorage.getObject('user', {
+      email: "",
+      imageUrl: "",
+      isLoggedin: false,
+      isSocialLogin: false
 
-    },true);
-  
-    if(user.isLoggedin){
-      this.setState({isLoggedin:true,user})
+    }, true);
+
+    if (user.isLoggedin) {
+      getNotification(user.email).then((notifications) => {
+        // alert(JSON.stringify(notifications))
+        this.setState({ notifications })
+
+      }).catch((err) => {
+
+      })
+      this.setState({ isLoggedin: true, user })
 
     }
-   
+
   }
   render() {
     return (
-        <Router history={history}>
-          < NotificationContainer />
-          <LoadingOverlay
-            active={this.state.isLoading}
-            spinner
-            text={this.state.loadingText}
-          >
-            {/* <NavbarUi />  */}
-            {this.state.isLoggedin ? <NavbarUi imageUrl ={this.state.user.imageUrl} email ={this.state.user.email}/> : <div></div>}
-            <Switch>
-              <Route exact path="/" render={(props) =>this.state.isLoggedin ? <Content {...props} toggleLoading={this.toggleLoading} />:<Login {...props} toggleLoading={this.toggleLoading} />} />
-              <Route  path="/topic/:topicId/subtopic/:videoId" render={(props) =>this.state.isLoggedin ? <Topic {...props} toggleLoading={this.toggleLoading} />:<Login {...props} toggleLoading={this.toggleLoading} />}  />
-              <Route  path="/login" render={(props) =>this.state.isLoggedin ? <Content {...props} toggleLoading={this.toggleLoading} />:<Login {...props} toggleLoading={this.toggleLoading} />} />
-              <Route  path="/signup" render={(props) =>this.state.isLoggedin ? <Content {...props} toggleLoading={this.toggleLoading} />:<Signup {...props} toggleLoading={this.toggleLoading} />} />
-              <Route  path="/content" render={(props) =>this.state.isLoggedin ? <Content {...props} toggleLoading={this.toggleLoading} />:<Login {...props} toggleLoading={this.toggleLoading} />} />
-            </Switch>
-          </LoadingOverlay>
-        </Router>
+      <Router history={history}>
+        < NotificationContainer />
+        <LoadingOverlay
+          active={this.state.isLoading}
+          spinner
+          text={this.state.loadingText}
+        >
+          {/* <NavbarUi />  */}
+          {this.state.isLoggedin ?
+            <NavbarUi
+              imageUrl={this.state.user.imageUrl}
+              email={this.state.user.email}
+              notifications={this.state.notifications}
+            /> : <div></div>}
+          <Switch>
+            <Route exact path="/" render={(props) => this.state.isLoggedin ? <Content {...props} toggleLoading={this.toggleLoading} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
+            <Route path="/topic/:topicId/subtopic/:videoId" render={(props) => this.state.isLoggedin ? <Topic {...props} toggleLoading={this.toggleLoading} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
+            <Route path="/login" render={(props) => this.state.isLoggedin ? <Content {...props} toggleLoading={this.toggleLoading} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
+            <Route path="/signup" render={(props) => this.state.isLoggedin ? <Content {...props} toggleLoading={this.toggleLoading} /> : <Signup {...props} toggleLoading={this.toggleLoading} />} />
+            <Route path="/content" render={(props) => this.state.isLoggedin ? <Content {...props} toggleLoading={this.toggleLoading} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
+            <Route path="/notification" render={(props) => this.state.isLoggedin ? <Notification {...props} toggleLoading={this.toggleLoading} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
+            <Route path="/test/:id" render={(props) => this.state.isLoggedin ? <ViewTest {...props} toggleLoading={this.toggleLoading} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
+            <Route path="/course/:id" render={(props) => this.state.isLoggedin ? <Course {...props} toggleLoading={this.toggleLoading} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
+            <Route path="/tests/" render={(props) => this.state.isLoggedin ? <AllTests {...props} toggleLoading={this.toggleLoading} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
+            <Route path="/courses/" render={(props) => this.state.isLoggedin ? <Allcourses {...props} toggleLoading={this.toggleLoading} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
+            <Route path="/result/:id" render={(props) => this.state.isLoggedin ? <Result {...props} toggleLoading={this.toggleLoading} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
+          </Switch>
+        </LoadingOverlay>
+      </Router>
 
     );
 

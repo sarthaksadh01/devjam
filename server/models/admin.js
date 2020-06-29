@@ -17,7 +17,8 @@ var admins = new Schema({
     password: {
         type: String,
         required: [true, "can't be blank"],
-    }
+    },
+  
 
 }, { timestamps: true });
 module.exports = mongoose.model('Admins', admins);

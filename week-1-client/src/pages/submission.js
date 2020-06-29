@@ -276,6 +276,12 @@ class Submission extends React.Component {
                                     <div class="row">
                                         <span class="text-muted">{this.state.users[this.state.currentIndex].submission.comment}</span>
                                     </div>
+                                    <div class="row">
+                                        <span class="text-muted">{new Date(this.state.users[this.state.currentIndex].submission.createdAt).toLocaleDateString("en-US", options)}</span>
+                                    </div>
+                                    <div class="row">
+                                       Reply:  <span class="text-muted">{this.state.users[this.state.currentIndex].submission.reply}</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="mt-3 mb-5 row ">

@@ -42,6 +42,18 @@ import Marking from './pages/marking';
 import Submission from './pages/submission';
 import './assets/css/main.css'
 import Dscore from './pages/dScore';
+import Tests from './pages/tests';
+import EditTest from './pages/editTest'
+import ViewTest from './pages/viewTest';
+import Publish from './pages/publish';
+import ViewSingleTestResult from './pages/viewSingleResult';
+import ViewResult from './pages/viewResult';
+import Courses from './pages/courses';
+import Course from './pages/course';
+import PublishCourse from './pages/publishCourse';
+import EditCourse from './pages/editCourse';
+import ViewCourse from './pages/viewCourse';
+
 
 class App extends React.Component {
   state = {
@@ -125,6 +137,16 @@ class App extends React.Component {
               <Route path="/marking" render={(props) => this.state.isLoggedin ? <Marking {...props} toggleLoading={this.toggleLoading} userName={this.state.userName} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
               <Route path="/submission/:id/:email" render={(props) => this.state.isLoggedin ? <Submission {...props} toggleLoading={this.toggleLoading} userName={this.state.userName} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
               <Route path="/dscore/:id" render={(props) => this.state.isLoggedin ? <Dscore {...props} toggleLoading={this.toggleLoading} userName={this.state.userName} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
+              <Route path="/tests" render={(props) => this.state.isLoggedin ? <Tests {...props} toggleLoading={this.toggleLoading} userName={this.state.userName} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
+              <Route path="/edit-test/:id" render={(props) => this.state.isLoggedin ? <EditTest {...props} toggleLoading={this.toggleLoading} userName={this.state.userName} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
+              <Route path="/view-test/:id" render={(props) => this.state.isLoggedin ? <ViewTest {...props} toggleLoading={this.toggleLoading} userName={this.state.userName} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
+              <Route path="/publish/:id" render={(props) => this.state.isLoggedin ? <Publish {...props} toggleLoading={this.toggleLoading} userName={this.state.userName} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
+              <Route path="/test-submission/test/:testId/submission/:submissionId" render={(props) => this.state.isLoggedin ? <ViewSingleTestResult {...props} toggleLoading={this.toggleLoading} userName={this.state.userName} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
+              <Route path="/view-results/:id" render={(props) => this.state.isLoggedin ? <ViewResult {...props} toggleLoading={this.toggleLoading} userName={this.state.userName} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
+              <Route path="/edit-course/:id" render={(props) => this.state.isLoggedin ? <EditCourse {...props} toggleLoading={this.toggleLoading} userName={this.state.userName} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
+              <Route path="/courses" render={(props) => this.state.isLoggedin ? <Courses {...props} toggleLoading={this.toggleLoading} userName={this.state.userName} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
+              <Route path="/publish-course/:id" render={(props) => this.state.isLoggedin ? <PublishCourse {...props} toggleLoading={this.toggleLoading} userName={this.state.userName} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
+              <Route path="/view-course/:id" render={(props) => this.state.isLoggedin ? <ViewCourse {...props} toggleLoading={this.toggleLoading} userName={this.state.userName} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
             </Switch>
           </LoadingOverlay>
         </Router>

@@ -35,6 +35,12 @@ function NavbarUi() {
                         <a class="nav-link" href="/marking">Marks</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="/tests">Tests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/courses">Courses</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="https://hiii-15fdf.web.app">Student Portal</a>
                     </li>
                     
