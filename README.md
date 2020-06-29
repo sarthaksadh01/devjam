@@ -10,7 +10,7 @@
 
 **Admin Credentials** : guest@zaio.io 123456
 
-**Server Hosting** : https://devjam-server.herokuapp.com/api
+**Server Hosting** : https://devjam-server.herokuapp.com
 
 
 
