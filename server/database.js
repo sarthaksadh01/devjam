@@ -19,6 +19,9 @@ const Tests = require('./models/test')
 const SubmissionsTest = require('./models/testSubmission')
 const Notifications = require('./models/notification')
 const Courses = require('./models/courses')
+const CodingTests = require("./models/codingTestModel");
+const CodingTestQuestion = require('./models/codingQuestions')
+const codingTestHtml = require('./htmlTemplate').codingTestHtml
 
 var transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -664,7 +667,7 @@ function calculateFinalMarks(submission) {
     if (submission.isStarted === false) return 0;
     var marks = 0;
     submission.ans.forEach((ans, index) => {
-       marks+=ans.finalMakrs;
+        marks += ans.finalMakrs;
     })
     return marks
 }
@@ -688,8 +691,8 @@ function saveNotification(users, title, link) {
 
 async function getNotification(email) {
     return new Promise((resolve, reject) => {
-        Notifications.find({ email }).sort({createdAt:'desc'}).exec((err,docs)=>{
-            if(err)reject(err);
+        Notifications.find({ email }).sort({ createdAt: 'desc' }).exec((err, docs) => {
+            if (err) reject(err);
             resolve(docs);
 
         })
@@ -806,18 +809,18 @@ function sendCourseNotification(users, data) {
 
 }
 
-function sendReminder(notifications){
+function sendReminder(notifications) {
     console.log(notifications)
-    notifications.forEach((notification)=>{
+    notifications.forEach((notification) => {
         var html = '';
         var text = ''
-        notification.events.forEach((event)=>{
-            html+= `<p>${event.title}</p>`
-            text+= `${event.title}\n`
+        notification.events.forEach((event) => {
+            html += `<p>${event.title}</p>`
+            text += `${event.title}\n`
             console.log(html)
         });
         html += `<a href = "http://hiii-15fdf.web.app/course/${notification.courseId}">View</a>`
-        notification.receivers.forEach((email)=>{
+        notification.receivers.forEach((email) => {
             var _notification = new Notifications({
                 title: "Reminder",
                 text,
@@ -828,22 +831,22 @@ function sendReminder(notifications){
             _notification.save();
 
 
-        const mailOptions = {
-            from: 'cryptxsadh@gmail.com', // sender address
-            to: email, // list of receivers
-            subject: 'Reminder', // Subject line
-            html
-        };
+            const mailOptions = {
+                from: 'cryptxsadh@gmail.com', // sender address
+                to: email, // list of receivers
+                subject: 'Reminder', // Subject line
+                html
+            };
 
-        transporter.sendMail(mailOptions, function (err, info) {
-            if (err)
-                console.log(err)
-            else
-                console.log(info);
-        });
+            transporter.sendMail(mailOptions, function (err, info) {
+                if (err)
+                    console.log(err)
+                else
+                    console.log(info);
+            });
 
         })
-        
+
 
     })
 }
@@ -859,9 +862,120 @@ async function testSubmissionPagination(pageNumber) {
     })
 }
 
+async function getAllcodingTest() {
+    return new Promise((resolve, reject) => {
+        CodingTests.find({}).then((docs) => {
+            resolve(docs);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+}
+async function getCodingTestById(_id) {
+    return new Promise((resolve, reject) => {
+        CodingTests.findOne({ _id }).then((docs) => {
+            resolve(docs);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+}
+
+async function updateCodingTest(data) {
+    return new Promise((resolve, reject) => {
+        CodingTests.findOneAndUpdate({ _id: data._id }, data).then((docs) => {
+            resolve(docs);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+}
+
+async function createCodingTest(data) {
+    return new Promise((resolve, reject) => {
+        var _codingTest = new CodingTests(data);
+        _codingTest.save().then((doc) => {
+            resolve(doc);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+}
+
+async function getAllQuestions() {
+    return new Promise((resolve, reject) => {
+        CodingTestQuestion.find({}).then((docs) => {
+            resolve(docs);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+
+async function updateQueston(data) {
+    return new Promise((resolve, reject) => {
+        CodingTestQuestion.findOneAndUpdate({ _id: data._id }, data).then((docs) => {
+            resolve(docs);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+async function getQuestion(_id) {
+    return new Promise((resolve, reject) => {
+        CodingTestQuestion.findOne({ _id }).then((docs) => {
+            resolve(docs);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
 
 
-// async function ShowNotification()
+}
+async function createQuestion(data) {
+    return new Promise((resolve, reject) => {
+        var _codingTestQuestion = new CodingTestQuestion(data);
+        _codingTestQuestion.save().then((doc) => {
+            resolve(doc);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+}
+
+async function publishCodingTest(data) {
+    sendCodingChallengeMail(data);
+    return new Promise((resolve, reject) => {
+        CodingTests.findOneAndUpdate({ _id: data._id }, data).then((doc) => {
+            resolve(doc);
+
+        }).catch((err) => {
+            reject(err);
+
+        })
+    })
+
+}
+function sendCodingChallengeMail(test) {
+    test.testFor.forEach((email) => {
+        const mailOptions = {
+            from: 'cryptxsadh@gmail.com', // sender address
+            to: email, // list of receivers
+            subject: 'New Coding Test Released', // Subject line
+            html: codingTestHtml(`http://hiii-15fdf.web.app/coding-challenge/${test._id}`)// plain text body
+        };
+        transporter.sendMail(mailOptions, function (err, info) {
+            if (err)
+                console.log(err)
+            else
+                console.log(info);
+        });
+    })
+
+
+}
 
 
 
@@ -914,8 +1028,19 @@ module.exports = {
     getAllCourse,
     publishCourse,
     sendReminder,
-    testSubmissionPagination
+    testSubmissionPagination,
+    getAllcodingTest,
+    getCodingTestById,
+    updateCodingTest,
+    createCodingTest,
+    createQuestion,
+    getQuestion,
+    updateQueston,
+    getAllQuestions,
+    publishCodingTest
 
 
 }
+
+
 

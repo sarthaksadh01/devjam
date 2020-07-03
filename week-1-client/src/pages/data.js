@@ -286,9 +286,9 @@ async function getUsers() {
 
 }
 
-async function UpdateUser(email, points, subTopicId) {
+async function UpdateUser(email,points,subTopicId){
     return new Promise((resolve, reject) => {
-        axios.post(`${baseUrl}/updateMarks`, { email, points, subTopicId }).then((res) => {
+        axios.post(`${baseUrl}/updateMarks`,{email,points,subTopicId}).then((res) => {
             resolve(res.data);
         }).catch((err) => {
             reject(err);
@@ -296,9 +296,9 @@ async function UpdateUser(email, points, subTopicId) {
     })
 
 }
-async function saveReplyData(email, reply, subTopicId) {
+async function saveReplyData(email,reply,subTopicId){
     return new Promise((resolve, reject) => {
-        axios.post(`${baseUrl}/saveReply`, { email, reply, subTopicId }).then((res) => {
+        axios.post(`${baseUrl}/saveReply`,{email,reply,subTopicId}).then((res) => {
             resolve(res.data);
         }).catch((err) => {
             reject(err);
@@ -307,7 +307,7 @@ async function saveReplyData(email, reply, subTopicId) {
 
 }
 
-async function getAllTests() {
+async function getAllTests(){
     return new Promise((resolve, reject) => {
         axios.get(`${baseUrl}/tests`).then((res) => {
             resolve(res.data);
@@ -317,7 +317,7 @@ async function getAllTests() {
     })
 
 }
-async function createTest() {
+async function createTest(){
     return new Promise((resolve, reject) => {
         axios.get(`${baseUrl}/createTest`).then((res) => {
             resolve(res.data);
@@ -327,7 +327,7 @@ async function createTest() {
     })
 
 }
-async function getTest(id) {
+async function getTest(id){
     return new Promise((resolve, reject) => {
         axios.get(`${baseUrl}/test/${id}`).then((res) => {
             resolve(res.data);
@@ -337,9 +337,9 @@ async function getTest(id) {
     })
 
 }
-async function updateTest(data) {
+async function updateTest(data){
     return new Promise((resolve, reject) => {
-        axios.post(`${baseUrl}/updateTest/`, { data }).then((res) => {
+        axios.post(`${baseUrl}/updateTest/`,{data}).then((res) => {
             resolve(res.data);
         }).catch((err) => {
             reject(err);
@@ -347,9 +347,9 @@ async function updateTest(data) {
     })
 
 }
-async function publishTest(data) {
+async function publishTest(data){
     return new Promise((resolve, reject) => {
-        axios.post(`${baseUrl}/publishTest/`, { data }).then((res) => {
+        axios.post(`${baseUrl}/publishTest/`,{data}).then((res) => {
             resolve(res.data);
         }).catch((err) => {
             reject(err);
@@ -357,9 +357,9 @@ async function publishTest(data) {
     })
 
 }
-async function saveTestSubmission(data) {
+async function saveTestSubmission(data){
     return new Promise((resolve, reject) => {
-        axios.post(`${baseUrl}/saveTestSubmission/`, { data }).then((res) => {
+        axios.post(`${baseUrl}/saveTestSubmission/`,{data}).then((res) => {
             resolve(res.data);
         }).catch((err) => {
             reject(err);
@@ -367,9 +367,9 @@ async function saveTestSubmission(data) {
     })
 
 }
-async function updateTestSubmission(data) {
+async function updateTestSubmission(data){
     return new Promise((resolve, reject) => {
-        axios.post(`${baseUrl}/updateTestSubmission/`, { data }).then((res) => {
+        axios.post(`${baseUrl}/updateTestSubmission/`,{data}).then((res) => {
             resolve(res.data);
         }).catch((err) => {
             reject(err);
@@ -377,9 +377,9 @@ async function updateTestSubmission(data) {
     })
 
 }
-async function getTestSubmission(email, testId) {
+async function getTestSubmission(email,testId){
     return new Promise((resolve, reject) => {
-        axios.post(`${baseUrl}/getTestSubmission/`, { email, testId }).then((res) => {
+        axios.post(`${baseUrl}/getTestSubmission/`,{email,testId}).then((res) => {
             resolve(res.data);
         }).catch((err) => {
             reject(err);
@@ -387,7 +387,7 @@ async function getTestSubmission(email, testId) {
     })
 
 }
-async function getSubmissionById(id) {
+async function getSubmissionById(id){
     return new Promise((resolve, reject) => {
         axios.get(`${baseUrl}/submission/${id}`).then((res) => {
             resolve(res.data);
@@ -397,7 +397,7 @@ async function getSubmissionById(id) {
     })
 
 }
-async function getsubmissionByTestId(id) {
+async function getsubmissionByTestId(id){
     return new Promise((resolve, reject) => {
         axios.get(`${baseUrl}/submissionByTestId/${id}`).then((res) => {
             resolve(res.data);
@@ -407,9 +407,9 @@ async function getsubmissionByTestId(id) {
     })
 
 }
-async function releaseResult(test, submissions) {
+async function releaseResult(test,submissions){
     return new Promise((resolve, reject) => {
-        axios.post(`${baseUrl}/releaseResult/`, { test, submissions }).then((res) => {
+        axios.post(`${baseUrl}/releaseResult/`,{test,submissions}).then((res) => {
             resolve(res.data);
         }).catch((err) => {
             reject(err);
@@ -417,7 +417,7 @@ async function releaseResult(test, submissions) {
     })
 
 }
-async function createCourse() {
+async function createCourse(){
     return new Promise((resolve, reject) => {
         axios.get(`${baseUrl}/createCourse`).then((res) => {
             resolve(res.data);
@@ -427,7 +427,7 @@ async function createCourse() {
     })
 
 }
-async function getCourse(id) {
+async function getCourse(id){
     return new Promise((resolve, reject) => {
         axios.get(`${baseUrl}/course/${id}`).then((res) => {
             resolve(res.data);
@@ -437,9 +437,9 @@ async function getCourse(id) {
     })
 
 }
-async function updateCourse(data) {
+async function updateCourse(data){
     return new Promise((resolve, reject) => {
-        axios.post(`${baseUrl}/updateCourse/`, { data }).then((res) => {
+        axios.post(`${baseUrl}/updateCourse/`,{data}).then((res) => {
             resolve(res.data);
         }).catch((err) => {
             reject(err);
@@ -447,7 +447,7 @@ async function updateCourse(data) {
     })
 
 }
-async function getAllCourses() {
+async function getAllCourses(){
     return new Promise((resolve, reject) => {
         axios.get(`${baseUrl}/courses`).then((res) => {
             resolve(res.data);
@@ -458,9 +458,9 @@ async function getAllCourses() {
 
 }
 
-async function publishCourse(data) {
+async function publishCourse(data){
     return new Promise((resolve, reject) => {
-        axios.post(`${baseUrl}/publishCourse/`, { data }).then((res) => {
+        axios.post(`${baseUrl}/publishCourse/`,{data}).then((res) => {
             resolve(res.data);
         }).catch((err) => {
             reject(err);
@@ -471,7 +471,7 @@ async function publishCourse(data) {
 
 
 
-async function getAllCodingTests() {
+async function getAllCodingTests(){
     return new Promise((resolve, reject) => {
         axios.get(`${baseUrl}/codingTests`).then((res) => {
             resolve(res.data);
@@ -481,7 +481,7 @@ async function getAllCodingTests() {
     })
 
 }
-async function createCodingTest() {
+async function createCodingTest(){
     return new Promise((resolve, reject) => {
         axios.get(`${baseUrl}/createCodingTest`).then((res) => {
             resolve(res.data);
@@ -491,7 +491,7 @@ async function createCodingTest() {
     })
 
 }
-async function getCodingTest(id) {
+async function getCodingTest(id){
     return new Promise((resolve, reject) => {
         axios.get(`${baseUrl}/codingTest/${id}`).then((res) => {
             resolve(res.data);
@@ -501,9 +501,9 @@ async function getCodingTest(id) {
     })
 
 }
-async function updateCodingTest(data) {
+async function updateCodingTest(data){
     return new Promise((resolve, reject) => {
-        axios.post(`${baseUrl}/updateCodingTest/`, { data }).then((res) => {
+        axios.post(`${baseUrl}/updateCodingTest/`,{data}).then((res) => {
             resolve(res.data);
         }).catch((err) => {
             reject(err);
@@ -511,84 +511,6 @@ async function updateCodingTest(data) {
     })
 
 }
-
-
-async function getAllCodingQuestions() {
-    return new Promise((resolve, reject) => {
-        axios.get(`${baseUrl}/codingQuestions`).then((res) => {
-            resolve(res.data);
-        }).catch((err) => {
-            reject(err);
-        })
-    })
-
-}
-async function createCodingQuestion(data) {
-    return new Promise((resolve, reject) => {
-        axios.post(`${baseUrl}/createCodingQuestion`, { data }).then((res) => {
-            resolve(res.data);
-        }).catch((err) => {
-            reject(err);
-        })
-    })
-
-}
-async function getCodingQuestion(id) {
-    return new Promise((resolve, reject) => {
-        axios.get(`${baseUrl}/codingQuestion/${id}`).then((res) => {
-            resolve(res.data);
-        }).catch((err) => {
-            reject(err);
-        })
-    })
-
-}
-async function updateCodingQuestion(data) {
-    return new Promise((resolve, reject) => {
-        axios.post(`${baseUrl}/updateCodingQuestion/`, { data }).then((res) => {
-            resolve(res.data);
-        }).catch((err) => {
-            reject(err);
-        })
-    })
-
-}
-
-
-async function publishCodingTest(data) {
-    return new Promise((resolve, reject) => {
-        axios.post(`${baseUrl}/publishCodingTest/`, { data }).then((res) => {
-            resolve(res.data);
-        }).catch((err) => {
-            reject(err);
-        })
-    })
-
-}
-async function compileCode(language, sourceCode, input) {
-    return new Promise((resolve, reject) => {
-        axios.post(`${baseUrl}/compileCode/`, { language, sourceCode, input }).then((res) => {
-
-            resolve(res.data);
-        }).catch((err) => {
-            reject(err);
-        })
-    })
-
-}
-
-async function submitCode(language, sourceCode, input) {
-    return new Promise((resolve, reject) => {
-        axios.post(`${baseUrl}/submitCode/`, { language, sourceCode, input }).then((res) => {
-            resolve(res.data);
-        }).catch((err) => {
-            reject(err);
-        })
-    })
-
-}
-
-
 
 export {
     getContent,
@@ -635,12 +557,5 @@ export {
     getAllCodingTests,
     createCodingTest,
     getCodingTest,
-    updateCodingTest,
-    updateCodingQuestion,
-    getCodingQuestion,
-    createCodingQuestion,
-    getAllCodingQuestions,
-    publishCodingTest,
-    compileCode,
-    submitCode
+    updateCodingTest
 }

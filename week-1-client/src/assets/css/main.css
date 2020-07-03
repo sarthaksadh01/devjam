@@ -1,3 +1,11 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans&family=Roboto:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Inconsolata:700');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap');
+
 .title {
 
     margin-top: 100px;
@@ -56,9 +64,9 @@
     flex: 1 0 auto;
 }
 
-.container {
+/* .container {
     max-width: 1000px;
-  }
+  } */
   
   .lh-condensed { line-height: 1.25; }
 
@@ -357,4 +365,72 @@ table {
     top: 2px;
     right: 2px;
     z-index: 100;
+}
+
+
+
+
+*, *::before, *::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+.playground {
+  position: fixed;
+  /* top: 80px; */
+  bottom: 0;
+  left: 0;
+  width: 600px;
+  background-color: #1E1E2C;
+}
+
+.code-editor {
+  height: 33.33%;
+  overflow: hidden;
+  position: relative;
+}
+
+.editor-header {
+  height: 30px;
+  content: attr(title);
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  font-size: 18px;
+  color: #fafafa;
+}
+
+.react-codemirror2 {
+  max-height: calc(100% - 30px);
+  overflow: auto;
+}
+
+.result {
+  position: fixed;
+  /* top: 80px; */
+  right: 0;
+  bottom: 0;
+  left: 600px;
+  overflow: hidden;
+}
+
+.iframe {
+  width: 100%;
+  height: 100%;
+}
+
+.hr{
+    height: 0px; 
+    border: none;
+    border-top: 1px solid rgb(10, 10, 88);
+    background-color: rgb(10, 10, 88);
+}
+.title{
+
+  margin-top: 80px;
+}
+
+h1,h2,h3,h4,h5,h6,h7{
+  font-family: 'Inconsolata';
 }

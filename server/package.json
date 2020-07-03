@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "archiver": "^4.0.1",
+    "compile-run": "^2.3.2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "form-data": "^3.0.0",

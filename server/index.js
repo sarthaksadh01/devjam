@@ -6,6 +6,7 @@ const loginRouter = require("./routes/loginRouter");
 const marksRouter = require('./routes/marking')
 const TestRouter = require('./routes/tests');
 const CourseRouter = require('./routes/courses')
+const CodinTestRouter = require('./routes/codingTestRouter')
 const db = require('./database')
 var schedule = require('node-schedule');
 
@@ -24,6 +25,7 @@ app.use(loginRouter)
 app.use(marksRouter)
 app.use(TestRouter)
 app.use(CourseRouter)
+app.use(CodinTestRouter)
 
 var j = schedule.scheduleJob('0 18 * 1-12 0-6', function () {
     reminder().then((notifications) => {
