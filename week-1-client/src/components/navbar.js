@@ -13,7 +13,7 @@ function NavbarUi() {
     return (
 
         <Navbar collapseOnSelect expand="lg"  className="navbar   navbar-dark navbar-custom fixed-top">
-            <a class="navbar-brand" href="/"><b>Cryptx</b></a>
+            <a class=" text-white navbar-brand" href="/"><img style={{ height: 35 }} src="https://www.zaiodev.com/static/media/zaiowhite.76601178.png" /></a>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
          
@@ -21,7 +21,7 @@ function NavbarUi() {
                     <li class="nav-item ">
                         <a class="nav-link" href="/">Home </a>
                     </li>
-                    <li class="nav-item">
+                    {/* <li class="nav-item">
                         <a class="nav-link" href="/createprofile">Create Profile</a>
                     </li>
 
@@ -36,13 +36,13 @@ function NavbarUi() {
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/tests">Tests</a>
-                    </li>
+                    </li> */}
                     <li class="nav-item">
                         <a class="nav-link" href="/coding-tests/">Coding Tests</a>
                     </li>
-                    <li class="nav-item">
+                    {/* <li class="nav-item">
                         <a class="nav-link" href="/courses">Courses</a>
-                    </li>
+                    </li> */}
                     <li class="nav-item">
                         <a class="nav-link" href="https://hiii-15fdf.web.app">Student Portal</a>
                     </li>

@@ -117,15 +117,10 @@ class CodingTests extends React.Component {
         return (
             <div style={{ marginTop: "80px" }}>
                 <div className="container">
-                    <div className="row mt-4">
-                        <div className="col-12">
-                            <button onClick ={()=>{this.onClickTestCreate()}} className="btn btn-lg btn-outline-success">Create New Test</button>
-
-                        </div>
-                    </div>
-                    <hr className="hr" />
-                    <div className="row">
-                        <div className="col-12">
+                <br />
+               
+                    <div className="row my-4 ">
+                    <div className="col-7">
                             <Select
                                 value={this.state.selectedOption}
                                 onChange={this.onFilterChange}
@@ -133,37 +128,45 @@ class CodingTests extends React.Component {
                             />
 
                         </div>
-                    </div>
+                        <div className="col-4 ml-4">
+                            <button onClick ={()=>{this.onClickTestCreate()}} className="btn  blueBack font-weight-bold text-white float-right">Create New Test</button>
+
+                        </div>
+                   
+                        </div>
+               
+                    <br />
                     <div className="row mt-3">
                         {this.state.filterCodingTests.map((value, index) => {
-                            return <div className="col-12">
-                                <div className="card mb-3 shadow">
-                                    <div className="card-header">
-                                        <h5>{value.title} <span className={`badge ${this.badgeColor[value.status]} text-white`}>{value.status}</span></h5>
+                            return <div className="col-12 mb-4">
+                                <div className="card mb-3 shadow rounded">
+                                    <div className="card-header redBack text-white font-weight-bold">
+                                        <h4>{value.title} <span className={`badge ${this.badgeColor[value.status]} text-white float-right mt-1`}>{value.status}</span></h4>
                                     </div>
-                                    <div className="card-body">
+                                    <div className="card-body mx-3">
                                         <ReactMarkdown escapeHtml={false} source={value.instructions} />
 
                                     </div>
-                                    <div className="card-footer">
+                                    <div className="m-2 mb-4 text-center">
                                         <div class="btn-group" role="group" aria-label="Basic example">
                                             <button onClick={()=>{
                                                 history.push(`/edit-coding-test/${value._id}`);
                                                 window.location.reload();
-                                            }} type="button" class="btn btn-outline-info">Edit</button>
+                                            }} type="button" class="btn btn-outline-danger ">Edit</button>
                                             <button onClick ={()=>{
                                                 history.push(`/view-coding-test/${value._id}`);
                                                 window.location.reload();
 
-                                            }} type="button" class="btn btn-outline-info">Preview</button>
+                                            }} type="button" class="btn btn-outline-danger">Preview</button>
                                             <button onClick ={()=>{
                                                 this.functionCall[value.status](index);
-                                            }} type="button" class="btn btn-outline-info">{this.buttonText[value.status]}</button>
+                                            }} type="button" class="btn btn-outline-danger">{this.buttonText[value.status]}</button>
 
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                           
                         })}
                     </div>
                 </div>

@@ -96,7 +96,7 @@ class Content extends React.Component {
 
                                 <img class="video-card__image"
                                     src={value.subTopics[0].thumbNail}
-                                    alt="Card image" /> alt="Card image" />
+                                    alt="Card image" /> 
                             <div class="video-card__text-wrapper">
                                     <h2 class="video-card__title text-center">{value.title}</h2>
                                     <div class="video-card__post-date">

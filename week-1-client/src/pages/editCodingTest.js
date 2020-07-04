@@ -203,19 +203,19 @@ class EditCodingTest extends React.Component {
     render() {
         const mdParser = new MarkdownIt();
         return (
-            <div style={{ marginTop: "80px" }}>
+            <div style={{ marginTop: "100px" }}>
 
-                <div className="container">
+                <div className="container ">
                     <div style={{ marginTop: "90px" }} className="row">
                         <div className="col-md-7">
-                            <div className="col-md-10"><h4 className=" text-truncate text-topic">{this.state.test.title}</h4></div>
+                            <div className="col-md-10 mb-3"><h4 className=" text-truncate text-topic font-weight-bold">{this.state.test.title}</h4></div>
                             <hr className="hr" />
                             <br />
                         </div>
 
                         <div className="col-md-4">
 
-                            <div class="btn-group" role="group" aria-label="Basic example">
+                            <div class="btn-group float-right" role="group" aria-label="Basic example">
                                 <button onClick={() => {
                                     this.props.toggleLoading();
                                     updateCodingTest(this.state.test).then((doc) => {
@@ -315,7 +315,7 @@ class EditCodingTest extends React.Component {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-4">
+                        <div className="col-3">
                             {this.state.test.isTimed ? <span><input onChange={(e) => {
                                 var test = this.state.test;
                                 test.testTiming = e.target.value;

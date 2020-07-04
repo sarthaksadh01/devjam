@@ -11,6 +11,33 @@
     margin-top: 100px;
 }
 
+.blueText{
+  color:#060c22;
+}
+
+.blueGradient{
+  background: -webkit-linear-gradient(#83b5ee, #060c22);
+  
+}
+
+.blueBack{
+  background-color: #060c22;
+}
+
+.padding-right{
+  padding-right: 0px;
+}
+/* f82249 */
+.redBack{
+  background-color:#f82249cc ;
+}
+
+.redOutline{
+  outline:#f82249 solid 1px ;
+  
+}
+
+
 .details {
     color: #4633af;
 }

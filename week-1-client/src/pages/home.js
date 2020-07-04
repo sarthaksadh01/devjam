@@ -5,8 +5,8 @@ function Home() {
     return (
         <div className="container-outer-2 bg-light ">
 
-            <a href="/content" className="display-1 logo">CRYPTX</a>
-            <Wave fill='#c850c0'
+            <a href="/content" className="blueText logo">CRYPTX</a>
+            <Wave fill='#060c22'
             className ="fixed-bottom"
                 paused={false}
                 options={{
