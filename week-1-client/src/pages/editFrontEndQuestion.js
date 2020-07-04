@@ -5,8 +5,10 @@ import 'react-markdown-editor-lite/lib/index.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons'
 import { NotificationManager } from 'react-notifications';
+import { getCodingQuestion, updateCodingQuestion } from '../data/data';
 import Select from 'react-select';
-class AddFreeStyleQuestion extends React.Component {
+import history from '../components/history';
+class EditFreeStyleQuestion extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -35,14 +37,44 @@ class AddFreeStyleQuestion extends React.Component {
         this.setState({ question });
 
     }
+    componentDidMount() {
+        this.props.toggleLoading();
+        getCodingQuestion(this.props.match.params.id).then((question) => {
+            var diff = this.difficulty.find((dif)=>{
+                return dif.value===question.difficulty;
+            })
+            this.setState({ question ,selectedOption:diff});
+        }).catch((err) => {
+            NotificationManager.error("Error connecting to server..!");
+        }).finally(() => {
+            this.props.toggleLoading();
+        })
+
+    }
+    saveQuestion() {
+        this.props.toggleLoading();
+        updateCodingQuestion(this.state.question).then((question) => {
+            NotificationManager.success("Question Updated");
+            history.goBack();
+
+
+
+        }).catch((err) => {
+            NotificationManager.error("Error connecting to server..!");
+
+        }).finally(() => {
+            this.props.toggleLoading();
+
+        })
+    }
 
     render() {
         const mdParser = new MarkdownIt();
         return (
-            <div>
+            <div className="container" style={{marginTop:"80px"}}>
                 <div className="row mt-3">
                     <div className="col-8">
-                        <h5>General Details</h5>
+                        <h5>Edit Question</h5>
                         <hr />
                         <div class="form-group w-100">
                             <label for="exampleFormControlTextarea1">Question Image</label>
@@ -140,7 +172,7 @@ class AddFreeStyleQuestion extends React.Component {
                             <div className="row mt-3">
                                 <button onClick ={()=>{
                                     var question = this.state.question;
-                                    this.props.saveQuestion(question);
+                                    this.saveQuestion();
                                 }} className="btn btn-lg btn-info">Save</button>
                             </div>
 
@@ -155,4 +187,4 @@ class AddFreeStyleQuestion extends React.Component {
     }
 
 }
-export default AddFreeStyleQuestion;
+export default EditFreeStyleQuestion;

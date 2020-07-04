@@ -7,6 +7,7 @@ import { faImage } from '@fortawesome/free-solid-svg-icons'
 import { NotificationManager } from 'react-notifications';
 import Select from 'react-select';
 import { getCodingQuestion, updateCodingQuestion } from '../data/data';
+import history from '../components/history';
 class EditCodingQuestion extends React.Component {
     constructor(props) {
         super(props);
@@ -54,6 +55,7 @@ class EditCodingQuestion extends React.Component {
         this.props.toggleLoading();
         updateCodingQuestion(this.state.question).then((question) => {
             NotificationManager.success("Question Updated");
+            history.goBack();
 
 
         }).catch((err) => {
@@ -67,7 +69,10 @@ class EditCodingQuestion extends React.Component {
     componentDidMount() {
         this.props.toggleLoading();
         getCodingQuestion(this.props.match.params.id).then((question) => {
-            this.setState({ question });
+            var diff = this.difficulty.find((dif)=>{
+                return dif.value===question.difficulty;
+            })
+            this.setState({ question,selectedOption:diff });
         }).catch((err) => {
             NotificationManager.error("Error connecting to server..!");
         }).finally(() => {

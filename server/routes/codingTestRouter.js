@@ -109,15 +109,9 @@ router.post("/api/submitCode", (req, res) => {
     compiler.runTestCases(sourceCode, input, language).then((result) => {
         console.log("lol-----")
         console.log(result);
-        res.status(200).json({
-            a:"lol"
-        });
+        res.status(200).json(result);
 
-    }).catch((err) => {
-        console.log(err);
-        res.status(200).json(err);
-
-    })
+    });
 
 })
 // router.post("/api/getTestSubmission", (req, res) => {

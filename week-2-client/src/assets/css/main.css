@@ -345,10 +345,10 @@ h1,h2,h3,h4,h5,h6,h7{
   margin-right:10% !important;
 } */
 
-.btn {
+/* .btn {
   z-index: 999;
   padding-left: 30px !important;
-}
+} */
 .row{
   margin-right:0;
 }
@@ -416,11 +416,11 @@ aside {
   }
 }
 .card-header{
-  background: #4633af;
+  /* background: #4633af;
   background: -webkit-linear-gradient(-135deg, #4633af, #c850c0);
   background: -o-linear-gradient(-145deg, #4633af, #c850c0);
   background: -moz-linear-gradient(-145deg, #4633af, #c850c0);
-  background: linear-gradient(-135deg, #4633af, #c850c0);
+  background: linear-gradient(-135deg, #4633af, #c850c0); */
 
 }
 .icons{
@@ -434,11 +434,11 @@ aside {
 
 }
 input {
-  background-color: #eee !important;
+  /* background-color: #eee !important;
   border: none !important;
   padding: 12px 15px !important;
   margin: 8px 0 !important;
-  width: 100% !important;
+  width: 100% !important; */
 }
 .submit {
   /* border-radius: 20px; */

@@ -57,6 +57,47 @@ class EditCodingTest extends React.Component {
         })
 
     }
+    buttonText = {
+        draft: "Publish",
+        published: "Close",
+        closed: "View Result"
+    }
+    functionCall = {
+        draft: () => {
+            history.push(`/publish-coding-test/${this.state.test._id}`)
+            window.location.reload();
+        },
+        published: () => {
+            if (window.confirm("Are you sure you want to close the test?")) {
+
+                this.props.toggleLoading("loading....");
+                var test = this.state.test;
+                test.status = "closed";
+           
+    
+                updateCodingTest(test).then(() => {
+                    NotificationManager.success("Test Closed");
+                    this.setState({ test })
+
+                }).catch((err) => {
+                    NotificationManager.error("Cannot connect to the Server!");
+
+                }).finally(() => {
+                    this.props.toggleLoading();
+
+                })
+
+            }
+
+        },
+        closed: () => {
+            history.push(`/view-coding-results/${this.state.test._id}`);
+            window.location.reload()
+
+
+        }
+    }
+    
     saveQuestion(question) {
         this.props.toggleLoading();
         createCodingQuestion(question).then((question) => {
@@ -166,7 +207,7 @@ class EditCodingTest extends React.Component {
 
                 <div className="container">
                     <div style={{ marginTop: "90px" }} className="row">
-                        <div className="col-md-8">
+                        <div className="col-md-7">
                             <div className="col-md-10"><h4 className=" text-truncate text-topic">{this.state.test.title}</h4></div>
                             <hr className="hr" />
                             <br />
@@ -190,14 +231,16 @@ class EditCodingTest extends React.Component {
                                     })
 
                                 }} type="button" class="btn btn-outline-info">Save</button>
-                                <button type="button" class="btn btn-outline-info">Preview</button>
+                                <button onClick={() => {
+                                        history.push(`/view-coding-test/${this.state.test._id}`)
+                                        window.location.reload();
+                                    }} type="button" class="btn btn-outline-info">Preview</button>
                                 <button
                                     onClick={() => {
-                                        history.push(`/publish-coding-test/${this.state.test._id}`)
-                                        window.location.reload();
+                                       this.functionCall[this.state.test.status]();
                                     }}
 
-                                    type="button" class="btn btn-outline-info">Publish</button>
+                                    type="button" class="btn btn-outline-info">{this.buttonText[this.state.test.status]}</button>
 
                             </div>
                         </div>

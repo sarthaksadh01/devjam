@@ -1,6 +1,6 @@
 import axios from 'axios';
-var baseUrl = "https://devjam-server.herokuapp.com/api";
-// var baseUrl = "http://localhost:4000/api";
+// var baseUrl = "https://devjam-server.herokuapp.com/api";
+var baseUrl = "http://localhost:4000/api";
 async function signupWithEmailPassword(data) {
     return new Promise((resolve, reject) => {
         axios.post(`${baseUrl}/userLogin`, { data }).then((data) => {
@@ -186,6 +186,45 @@ async function getSubmissionById(id){
 
 }
 
+async function getCodingTest(id) {
+    return new Promise((resolve, reject) => {
+        axios.get(`${baseUrl}/codingTest/${id}`).then((res) => {
+            resolve(res.data);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+
+
+
+
+
+
+async function compileCode(language, sourceCode, input) {
+    return new Promise((resolve, reject) => {
+        axios.post(`${baseUrl}/compileCode/`, { language, sourceCode, input }).then((res) => {
+
+            resolve(res.data);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+
+async function submitCode(language, sourceCode, input) {
+    return new Promise((resolve, reject) => {
+        axios.post(`${baseUrl}/submitCode/`, { language, sourceCode, input }).then((res) => {
+            resolve(res.data);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+
 
 
 
@@ -206,7 +245,10 @@ export {
     getCourse,
     getAllCourses,
     getAllTests,
-    getSubmissionById
+    getSubmissionById,
+    getCodingTest,
+    submitCode,
+    compileCode
 
 
 }

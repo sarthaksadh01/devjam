@@ -58,6 +58,9 @@ import EditCodingTest from './pages/editCodingTest'
 import PublishCodingTest from './pages/publishCodingTest'
 import EditCodingQuestion from './pages/editCodingQuestion';
 import ViewCodingTest from './pages/viewCodingTest';
+import EditFreeStyleQuestion from './pages/editFrontEndQuestion';
+import ViewSingleCodingResult from './pages/viewSingleCodingResult';
+import ViewCodingResult from './pages/vieCodingResults';
 
 
 class App extends React.Component {
@@ -156,7 +159,10 @@ class App extends React.Component {
               <Route path="/edit-coding-test/:id" render={(props) => this.state.isLoggedin ?< EditCodingTest {...props} toggleLoading={this.toggleLoading} userName={this.state.userName} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
               <Route path="/publish-coding-test/:id" render={(props) => this.state.isLoggedin ?< PublishCodingTest {...props} toggleLoading={this.toggleLoading} userName={this.state.userName} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
               <Route path="/edit-coding-question/:id" render={(props) => this.state.isLoggedin ?< EditCodingQuestion {...props} toggleLoading={this.toggleLoading} userName={this.state.userName} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
+              <Route path="/edit-frontend-question/:id" render={(props) => this.state.isLoggedin ?< EditFreeStyleQuestion {...props} toggleLoading={this.toggleLoading} userName={this.state.userName} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
               <Route path="/view-coding-test/:id" render={(props) => this.state.isLoggedin ?< ViewCodingTest {...props} toggleLoading={this.toggleLoading} userName={this.state.userName} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
+              <Route path="/view-coding-test-result-single/:testId/:submissionId" render={(props) => this.state.isLoggedin ?< ViewSingleCodingResult {...props} toggleLoading={this.toggleLoading} userName={this.state.userName} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
+              <Route path="/view-coding-results/:id/" render={(props) => this.state.isLoggedin ?< ViewCodingResult {...props} toggleLoading={this.toggleLoading} userName={this.state.userName} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
             </Switch>
           </LoadingOverlay>
         </Router>

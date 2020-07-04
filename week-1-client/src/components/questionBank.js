@@ -28,9 +28,8 @@ function QuestionBank(props) {
       value: "Hard"
     },
     coding:'Coding Question',
-    frontend:'Frontend Question',
-    frontendDynamic:'Frontend Dynamic Question',
-    freeStyle:'FreeStyle frontend question',
+    freeStyleDynamic:'Frontend Dynamic Question',
+    freeStyle:'Frontend question',
   }
   function calculatePoints(question) {
     var points = parseInt(question.points);
@@ -106,7 +105,7 @@ function QuestionBank(props) {
               checked ={props.selectedQuestions.find((question)=>{
                 return question._id === props.questions[index]._id;
               })!==undefined} className="from-check-input" type={"checkbox"} /></th>
-              <td><a className="text-dark" href={`/edit-coding-question/${props.questions[index]._id}`}>{props.questions[index].title} </a></td>
+              <td><a className="text-dark" href={props.questions[index].questionType==="coding"?`/edit-coding-question/${props.questions[index]._id}`:`/edit-frontend-question/${props.questions[index]._id}`}>{props.questions[index].title} </a></td>
               <td><span className={questionProps[props.questions[index].difficulty].badge}>{questionProps[props.questions[index].difficulty].value}</span></td>
              <td>{questionProps[props.questions[index].questionType]}</td>
               <td>{calculatePoints(props.questions[index])}</td>

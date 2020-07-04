@@ -66,6 +66,34 @@ async function runTestCases(sourcecode, input = [], language) {
     })
 }
 
+// var sourceCode = `print("hello sarthak")`
+// var input = [
+//     {
+//         intput:0,
+//         output:1
+//     },
+//     {
+//         intput:0,
+//         output:1
+//     },
+//     {
+//         intput:0,
+//         output:1
+//     },
+//     {
+//         intput:0,
+//         output:1
+//     },
+//     {
+//         intput:0,
+//         output:1
+//     }
+// ]
+// runTestCases(sourceCode,input,"python").then((res)=>{
+//     console.log("code res is---")
+//     console.log(res);
+// })
+
 module.exports ={
     compileCode,
     runTestCases

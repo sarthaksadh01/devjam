@@ -38,6 +38,9 @@ function NavbarUi() {
                         <a class="nav-link" href="/tests">Tests</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="/coding-tests/">Coding Tests</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="/courses">Courses</a>
                     </li>
                     <li class="nav-item">
