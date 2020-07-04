@@ -61,6 +61,7 @@ import ViewCodingTest from './pages/viewCodingTest';
 import EditFreeStyleQuestion from './pages/editFrontEndQuestion';
 import ViewSingleCodingResult from './pages/viewSingleCodingResult';
 import ViewCodingResult from './pages/vieCodingResults';
+import QuestionBankClass from './pages/questionBank';
 
 
 class App extends React.Component {
@@ -163,6 +164,7 @@ class App extends React.Component {
               <Route path="/view-coding-test/:id" render={(props) => this.state.isLoggedin ?< ViewCodingTest {...props} toggleLoading={this.toggleLoading} userName={this.state.userName} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
               <Route path="/view-coding-test-result-single/:testId/:submissionId" render={(props) => this.state.isLoggedin ?< ViewSingleCodingResult {...props} toggleLoading={this.toggleLoading} userName={this.state.userName} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
               <Route path="/view-coding-results/:id/" render={(props) => this.state.isLoggedin ?< ViewCodingResult {...props} toggleLoading={this.toggleLoading} userName={this.state.userName} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
+              <Route path="/question-bank" render={(props) => this.state.isLoggedin ?< QuestionBankClass {...props} toggleLoading={this.toggleLoading} userName={this.state.userName} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
             </Switch>
           </LoadingOverlay>
         </Router>
