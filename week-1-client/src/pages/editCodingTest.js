@@ -247,15 +247,16 @@ class EditCodingTest extends React.Component {
 
                     </div>
                     <div className="row">
-                        <div className="col-8">
+                        <div className="col-12">
                             {/* <form className="w-100"> */}
-                            <div class="form-group w-100">
+                            <div class="form-group w-100 col-6 pl-0">
                                 <label for="exampleFormControlTextarea1">Test Title</label>
                                 <input onChange={(e) => {
                                     var test = this.state.test;
                                     test.title = e.target.value;
                                     this.setState({ test });
                                 }} value={this.state.test.title} type="text" class="form-control w-100" id="exampleFormControlInput1" placeholder="" />
+                            
                             </div>
                             <div class="form-group">
                                 <label for="exampleFormControlTextarea1">Test Instructions</label>
@@ -269,27 +270,16 @@ class EditCodingTest extends React.Component {
                                         this.setState({ test });
 
 
+
                                     }}
                                 />
                             </div>
                             {/* </form> */}
                         </div>
                     </div>
-                    <div className="row  ml-2 mt-1">
-                        <div className="col-3">
-                            <label class="form-check">
-                                <input onChange={(e) => {
-                                    var test = this.state.test;
-                                    test.isTimed = !this.state.test.isTimed;
-                                    this.setState({ test })
-
-                                }} checked={this.state.test.isTimed} class="form-check-input" type="checkbox" />
-                                <span class="form-check-label">
-                                    Timed
-                             </span>
-                            </label>
-                        </div>
-                        <div className="col-3">
+                    <br/>
+                    <div className="row  ml-2 mt-1 ">
+                    <div className="col-3">
                             <label class="form-check">
                                 <input onChange={(e) => {
                                     var test = this.state.test;
@@ -313,30 +303,49 @@ class EditCodingTest extends React.Component {
                              </span>
                             </label>
                         </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-3">
-                            {this.state.test.isTimed ? <span><input onChange={(e) => {
+                        <div className="col-5">
+                            <div class="row">
+                                <div className="col-4">
+                                <label class="form-check">
+                                <input onChange={(e) => {
+                                    var test = this.state.test;
+                                    test.isTimed = !this.state.test.isTimed;
+                                    this.setState({ test })
+
+                                }} checked={this.state.test.isTimed} class="form-check-input" type="checkbox" />
+                                <span class="form-check-label">
+                                    Timed (In Minutes)
+                             </span>
+                            </label>
+                                </div>
+
+                                <div className="col-4">
+                                {this.state.test.isTimed ? <span><input onChange={(e) => {
                                 var test = this.state.test;
                                 test.testTiming = e.target.value;
                                 this.setState({ test });
-                            }} value={this.state.test.testTiming} type="number" className="form-control" /></span> : <span></span>}
-
+                            }} value={this.state.test.testTiming} type="number" className="form-control" placeholder="Minutes"  style={{ height: "18px" }}/></span> : <span></span>}
+                                </div>
+                            </div>
+                            
                         </div>
+                        
                     </div>
+                    
+                    <br />
                     <br />
                     <div className="row">
                         <div className="col-8">
-                            <h4>Selected Questions: {this.state.test.questions.length}</h4>
-                            <hr />
+                            <h4># Selected Questions: {this.state.test.questions.length}</h4>
+                            <br/>
                         </div>
 
                     </div>
                     <div className="row">
                         {this.state.test.questions.map((question, index) => {
-                            return <div className="col-8">
-                                <div className="mb-3 card">
-                                    <div className="card-header">
+                            return <div className="col-8 ">
+                                <div className="mb-2 card shadow " >
+                                    <div className="card-body">
                                         {question.title} <button onClick={() => {
                                             var test = this.state.test;
                                             test.questions.splice(index, 1);

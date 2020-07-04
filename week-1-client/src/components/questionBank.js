@@ -52,9 +52,9 @@ function QuestionBank(props) {
     <div>
       <div className="row mb-2 mt-4">
         <div className="col-6">
-          <input onChange ={(e)=>{props.onSearchQuestion(e.target.value)}} className="form-control w-100" placeholder="Search question By name"></input>
+          <input onChange ={(e)=>{props.onSearchQuestion(e.target.value)}} className="form-control w-100" style={{ height: "23px" }}placeholder="Search question By name"></input>
         </div>
-        <div className="col-2">
+        <div className="ml-5 col-2" >
           <Select
             // value={selectedOption}
              onChange={(e) => {
@@ -85,6 +85,7 @@ function QuestionBank(props) {
 
 
         </div>
+        <br/>
       </div>
       <table class="table">
         <thead>
@@ -114,7 +115,8 @@ function QuestionBank(props) {
 
         </tbody>
       </table>
-
+      <br/>
+      <br/>
     </div>
   );
 }
