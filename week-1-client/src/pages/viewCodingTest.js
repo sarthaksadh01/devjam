@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import FrontEndChallenge from "../components/frontendChallenge";
 import Select from 'react-select';
 import BackendTask from "../components/backendChallenge";
-import { getCodingTest } from "../data/data";
+import { getCodingTest, getTestSubmission, saveTestSubmission, updateTestSubmission } from "../data/data";
 import { NotificationManager } from "react-notifications";
 import Countdown from 'react-countdown';
 import CodingTestInstructions from "../components/codingTestInstructions";
+import TestFinish from '../components/testFinish'
+import { reactLocalStorage } from 'reactjs-localstorage';
 class ViewCodingTest extends React.Component {
     constructor(props) {
         super(props);
@@ -25,22 +27,37 @@ class ViewCodingTest extends React.Component {
         var submission = this.state.submission
         submission.ans[this.state.currentIndex].submission = JSON.parse(JSON.stringify(ans));
         submission.ans[this.state.currentIndex].isSubmitted = true;
+        if (submission.ans[this.state.currentIndex].questionType !== "coding") {
+            submission.ans[this.state.currentIndex].finalMarks = this.state.test.questions[this.state.currentIndex].points;
+        }
         this.setState({ submission }, () => {
             NotificationManager.success("Submission Saved")
+
+
         });
-    }
-    updateProgress() {
+
 
     }
+
     startTest() {
         var submission = this.state.submission;
         submission.isStarted = true;
-        this.setState({ submission })
+        this.setState({ submission });
+
     }
 
     componentDidMount() {
         this.props.toggleLoading();
         getCodingTest(this.props.match.params.id).then((test) => {
+            // alert(JSON.stringify(test))
+            var user = reactLocalStorage.getObject('user', {
+                email: "",
+                imageUrl: "",
+                isLoggedin: false,
+                isSocialLogin: false
+
+            }, true);
+            var email = user.email;
             var submission = {
 
                 testId: this.props.match.params.id,
@@ -49,10 +66,13 @@ class ViewCodingTest extends React.Component {
                 ans: [],
                 isOver: false,
                 progress: 0,
-                isStarted: false
+                isStarted: false,
+                email,
+                completedOnTime: false
 
             }
-            var dropDownOptions = [];
+
+
             test.questions.forEach((question, index) => {
                 if (question.questionType === "coding") {
                     submission.ans.push({
@@ -60,7 +80,10 @@ class ViewCodingTest extends React.Component {
                         marksObtained: 0,
                         finalMarks: 0,
                         isSubmitted: false,
-                        submission: {}
+                        submission: {
+                            code: "",
+                            result: []
+                        }
 
                     })
 
@@ -83,14 +106,13 @@ class ViewCodingTest extends React.Component {
 
                 }
 
-                dropDownOptions.push({
-                    value: index,
-                    label: question.title
-                })
 
             })
-            var selectedOption = dropDownOptions[0];
-            this.setState({ test, dropDownOptions, selectedOption, submission });
+
+
+            this.setState({ test, submission });
+            // })
+
         }).catch((err) => {
             NotificationManager.error("Error connecting to server..");
         }).finally(() => {
@@ -99,9 +121,29 @@ class ViewCodingTest extends React.Component {
         })
 
     }
+    onTimeEnd(status) {
+        var left = this.state.submission.ans.filter((ans) => {
+            return ans.isSubmitted === false;
+        })
+        if (left.length === 0) status = "submit"
+        var submission = this.state.submission;
+        submission["completedOnTime"] = (status === "submit");
+        submission["isOver"] = true;
+        this.setState({ submission })
+
+    }
+
+
     render() {
+        if (this.state.submission.isOver) {
+            return <TestFinish
+                message="Test  Completed"
+                image="fa fa-check text-success"
+            />
+        }
         if (this.state.test === null) return null;
-        if (this.state.submission.isStarted === false) return <CodingTestInstructions startTest = {this.startTest} test={this.state.test} />
+        if (this.state.submission.isStarted === false) return <CodingTestInstructions startTest={this.startTest} test={this.state.test} />
+
         return (
             <div style={{ overflowX: "hidden" }}>
                 <div className="sidenav bg-dark">
@@ -109,17 +151,18 @@ class ViewCodingTest extends React.Component {
                         <Countdown
                             // intervalDelay={60000}
                             onTick={(d) => {
+
                                 var submission = this.state.submission;
                                 submission.progress += (1 / 60);
                                 this.setState({ submission })
                             }}
-                            // onComplete={() => { this.onTimeEnd("timeOver") }}
+                            onComplete={() => { this.onTimeEnd("timeOver") }}
                             date={Date.now() + (this.state.test.testTiming - this.state.submission.progress) * 60000}
                             renderer={({ hours, minutes, seconds, completed }) => {
                                 if (completed) {
                                     return null;
                                 } else {
-                                    return <button className="btn btn-outline-info w-75 text-white disabled ml-2">{hours}:{minutes}:{seconds}</button>;
+                                    return <button className="btn disabled btn-outline-success w-75 text-white">{hours}:{minutes}:{seconds}</button>;
                                 }
                             }}
                         />
@@ -142,7 +185,20 @@ class ViewCodingTest extends React.Component {
                 <div className="main">
                     <div className="row float-right">
                         <div className="col-12 float-right">
-                            <button className="btn btn-lg btn-info">End Test</button>
+                            <button onClick={() => {
+                                var left = this.state.submission.ans.filter((ans) => {
+                                    return ans.isSubmitted === false;
+                                }).length
+                                var message = "Are you sure you want to end test";
+                                if (left !== 0) {
+                                    message = `You have Not submitted ${left} questions are you sure you want to end test?`
+                                }
+                                if (window.confirm(message)) {
+                                    this.onTimeEnd("submit");
+                                }
+
+
+                            }} className="btn btn-lg btn-info">End Test</button>
                         </div>
                     </div>
 
@@ -151,11 +207,13 @@ class ViewCodingTest extends React.Component {
 
                         {this.state.test.questions[this.state.currentIndex].questionType === "coding" ?
                             <BackendTask
+                                submission={this.state.submission.ans[this.state.currentIndex].submission}
                                 updateSubmission={this.updateSubmission}
                                 question={this.state.test.questions[this.state.currentIndex]}
 
                             />
                             : <FrontEndChallenge
+                                submission={this.state.submission.ans[this.state.currentIndex].submission}
                                 question={this.state.test.questions[this.state.currentIndex]}
                                 updateSubmission={this.updateSubmission}
 

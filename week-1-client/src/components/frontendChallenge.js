@@ -22,13 +22,15 @@ class FrontEndChallenge extends Component {
 
     }
 
-    componentDidUpdate() {
-        this.runCode();
-    }
-
     componentDidMount() {
-
+        const {html,css,js} = this.props.submission;
+        // alert(JSON.stringify(this.props.submission))
+        this.setState({html,css,js},()=>{
+            this.runCode();
+        })
     }
+
+  
 
 
 
@@ -63,6 +65,10 @@ class FrontEndChallenge extends Component {
         document.write(documentContents);
         document.close();
     };
+
+    componentDidUpdate() {
+        this.runCode();
+      }
 
     render() {
         const { html, js, css } = this.state;

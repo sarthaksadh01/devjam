@@ -592,7 +592,7 @@ async function compileCode(language, sourceCode, input) {
 async function submitCode(language, sourceCode, input) {
     return new Promise((resolve, reject) => {
         axios.post(`${baseUrl}/submitCode/`, { language, sourceCode, input }).then((res) => {
-            alert(JSON.stringify(res));
+            // alert(JSON.stringify(res));
             resolve(res.data);
         }).catch((err) => {
             reject(err);
