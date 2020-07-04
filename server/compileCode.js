@@ -53,6 +53,7 @@ async function runTestCases(sourcecode, input = [], language) {
             var testCase = input[i];
             try {
                 var res = await compileCode(sourcecode, testCase.input, language);
+                if(res.stderr==='')res.stdout = res.stdout.trim();
                 output.push(res);
             } catch (error) {
                 output.push(err);

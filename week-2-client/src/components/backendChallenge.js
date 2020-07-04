@@ -35,6 +35,7 @@ class BackendTask extends React.Component {
 
     }
     componentDidMount() {
+        // alert(JSON.stringify(this.props.question))
         this.setState({ code: this.props.submission.code });
 
     }
@@ -247,10 +248,13 @@ class BackendTask extends React.Component {
                                         </thead>
                                         <tbody>
                                             {this.state.codeSubmissionResult.map((result, index) => {
+                                                var string = `${result.stdout} - ${this.props.question.testCases[index].output}`;
+                                                
+
                                                 var status;
                                                 var points = 0;
                                                 if (result.stderr === '') {
-                                                    if (result.stdout === this.props.question.testCases[index].output) {
+                                                    if (result.stdout.trim() === this.props.question.testCases[index].output.trim()) {
                                                         status = <i className="fa fa-check text-success"></i>;
                                                         points = this.props.question.testCases[index].points
 
