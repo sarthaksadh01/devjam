@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { getTest, getUsers, getsubmissionByTestId, releaseResult, getCodingTest } from '../data/data'
+import { getTest, getUsers, getsubmissionByTestId, releaseResult, getCodingTest, releaseCodingResult } from '../data/data'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCopy } from '@fortawesome/free-solid-svg-icons'
 const ReactMarkdown = require('react-markdown')
@@ -50,7 +50,7 @@ class ViewCodingResult extends React.Component {
 
 
             })
-            releaseResult(this.state.test, this.state.submissions).then((doc) => {
+            releaseCodingResult(this.state.test, this.state.submissions).then((doc) => {
                 modifiedUser.forEach((user) => {
                     user.testSubmission.isReleased = true;
 
@@ -69,7 +69,7 @@ class ViewCodingResult extends React.Component {
         else {
             var submissions = [];
             submissions.push(this.state.modifiedUser[index].testSubmission);
-            releaseResult(this.state.test, submissions).then((doc) => {
+            releaseCodingResult(this.state.test, submissions).then((doc) => {
                 var modifiedUser = this.state.modifiedUser;
                 modifiedUser[index].testSubmission.isReleased = true;
                 this.setState({ modifiedUser });
@@ -404,17 +404,14 @@ class ViewCodingResult extends React.Component {
 
                     <div class="title text-dark ">
                         <a href={undefined}><h2 class="details text-monospace inline-block">{this.state.test.title}</h2></a>
-                        <h3 class="text-muted float-right">{this.state.isAllReleased ? <div></div> : <button className="btn btn-lg text-white rounded-pill bg-info">Release All</button>} </h3>
+                        <h3 class="text-muted float-right">{this.state.isAllReleased ? <div></div> : <button onClick ={()=>{
+                            this.onClickreleaseResult("sarthak",true)
+                        }} className="btn btn-lg text-white rounded-pill bg-info">Release All</button>} </h3>
                     </div>
                     <hr />
                     <div class="mt-5">
                         <div class="card shadow-lg rounded p-3">
-                            <div class="px-3">
-                                <h5 class="details2 text-monospace inline-block">Description : </h5>
-                                <p class="text-muted inline-block">
-                                    <ReactMarkdown escapeHtml={false} source={this.state.test.desc} />
-                                </p>
-                            </div>
+                        
 
                             <div class="px-3">
                                 <h5 class="details2 text-monospace inline-block"> Created Date : </h5>
@@ -423,7 +420,7 @@ class ViewCodingResult extends React.Component {
 
                             <div class="px-3">
                                 <h5 class="details2 text-monospace inline-block">Points : </h5>
-                                <p class="text-muted inline-block"> {this.state.test.questions.length}  Points</p>
+                                <p class="text-muted inline-block"> {this.calculateTotalMarks()}  Points</p>
                             </div>
                             <div class="px-3">
                                 <h5 class="details2 text-monospace inline-block">Duration : </h5>

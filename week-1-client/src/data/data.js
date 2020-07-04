@@ -554,6 +554,18 @@ async function updateCodingQuestion(data) {
 
 }
 
+async function releaseCodingResult(test, submissions) {
+    return new Promise((resolve, reject) => {
+        axios.post(`${baseUrl}/releaseCodingResult/`, { test, submissions }).then((res) => {
+            resolve(res.data);
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+
+}
+
+
 
 async function publishCodingTest(data) {
     return new Promise((resolve, reject) => {
@@ -580,6 +592,7 @@ async function compileCode(language, sourceCode, input) {
 async function submitCode(language, sourceCode, input) {
     return new Promise((resolve, reject) => {
         axios.post(`${baseUrl}/submitCode/`, { language, sourceCode, input }).then((res) => {
+            alert(JSON.stringify(res));
             resolve(res.data);
         }).catch((err) => {
             reject(err);
@@ -642,5 +655,6 @@ export {
     getAllCodingQuestions,
     publishCodingTest,
     compileCode,
-    submitCode
+    submitCode,
+    releaseCodingResult
 }

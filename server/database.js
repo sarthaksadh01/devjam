@@ -22,6 +22,7 @@ const Courses = require('./models/courses')
 const CodingTests = require("./models/codingTestModel");
 const CodingTestQuestion = require('./models/codingQuestions')
 const codingTestHtml = require('./htmlTemplate').codingTestHtml
+const codingTestResultHtml = require('./htmlTemplate').codingTestResultHtml
 
 var transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -642,7 +643,7 @@ function sendResultMail(submissions, test) {
 function resultNotification(test, submissions) {
     submissions.forEach((submission) => {
         var title = `Result Released for test ${test.title}`;
-        var text = "You have not submitted the test <br/> your final score is 0";
+        var text = "You have not submitted the test  your final score is 0";
         var email = submission.email;
         var isUrl = false;
         var url = ""
@@ -964,7 +965,7 @@ function sendCodingChallengeMail(test) {
             from: 'cryptxsadh@gmail.com', // sender address
             to: email, // list of receivers
             subject: 'New Coding Test Released', // Subject line
-            html: codingTestHtml(`http://hiii-15fdf.web.app/coding-challenge/${test._id}`)// plain text body
+            html: codingTestHtml(`http://hiii-15fdf.web.app/coding-test/${test._id}`)// plain text body
         };
         transporter.sendMail(mailOptions, function (err, info) {
             if (err)
@@ -975,6 +976,93 @@ function sendCodingChallengeMail(test) {
     })
 
 
+}
+function sendCodingChallengeMail2(test,submissions) {
+    submissions.forEach((submission) => {
+        const mailOptions = {
+            from: 'cryptxsadh@gmail.com', // sender address
+            to: submission.email, // list of receivers
+            subject: `Test Result Released Marks : ${calculateFinalMarks2(submission,test.questions)}`, // Subject line
+            html: submission.isStarted?codingTestResultHtml(`http://hiii-15fdf.web.app/coding-test-result/${submission._id}`):codingTestResultHtml(`http://hiii-15fdf.web.app/notifications`)
+        };
+        transporter.sendMail(mailOptions, function (err, info) {
+            if (err)
+                console.log(err)
+            else
+                console.log(info);
+        });
+
+    })
+ 
+
+}
+function resultNotification2(test, submissions) {
+    submissions.forEach((submission) => {
+        var title = `Result Released for test ${test.title}`;
+        var text = "You have not submitted the test  your final score is 0";
+        var email = submission.email;
+        var isUrl = false;
+        var url = ""
+        if (submission.isReleased) return;
+        if (submission.isStarted === true) {
+            isUrl = true;
+            text = `Your Test score is ${calculateFinalMarks2(submission,test.questions)}`;
+            url = `/coding-test-result/${submission._id}`;
+        }
+        var _notification = new Notifications({
+            title,
+            text,
+            email,
+            isUrl,
+            url
+        });
+        _notification.save();
+
+    })
+
+}
+
+function calculateFinalMarks2(submission,questions) {
+   
+    if (submission.isStarted === false) return 0;
+    var marks = 0;
+    submission.ans.forEach((ans, index) => {
+        if (!ans.isSubmitted) return;
+        if (ans.questionType === "coding") {
+            ans.submission.result.forEach((output, index2) => {
+                if (output.stderr === '') {
+                    if (output.stdout === questions[index].testCases[index2].output)
+                        marks += parseInt(questions[index].testCases[index2].points);
+                }
+            })
+
+        }
+        else {
+            marks += parseInt(ans.finalMarks);
+        }
+    })
+    return marks
+}
+
+function releaseResult2(test, submissions) {
+    resultNotification2(test, submissions)
+    sendCodingChallengeMail2(test, submissions);
+    submissions.forEach((submission) => {
+
+        if (submission.isReleased === false) {
+            submission.isReleased = true;
+            if (submission.isStarted) {
+                updateTestSubmission(submission)
+
+            }
+            else {
+                saveTestSubmission(submission);
+            }
+
+
+        }
+
+    })
 }
 
 
@@ -1037,7 +1125,8 @@ module.exports = {
     getQuestion,
     updateQueston,
     getAllQuestions,
-    publishCodingTest
+    publishCodingTest,
+    releaseResult2
 
 
 }

@@ -1,12 +1,13 @@
 
 import React from 'react';
-import { getsubmissionByTestId, getTest, updateTestSubmission, getUsers, releaseResult, getCodingTest } from '../data/data';
+import { getsubmissionByTestId, getTest, updateTestSubmission, getUsers, releaseCodingResult, getCodingTest } from '../data/data';
 import Mcq from '../components/mcq';
 import McqGrid from '../components/mcqGrid'
 import Paragraph from '../components/paragraph'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCopy } from '@fortawesome/free-solid-svg-icons'
+import { faCopy, faEllipsisH } from '@fortawesome/free-solid-svg-icons'
 import TestFinish from '../components/testFinish';
+import Collapse from 'react-bootstrap/Collapse'
 class ViewSingleCodingResult extends React.Component {
     constructor(props) {
         super(props)
@@ -97,11 +98,53 @@ class ViewSingleCodingResult extends React.Component {
         })
 
     }
+    runCode = (html, css, js, ref) => {
+        const documentContents = `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta http-equiv="X-UA-Compatible" content="ie=edge">
+          <title>Document</title>
+          <style>
+            ${css}
+          </style>
+        </head>
+        <body>
+          ${html}
+
+          <script type="text/javascript">
+            ${js}
+          </script>
+        </body>
+        </html>
+      `;
+        const iframe = <iframe
+        srcDoc = {documentContents}
+
+        width="540" height="450"></iframe>;
+
+        return iframe;
+
+    };
     calculateMarks(submission) {
         if (submission.isStarted === false) return -1;
         var marks = 0;
         submission.ans.forEach((ans, index) => {
-            marks += ans.marksObtained;
+            if (!ans.isSubmitted) return;
+            if (ans.questionType === "coding") {
+                ans.submission.result.forEach((output, index2) => {
+                    if (output.stderr === '') {
+                        if (output.stdout === this.state.test.questions[index].testCases[index2].output)
+                            marks += parseInt(this.state.test.questions[index].testCases[index2].points);
+                    }
+                })
+
+            }
+            else {
+                marks += parseInt(this.state.test.questions[index].points);
+            }
         })
         return marks
     }
@@ -109,7 +152,19 @@ class ViewSingleCodingResult extends React.Component {
         if (submission.isStarted === false) return -1;
         var marks = 0;
         submission.ans.forEach((ans, index) => {
-            marks += ans.finalMakrs;
+            if (!ans.isSubmitted) return;
+            if (ans.questionType === "coding") {
+                ans.submission.result.forEach((output, index2) => {
+                    if (output.stderr === '') {
+                        if (output.stdout === this.state.test.questions[index].testCases[index2].output)
+                            marks += parseInt(this.state.test.questions[index].testCases[index2].points);
+                    }
+                })
+
+            }
+            else {
+                marks += parseInt(ans.finalMarks);
+            }
         })
         return marks
     }
@@ -161,6 +216,46 @@ class ViewSingleCodingResult extends React.Component {
 
     }
 
+    caluclateCodingMarks(ans, question) {
+        var marks = 0;
+        ans.submission.result.forEach((output, index) => {
+            if (output.stderr === '') {
+                if (output.stdout === question.testCases[index].output)
+                    marks += parseInt(question.testCases[index].points);
+            }
+        })
+        return marks;
+
+
+    }
+    testCasesPassed(ans, question) {
+        var marks = 0;
+        ans.submission.result.forEach((output, index) => {
+            if (output.stderr === '') {
+                if (output.stdout === question.testCases[index].output)
+                    marks++;
+            }
+        })
+        return marks;
+    }
+
+    calculateTotalMarks(){
+        var marks = 0;
+        this.state.test.questions.forEach((question)=>{
+            if(question.questionType === "coding"){
+                question.testCases.forEach((testCase)=>{
+                    marks += parseInt(testCase.points);
+                })
+ 
+            }
+            else{
+                marks += parseInt(question.points);
+            }
+
+        })
+        return marks;
+    }
+
 
     render() {
 
@@ -176,13 +271,13 @@ class ViewSingleCodingResult extends React.Component {
             <div style={{ marginTop: "80px" }} className="container">
                 <div class="ml-3 mt-5 ">
                     <div className="row">
-                        <div className="col-5">
+                        <div className="col-4">
                             <div class="dropdown ml-4 ">
                                 <button class="btn shadow dropdown-toggle  bgWhite" type="button" id="dropdownMenuButton"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <img style={{ height: "30px" }} class="rounded-circle float-left" src={this.state.modifiedUsers[this.state.currentIndex].imageUrl} />
                                     <span class="details mx-3 ">{this.state.modifiedUsers[this.state.currentIndex].name}</span>
-                                    <span class="badge badge-primary ml-1 text-white float-right ">{this.calculateFinalMarks(this.state.modifiedUsers[this.state.currentIndex].testSubmission)}/{this.state.test.questions.length}</span>
+                                    <span class="badge badge-primary ml-1 text-white float-right ">{this.calculateFinalMarks(this.state.modifiedUsers[this.state.currentIndex].testSubmission)}/{this.calculateTotalMarks()}</span>
                                     <span class="badge badge-info text-white float-right ">{message}</span>
 
                                 </button>
@@ -198,7 +293,7 @@ class ViewSingleCodingResult extends React.Component {
 
                                             <img style={{ height: "30px" }} class="rounded-circle" src={user.imageUrl} />
                                             <span class="details mr-2 ml-2">{user.name}</span>
-                                            <span class="badge badge-primary ml-1 text-white float-right ">{this.calculateFinalMarks(user.testSubmission)}/{this.state.test.questions.length}</span>
+                                            <span class="badge badge-primary ml-1 text-white float-right ">{this.calculateFinalMarks(user.testSubmission)}/{this.calculateTotalMarks()}</span>
                                             <span class="badge badge-info text-white float-right ">{msg}</span>
                                         </a>
                                             <hr />
@@ -209,7 +304,7 @@ class ViewSingleCodingResult extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-3">
+                        <div className="col-2">
                             <h3 class="details2 ">
                                 {this.state.currentIndex != 0 ? <i onClick={() => { this.moveUser("left") }} class="fa fa-chevron-left mr-2"></i> : <i></i>}
                                 {this.state.currentIndex != (this.state.modifiedUsers.length - 1) ? <i onClick={() => { this.moveUser("right") }} class="fa fa-chevron-right"></i> : <i></i>}
@@ -219,65 +314,20 @@ class ViewSingleCodingResult extends React.Component {
                             <label>Auto Graded</label>
                             <h5 class="details2 ">
 
-                                {this.calculateMarks(this.state.modifiedUsers[this.state.currentIndex].testSubmission)}/{this.state.test.questions.length}
+                                {this.calculateMarks(this.state.modifiedUsers[this.state.currentIndex].testSubmission)}/{this.calculateTotalMarks()}
                             </h5>
                         </div>
                         <div className="col-2">
                             <label>Final Marks</label>
                             <h5 class="details2 ">
 
-                                {this.calculateFinalMarks(this.state.modifiedUsers[this.state.currentIndex].testSubmission)}/{this.state.test.questions.length}
+                                {this.calculateFinalMarks(this.state.modifiedUsers[this.state.currentIndex].testSubmission)}/{this.calculateTotalMarks()}
                             </h5>
                         </div>
                     </div>
 
-                    <div className="row mb-3 mt-3">
-                        <div className="col-8">
-                            <div className="row">
-                                <button style={{ width: "160px" }} onClick={() => {
-                                    var isSort = this.state.isSort;
-                                    this.setState({ isSort: !isSort });
-
-                                }} class="filter btn btn-lg ml-5  text-white"
-                                >
-                                    <i class="fa fa-filter mr-2"></i>
-                                Filter By
-                            </button>
-                            </div>
-                            <div className="row">
-                                {this.state.isSort ?
-                                    <div id="sort" class="sort-filter">
-                                        <div class="card rounded shadow p-3 mx-5 mt-1">
-                                            <label class="form-check">
-                                                <input o checked={this.state.sort === "Right"} value="Right" onChange={(e) => { this.onSortChange(e.target.value) }} class="form-check-input" type="radio" />
-                                                <span class="form-check-label">
-                                                    Right
-                                    </span>
-                                            </label>
-                                            <label class="form-check">
-                                                <input checked={this.state.sort === "Wrong"} value="Wrong" onChange={(e) => { this.onSortChange(e.target.value) }} class="form-check-input" type="radio" />
-                                                <span class="form-check-label">
-                                                    Wrong
-                                    </span>
-                                            </label>
-                                            <label class="form-check">
-                                                <input checked={this.state.sort === "Not Submitted"} onChange={(e) => { this.onSortChange(e.target.value) }} value="Not Submitted" class="form-check-input" type="radio" />
-                                                <span class="form-check-label">
-                                                    Not Submitted
-                                    </span>
-                                            </label>
-                                            <label class="form-check">
-                                                <input checked={this.state.sort === "Clear"} onChange={this.onSortChange} value="Clear" class="form-check-input" type="radio" />
-                                                <span class="form-check-label">
-                                                    Clear
-                                    </span>
-                                            </label>
-
-                                        </div>
-                                    </div>
-                                    : <div></div>
-                                }
-                            </div>
+                    <div className="row mb-3 mt-4">
+                        <div className="col-7">
                         </div>
                         <div className="col-4 text-right float-right">
                             <div className="row text-right float-right" >
@@ -294,7 +344,7 @@ class ViewSingleCodingResult extends React.Component {
                                         onClick={() => {
                                             var submissions = [];
                                             submissions.push(this.state.modifiedUsers[this.state.currentIndex].testSubmission);
-                                            releaseResult(this.state.test, submissions).then((doc) => {
+                                            releaseCodingResult(this.state.test, submissions).then((doc) => {
                                                 var modifiedUsers = this.state.modifiedUsers;
                                                 modifiedUsers[this.state.currentIndex].testSubmission.isReleased = true;
                                                 this.setState({ modifiedUsers });
@@ -329,6 +379,7 @@ class ViewSingleCodingResult extends React.Component {
                     <ol>
                         {this.state.queryAns.map((index) => {
                             var value = this.state.modifiedUsers[this.state.currentIndex].testSubmission.ans[index];
+                            var question = this.state.test.questions[index];
                             var icon = "";
 
                             if (value.isSubmitted) {
@@ -337,7 +388,167 @@ class ViewSingleCodingResult extends React.Component {
 
                             }
 
-                            return <div></div>
+                            return <div>
+                                {value.questionType === "coding" ?
+                                    <div className="row">
+                                        <div className="col-12">
+                                            <div className="card mb-3">
+                                                <div className="card-header">
+                                                    {index + 1}.  {question.title}
+                                                </div>
+                                                <div className="card-body">
+                                                    <div className="row">
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col"></th>
+                                                                    <th scope="col">Test Case Passed</th>
+                                                                    <th scope="col">Points Awarded</th>
+                                                                    <th scope="col">Provide Feedback</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th scope="row"></th>
+                                                                    <td>{this.testCasesPassed(value, question)}/{question.testCases.length}</td>
+                                                                    <td>{this.caluclateCodingMarks(value, question)}</td>
+                                                                    <td><input value={value.feedBack}
+                                                                        onChange={(e) => {
+                                                                            var modifiedUsers = this.state.modifiedUsers;
+                                                                            var currentIndex = this.state.currentIndex;
+                                                                            modifiedUsers[currentIndex].testSubmission.ans[index].feedBack = e.target.value;
+                                                                            this.setState({ modifiedUsers }, () => {
+                                                                                this.onClickUpdate(modifiedUsers[currentIndex].testSubmission);
+                                                                            })
+
+
+                                                                        }} className="w-75 form-control" /></td>
+                                                                </tr>
+
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+                                                </div>
+                                                <div className="card-footer"><button
+                                                    onClick={() => { this.setState({ isOpen: !this.state.isOpen }) }}
+                                                    aria-controls="example-collapse-text"
+                                                    aria-expanded={this.state.isOpen} className="btn btn-outline-info mb-3"><FontAwesomeIcon icon={faEllipsisH} /></button>
+                                                    <Collapse in={this.state.isOpen}>
+                                                        <div className="row">
+                                                            <table class="table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th scope="col"></th>
+                                                                        <th scope="col">Test Case</th>
+                                                                        <th scope="col">Expected Output</th>
+                                                                        <th scope="col">Output</th>
+                                                                        <th scope="col">Status</th>
+                                                                        <th scope="col">Points Awarded</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    {value.submission.result.map((result, index) => {
+                                                                        var output = result.stderr === "" ? result.stdout : result.errorType + " error";
+                                                                        var status = "";
+                                                                        if (result.stderr === "" && result.stdout === question.testCases[index].output) status = <i className="fa fa-check text-success"></i>;
+                                                                        else status = <i className="fa fa-times text-danger"></i>;
+                                                                        var marks = 0;
+                                                                        if (result.stderr === "" && result.stdout === question.testCases[index].output) marks = question.testCases[index].points
+
+
+
+                                                                        return <tr>
+                                                                            <th scope="row"></th>
+                                                                            <td>Test Case  {index + 1}</td>
+                                                                            <td><textarea className="text-center  mr-2">{question.testCases[index].output}</textarea></td>
+                                                                            <td><textarea className="text-center mr-2">{output}</textarea></td>
+                                                                            <td>{status}</td>
+                                                                            <td>{marks}/{question.testCases[index].points}</td>
+                                                                        </tr>
+                                                                    })}
+
+
+                                                                </tbody>
+                                                            </table>
+
+                                                        </div>
+                                                    </Collapse>
+
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div> : <div className="row">
+
+                                        <div className="col-12">
+                                            <div className="card mb-3">
+                                                <div className="card-header">
+                                                    {index + 1}.  {question.title}
+                                                </div>
+                                                <div class="card-body">
+                                                    <div className="row">
+                                                        <div className="col-5">
+                                                            <img className="img-fluid" style={{ maxHeight: "400px" }} src={this.state.test.questions[index].imageUrl} />
+
+                                                        </div>
+                                                        <div className="col-5">
+                                                            {/* <iframe className="img-fluid" title="result"  ref={index} /> */}
+                                                            {this.runCode(value.submission.html, value.submission.css, value.submission.js, index)}
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="card-footer">
+                                                    <div className="row">
+                                                        <div className="col-2">
+                                                            <button className="btn btn-outline-info">
+                                                                View Code
+                                                            </button>
+                                                        </div>
+                                                        <div className="col-3">
+                                                            <input onChange={(e) => {
+                                                                var modifiedUsers = this.state.modifiedUsers;
+                                                                var currentIndex = this.state.currentIndex;
+                                                                modifiedUsers[currentIndex].testSubmission.ans[index].feedBack = e.target.value;
+                                                                this.setState({ modifiedUsers }, () => {
+                                                                    this.onClickUpdate(modifiedUsers[currentIndex].testSubmission);
+                                                                })
+
+
+                                                            }} value ={value.feedBack} className="form-control" placeholder="Give Feedback" />
+                                                        </div>
+                                                        <div className="col-1">
+                                                            <input onChange={(e) => {
+                                                                var marks = parseInt(e.target.value);
+                                                                if(marks<0)marks = 0;
+                                                                if(marks>question.poitns)marks = question.points
+                                                                var modifiedUsers = this.state.modifiedUsers;
+                                                                var currentIndex = this.state.currentIndex;
+                                                                modifiedUsers[currentIndex].testSubmission.ans[index].finalMarks = marks;
+                                                                this.setState({ modifiedUsers }, () => {
+                                                                    this.onClickUpdate(modifiedUsers[currentIndex].testSubmission);
+                                                                })
+
+
+                                                            }}
+                                                                value={value.finalMarks} type="number" className="form-control" placeholder="Marks" />
+                                                        </div>
+                                                        <div className="col-1">/{question.points}</div>
+                                                    </div>
+
+                                                </div>
+
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
 
                             // return <li>
                             //     <div className="row mt-2 text-left">
@@ -402,7 +613,7 @@ class ViewSingleCodingResult extends React.Component {
                             //                                 })
 
                             //                             }}
-                                                        
+
                             //                             className="btn btn-danger mt-2 text-white">Delete</button>
 
                             //                     </div>
@@ -471,88 +682,11 @@ export default ViewSingleCodingResult;
 
 
 
-// import React from 'react';
-// import Collapse from 'react-bootstrap/Collapse'
-// class ViewSingleCodingResult extends React.Component {
-//     constructor(props) {
-//         super(props)
-//         this.state = {
-//             isOpen: false
-//         }
-//     }
-//     componentDidMount() {
 
-//     }
 //     render() {
 //         return (
 //             <div style={{ marginTop: "80px" }} className="container">
-//                 <div className="row">
-//                     <div className="col-12">
-//                         <div className="card">
-//                             <div className="card-header">
-//                                 question title
-//                             </div>
-//                             <div className="card-body">
-//                                 <div className="row">
-//                                     <table class="table">
-//                                         <thead>
-//                                             <tr>
-//                                                 <th scope="col"></th>
-//                                                 <th scope="col">Test Case Passed</th>
-//                                                 <th scope="col">Points Awarded</th>
-//                                                 <th scope="col">Provide Feedback</th>
-//                                             </tr>
-//                                         </thead>
-//                                         <tbody>
-//                                             <tr>
-//                                                 <th scope="row"></th>
-//                                                 <td>Mark</td>
-//                                                 <td>Otto</td>
-//                                                 <td><input className="w-75 form-control" /></td>
-//                                             </tr>
 
-//                                         </tbody>
-//                                     </table>
-
-//                                 </div>
-//                             </div>
-//                             <div className="card-footer"><button 
-//                                 onClick={() => {this.setState({isOpen:!this.state.isOpen})}}
-//                                 aria-controls="example-collapse-text"
-//                                 aria-expanded={this.state.isOpen} className="btn btn-outline-info mb-3">View More</button>
-//                                 <Collapse in={this.state.isOpen}>
-//                                 <div className="row">
-//                                     <table class="table">
-//                                         <thead>
-//                                             <tr>
-//                                                 <th scope="col"></th>
-//                                                 <th scope="col">Test Case</th>
-//                                                 <th scope="col">Expected Output</th>
-//                                                 <th scope="col">Output</th>
-//                                                 <th scope="col">Status</th>
-//                                                 <th scope="col">Points Awarded</th>
-//                                             </tr>
-//                                         </thead>
-//                                         <tbody>
-//                                             <tr>
-//                                                 <th scope="row"></th>
-//                                                 <td>Mark</td>
-//                                                 <td>Otto</td>
-//                                                 <td></td>
-//                                             </tr>
-
-//                                         </tbody>
-//                                     </table>
-
-//                                 </div>
-//                                 </Collapse>
-
-//                             </div>
-
-
-//                         </div>
-//                     </div>
-//                 </div>
 
 
 //                 <div className="row">

@@ -68,13 +68,16 @@ class BackendTask extends React.Component {
     onclickSubmitCode() {
         this.setState({ isCodeRunning: true, showCodeRunResult: false, showCodeSubmitResult: false });
         submitCode(this.state.selectedLanguage.value, this.state.code, this.props.question.testCases).then((data) => {
+            // alert(JSON.stringify(data));
             var submission = {
                 code: this.state.code,
                 result: data
             }
-            this.props.updateSubmission(submission);
-            this.setState({ isCodeRunning: false, codeSubmissionResult: data, showCodeSubmitResult: true })
-            alert(JSON.stringify(data))
+            // this.props.updateSubmission(submission);
+            this.setState({ isCodeRunning: false, codeSubmissionResult: data, showCodeSubmitResult: true },()=>{
+
+                this.props.updateSubmission(submission);
+            })
         }).catch((err) => {
             alert(JSON.stringify(err))
 
@@ -247,9 +250,9 @@ class BackendTask extends React.Component {
                                                 var status;
                                                 var points = 0;
                                                 if (result.stderr === '') {
-                                                    if (result.stdout === this.props.testCases[index].output) {
+                                                    if (result.stdout === this.props.question.testCases[index].output) {
                                                         status = <i className="fa fa-check text-success"></i>;
-                                                        points = this.props.testCases[index].points
+                                                        points = this.props.question.testCases[index].points
 
                                                     }
                                                     else {

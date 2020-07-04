@@ -112,6 +112,7 @@ class App extends React.Component {
             <Route path="/courses/" render={(props) => this.state.isLoggedin ? <Allcourses {...props} toggleLoading={this.toggleLoading} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
             <Route path="/result/:id" render={(props) => this.state.isLoggedin ? <Result {...props} toggleLoading={this.toggleLoading} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
             <Route path="/coding-test/:id" render={(props) => this.state.isLoggedin ? <ViewCodingTest {...props} toggleLoading={this.toggleLoading} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
+            <Route path="/coding-test-result/:id" render={(props) => this.state.isLoggedin ? <ViewCodingTest {...props} toggleLoading={this.toggleLoading} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
           </Switch>
         </LoadingOverlay>
       </Router>

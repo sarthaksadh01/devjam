@@ -114,81 +114,14 @@ router.post("/api/submitCode", (req, res) => {
     });
 
 })
-// router.post("/api/getTestSubmission", (req, res) => {
-//     db.getTestSubmission(req.body.email, req.body.testId).then((tests) => {
-//         res.status(200).json(tests);
-//     }).catch((err) => {
-//         res.status(500).json(err);
-//     })
-// })
-// router.post("/api/updateTestSubmission", (req, res) => {
-//     db.updateTestSubmission(req.body.data).then((tests) => {
-//         res.status(200).json(tests);
-//     }).catch((err) => {
-//         res.status(500).json(err);
-//     })
-// })
-// router.post("/api/saveTestSubmission", (req, res) => {
-//     console.log(req.body.data)
-//     db.saveTestSubmission(req.body.data).then((tests) => {
-//         res.status(200).json(tests);
-//     }).catch((err) => {
-//         res.status(500).json(err);
-//     })
-// })
-// router.get("/api/submission", (req, res) => {
-//     db.getTestSubmissionsAll().then((tests) => {
-//         res.status(200).json(tests);
-//     }).catch((err) => {
-//         res.status(500).json(err);
-//     })
 
-// })
-// router.get("/api/submission/:id", (req, res) => {
-//     db.getTestSubmissionById(req.params.id).then((tests) => {
-//         res.status(200).json(tests);
-//     }).catch((err) => {
-//         res.status(500).json(err);
-//     })
+router.post("/api/releaseCodingResult",(req,res)=>{
+    // console.log(req.body.submissions)
+    db.releaseResult2(req.body.test,req.body.submissions);
+    res.status(200).send("done");
 
-// })
-// router.get("/api/submissionByTestId/:id", (req, res) => {
-//     db.getTestSubmissionByTestId(req.params.id).then((tests) => {
-//         res.status(200).json(tests);
-//     }).catch((err) => {
-//         res.status(500).json(err);
-//     })
+})
 
-// })
-// router.post("/api/getNotification",(req,res)=>{
-//     db.getNotification(req.body.email).then((docs) => {
-//         res.status(200).json(docs);
-//     }).catch((err) => {
-//         res.status(500).json(err);
-//     })
 
-// })
-// router.post("/api/updateNotification",(req,res)=>{
-//     db.updateNotification(req.body.data).then((docs) => {
-//         res.status(200).json(docs);
-//     }).catch((err) => {
-//         res.status(500).json(err);
-//     })
-
-// })
-// router.post("/api/releaseResult",(req,res)=>{
-//     db.releaseResult(req.body.test,req.body.submissions);
-//     res.status(200).send("done");
-
-// })
-
-// router.get("/api/submissionPagination/:id",(req,res)=>{
-//     var page = Math.abs(parseInt(req.params.id));
-//     db.testSubmissionPagination(page).then((docs)=>{
-//         res.json(docs)
-//     }).catch((err)=>{
-//         res.json(err);
-//     })
-// })
 
 module.exports = router
