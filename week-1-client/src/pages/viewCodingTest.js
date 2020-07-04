@@ -177,7 +177,9 @@ class ViewCodingTest extends React.Component {
                         return <div>
                             <a onClick={(e) => {
                                 e.preventDefault();
-                                this.setState({ currentIndex: index });
+                                this.setState({ currentIndex: index },()=>{
+                                    this.forceUpdate()
+                                });
                             }} className={`${color}  text-truncate`}>{index + 1}. {question.title}</a>
 
                         </div>

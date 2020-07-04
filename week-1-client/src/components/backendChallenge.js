@@ -9,6 +9,19 @@ import "codemirror/mode/css/css";
 import "codemirror/mode/javascript/javascript";
 import "codemirror/mode/clike/clike"
 import "codemirror/mode/python/python"
+import "codemirror/mode/dart/dart"
+import 'codemirror/addon/hint/show-hint';
+import 'codemirror/addon/hint/javascript-hint';
+import 'codemirror/addon/hint/show-hint.css';
+import 'codemirror/addon/hint/anyword-hint';
+import 'codemirror/keymap/sublime';
+import 'codemirror/addon/edit/closebrackets';
+import 'codemirror/addon/edit/closetag';
+import 'codemirror/addon/fold/foldcode';
+import 'codemirror/addon/fold/foldgutter';
+import 'codemirror/addon/fold/brace-fold';
+import 'codemirror/addon/fold/comment-fold';
+import 'codemirror/addon/fold/foldgutter.css';
 import { compileCode, submitCode } from "../data/data";
 import ReactLoading from 'react-loading';
 const ReactMarkdown = require('react-markdown')
@@ -28,14 +41,23 @@ class BackendTask extends React.Component {
             codeRunOutput: "",
             isCodeRunning: false,
             showCodeSubmitResult: false,
-            selectedLanguage: { value: 'cpp', label: 'C++', mode: "c-like" },
+            selectedLanguage: { value: 'cpp', label: 'C++', mode: "clike" },
             codeSubmissionResult: []
 
         }
 
     }
+    javaCode = `
+    // "static void main" must be defined in a public class.
+   // Do not change the default java class name
+public class Solution {
+    public static void main(String[] args) {
+        System.out.println("Hello World!");
+    }
+}
+    `
     componentDidMount() {
-        this.setState({ code: this.props.submission.code ,codeSubmissionResult:[]});
+        this.setState({ code: this.props.submission.code, codeSubmissionResult: [] ,showCodeSubmitResult:false,showCodeSubmitResult:false});
 
     }
     onClickRunCode() {
@@ -74,7 +96,7 @@ class BackendTask extends React.Component {
                 result: data
             }
             // this.props.updateSubmission(submission);
-            this.setState({ isCodeRunning: false, codeSubmissionResult: data, showCodeSubmitResult: true },()=>{
+            this.setState({ isCodeRunning: false, codeSubmissionResult: data, showCodeSubmitResult: true }, () => {
 
                 this.props.updateSubmission(submission);
             })
@@ -86,8 +108,8 @@ class BackendTask extends React.Component {
 
     }
     languages = [
-        { value: 'cpp', label: 'C++', mode: "c-like" },
-        { value: 'java', label: 'JAVA', mode: "java" },
+        { value: 'cpp', label: 'C++', mode: "clike" },
+        { value: 'java', label: 'JAVA', mode: "dart" },
         { value: 'javascript', label: 'Javascript', mode: "javascript" },
         { value: 'python', label: 'Python', mode: "python" },
     ]
@@ -146,11 +168,18 @@ class BackendTask extends React.Component {
                         <div className="card-header">
                             <div className="row float-right">
 
+
                                 <div className="col-10 mr-5">
                                     <Select
                                         value={this.state.selectedLanguage}
                                         onChange={(e) => {
-                                            this.setState({ selectedLanguage: e })
+
+                                            this.setState({ selectedLanguage: e }, () => {
+                                                if (e.value === "java") {
+                                                   
+                                                    this.setState({ code:this.javaCode })
+                                                }
+                                            })
                                             // props.onFilterChange("questionType", e.value)
                                         }}
 
@@ -177,7 +206,17 @@ class BackendTask extends React.Component {
                                     theme: "material",
                                     lineNumbers: true,
                                     scrollbarStyle: null,
-                                    lineWrapping: true
+                                    lineWrapping: true,
+                                    smartIndent: true,
+                                    foldGutter: true,
+                                    gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+                                    autoCloseTags: true,
+                                    keyMap: 'sublime',
+                                    matchBrackets: true,
+                                    autoCloseBrackets: true,
+                                    extraKeys: {
+                                        'Ctrl-Space': 'autocomplete'
+                                    }
                                 }} />
 
                         </div>
@@ -185,10 +224,10 @@ class BackendTask extends React.Component {
                             <div className="row ">
                                 {this.state.isCodeRunning ? <div className="col-12">
                                     <span className="float-right">
-                                        <ReactLoading type={"spin"} color={"#5cb85c"} /> 
-                                </span>
+                                        <ReactLoading type={"spin"} color={"#5cb85c"} />
+                                    </span>
 
-                            </div>:    <div className="col-12">
+                                </div> : <div className="col-12">
                                         <span className="float-left">
                                             <label class="form-check">
                                                 <input onChange={(e) => {
@@ -213,110 +252,110 @@ class BackendTask extends React.Component {
 
                                     </div>}
                                 {this.state.isCustomInput ?
-                                        <div className="col-4">
-                                            <textarea value={this.state.customInput} onChange={(e) => {
-                                                this.setState({ customInput: e.target.value })
-                                            }} rows={4} className="form-control"></textarea>
-                                        </div> : <div></div>}
-                                </div>
+                                    <div className="col-4">
+                                        <textarea value={this.state.customInput} onChange={(e) => {
+                                            this.setState({ customInput: e.target.value })
+                                        }} rows={4} className="form-control"></textarea>
+                                    </div> : <div></div>}
+                            </div>
                         </div>
-
-                        </div>
-
 
                     </div>
+
+
                 </div>
-                <div className="row">
+            </div>
+            <div className="row">
 
-                    {this.state.isCodeRunning === false && this.state.showCodeSubmitResult ?
+                {this.state.isCodeRunning === false && this.state.showCodeSubmitResult ?
 
-                        <div className="col-12 mr-5">
-                            <div className="card mr-5">
-                                <div className="card-header">
-                                    Code Submit Result
+                    <div className="col-12 mr-5">
+                        <div className="card mr-5">
+                            <div className="card-header">
+                                Code Submit Result
                       </div>
-                                <div className="card-body">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col"></th>
-                                                <th scope="col">Test Case</th>
-                                                <th scope="col">Status</th>
-                                                <th scope="col">Points</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {this.state.codeSubmissionResult.map((result, index) => {
-                                                var status;
-                                                var points = 0;
-                                                if (result.stderr === '') {
-                                                    if (result.stdout.trim() === this.props.question.testCases[index].output.trim()) {
-                                                        status = <i className="fa fa-check text-success"></i>;
-                                                        points = this.props.question.testCases[index].points
+                            <div className="card-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"></th>
+                                            <th scope="col">Test Case</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Points</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {this.state.codeSubmissionResult.map((result, index) => {
+                                            var status;
+                                            var points = 0;
+                                            if (result.stderr === '') {
+                                                if (result.stdout.trim() === this.props.question.testCases[index].output.trim()) {
+                                                    status = <i className="fa fa-check text-success"></i>;
+                                                    points = this.props.question.testCases[index].points
 
-                                                    }
-                                                    else {
-                                                        status = <i className="fa fa-times text-danger"></i>;
-
-
-                                                    }
                                                 }
                                                 else {
-                                                    status = <span className="text-danger">{result.errorType} error</span>
+                                                    status = <i className="fa fa-times text-danger"></i>;
+
 
                                                 }
-                                                return <tr>
-                                                    <th scope="row">{index + 1}</th>
-                                                    <td>Test Case {index + 1}</td>
-                                                    <td>{status}</td>
-                                                    <td>{points}</td>
-                                                </tr>
-                                            })}
+                                            }
+                                            else {
+                                                status = <span className="text-danger">{result.errorType} error</span>
+
+                                            }
+                                            return <tr>
+                                                <th scope="row">{index + 1}</th>
+                                                <td>Test Case {index + 1}</td>
+                                                <td>{status}</td>
+                                                <td>{points}</td>
+                                            </tr>
+                                        })}
 
 
-                                        </tbody>
-                                    </table>
-                                </div>
+                                    </tbody>
+                                </table>
                             </div>
+                        </div>
 
-                        </div> :
-                        <div></div>
-                    }
-                </div>
-                <div className="row">
-                    {this.state.isCodeRunning === false && this.state.showCodeRunResult ?
-                        <div className="col-12 mt-3 mb-3">
-                            <div className="card">
-                                <div className="card-header">
-                                    {this.state.codeRunHeader}
-                                </div>
-                                <div className="card-body">
-                                    <div className="row">
-                                        <div className="col-6">
-                                            <div class="form-group mr-5">
-                                                <label for="exampleFormControlTextarea1">Your Input</label>
-                                                <textarea disabled value={this.state.customInput} class="w-100 form-control mr-5" id="exampleFormControlTextarea1" rows="2"></textarea>
-                                            </div>
+                    </div> :
+                    <div></div>
+                }
+            </div>
+            <div className="row">
+                {this.state.isCodeRunning === false && this.state.showCodeRunResult ?
+                    <div className="col-12 mt-3 mb-3">
+                        <div className="card">
+                            <div className="card-header">
+                                {this.state.codeRunHeader}
+                            </div>
+                            <div className="card-body">
+                                <div className="row">
+                                    <div className="col-6">
+                                        <div class="form-group mr-5">
+                                            <label for="exampleFormControlTextarea1">Your Input</label>
+                                            <textarea disabled value={this.state.customInput} class="w-100 form-control mr-5" id="exampleFormControlTextarea1" rows="2"></textarea>
                                         </div>
-                                        <div className="col-6">
-                                            <div class="form-group mr-5">
-                                                <label for="exampleFormControlTextarea1">Your Output</label>
-                                                <textarea disabled value={this.state.codeRunOutput} class="w-100 form-control mr-5" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                            </div>
+                                    </div>
+                                    <div className="col-6">
+                                        <div class="form-group mr-5">
+                                            <label for="exampleFormControlTextarea1">Your Output</label>
+                                            <textarea disabled value={this.state.codeRunOutput} class="w-100 form-control mr-5" id="exampleFormControlTextarea1" rows="3"></textarea>
                                         </div>
-
                                     </div>
 
                                 </div>
+
                             </div>
                         </div>
+                    </div>
 
 
-                        : <div></div>}
-                </div>
+                    : <div></div>}
+            </div>
 
 
-            </div >)
+        </div >)
     }
 }
 export default BackendTask;

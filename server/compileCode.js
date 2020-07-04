@@ -1,14 +1,21 @@
 const { c, cpp, node, python, java } = require('compile-run');
+var fs = require('fs');
+
 async function compileCode(sourcecode, input, language) {
     return new Promise((resolve, reject) => {
         switch (language) {
             case "java":
-                java.runSource(sourcecode, { stdin: input }, (err, result) => {
-                    if (err) reject(err);
-                    resolve(result);
-
-
-                });
+                fs.writeFile('Solution.java', sourcecode, function (err) {
+                    if (err) throw err;
+                    java.runFile("./Solution.java", { stdin: input }, (err, result) => {
+                        if (err) reject(err);
+                        console.log(result)
+                        resolve(result);
+    
+    
+                    });
+                  });
+               
 
 
                 break;
@@ -67,33 +74,39 @@ async function runTestCases(sourcecode, input = [], language) {
     })
 }
 
-// var sourceCode = `print("hello sarthak")`
-// var input = [
-//     {
-//         intput:0,
-//         output:1
-//     },
-//     {
-//         intput:0,
-//         output:1
-//     },
-//     {
-//         intput:0,
-//         output:1
-//     },
-//     {
-//         intput:0,
-//         output:1
-//     },
-//     {
-//         intput:0,
-//         output:1
-//     }
-// ]
-// runTestCases(sourceCode,input,"python").then((res)=>{
-//     console.log("code res is---")
-//     console.log(res);
-// })
+
+ var sourceCode = `// "static void main" must be defined in a public class.
+ public class Solution {
+     public static void main(String[] args) {
+         System.out.println("Hello World!");
+     }
+ }`
+var input = [
+    {
+        intput:0,
+        output:1
+    },
+    {
+        intput:0,
+        output:1
+    },
+    {
+        intput:0,
+        output:1
+    },
+    {
+        intput:0,
+        output:1
+    },
+    {
+        intput:0,
+        output:1
+    }
+]
+runTestCases(sourceCode,input,"java").then((res)=>{
+    console.log("code res is---")
+    console.log(res);
+})
 
 module.exports ={
     compileCode,

@@ -9,6 +9,19 @@ import "codemirror/mode/css/css";
 import "codemirror/mode/javascript/javascript";
 import "codemirror/mode/clike/clike"
 import "codemirror/mode/python/python"
+import "codemirror/mode/dart/dart"
+import 'codemirror/addon/hint/show-hint';
+import 'codemirror/addon/hint/javascript-hint';
+import 'codemirror/addon/hint/show-hint.css';
+import 'codemirror/addon/hint/anyword-hint';
+import 'codemirror/keymap/sublime';
+import 'codemirror/addon/edit/closebrackets';
+import 'codemirror/addon/edit/closetag';
+import 'codemirror/addon/fold/foldcode';
+import 'codemirror/addon/fold/foldgutter';
+import 'codemirror/addon/fold/brace-fold';
+import 'codemirror/addon/fold/comment-fold';
+import 'codemirror/addon/fold/foldgutter.css';
 import { compileCode, submitCode } from "../data/data";
 import ReactLoading from 'react-loading';
 const ReactMarkdown = require('react-markdown')
@@ -28,7 +41,7 @@ class BackendTask extends React.Component {
             codeRunOutput: "",
             isCodeRunning: false,
             showCodeSubmitResult: false,
-            selectedLanguage: { value: 'cpp', label: 'C++', mode: "c-like" },
+            selectedLanguage: { value: 'cpp', label: 'C++', mode: "clike" },
             codeSubmissionResult: []
 
         }
@@ -87,11 +100,19 @@ class BackendTask extends React.Component {
 
     }
     languages = [
-        { value: 'cpp', label: 'C++', mode: "c-like" },
-        { value: 'java', label: 'JAVA', mode: "java" },
+        { value: 'cpp', label: 'C++', mode: "clike" },
+        { value: 'java', label: 'JAVA', mode: "dart" },
         { value: 'javascript', label: 'Javascript', mode: "javascript" },
         { value: 'python', label: 'Python', mode: "python" },
     ]
+    javaCode = `
+    // "static void main" must be defined in a public class.
+   // Do not change the default java class name
+public class Solution {
+    public static void main(String[] args) {
+        System.out.println("Hello World!");
+    }
+}`;
     render() {
 
         return (<div>
@@ -151,7 +172,10 @@ class BackendTask extends React.Component {
                                     <Select
                                         value={this.state.selectedLanguage}
                                         onChange={(e) => {
-                                            this.setState({ selectedLanguage: e })
+                                            this.setState({ selectedLanguage: e },()=>{
+                                                if(e.value==="java")
+                                                this.setState({code:this.javaCode})
+                                            })
                                             // props.onFilterChange("questionType", e.value)
                                         }}
 
