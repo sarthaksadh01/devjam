@@ -164,6 +164,7 @@ class ViewCodingTest extends React.Component {
 
     render() {
         if (this.state.test === null) return null;
+        if (this.state.test.questions.length === 0) return null;
 
         var user = reactLocalStorage.getObject('user', {
             email: "",

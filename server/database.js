@@ -948,6 +948,7 @@ async function createQuestion(data) {
 
 async function publishCodingTest(data) {
     sendCodingChallengeMail(data);
+    codingNotification(data)
     return new Promise((resolve, reject) => {
         CodingTests.findOneAndUpdate({ _id: data._id }, data).then((doc) => {
             resolve(doc);
@@ -956,6 +957,25 @@ async function publishCodingTest(data) {
             reject(err);
 
         })
+    })
+
+}
+function codingNotification(test) {
+    test.testFor.forEach((email) => {
+        var title = `${test.title}`;
+        var text = "New Test Released ";
+        var isUrl = true;
+        var  url = `/coding-test/${test._id}`
+
+        var _notification = new Notifications({
+            title,
+            text,
+            email,
+            isUrl,
+            url
+        });
+        _notification.save();
+
     })
 
 }

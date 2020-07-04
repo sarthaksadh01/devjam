@@ -35,7 +35,7 @@ class BackendTask extends React.Component {
 
     }
     componentDidMount() {
-        this.setState({ code: this.props.submission.code });
+        this.setState({ code: this.props.submission.code ,codeSubmissionResult:[]});
 
     }
     onClickRunCode() {

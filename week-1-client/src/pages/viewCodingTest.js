@@ -142,6 +142,7 @@ class ViewCodingTest extends React.Component {
             />
         }
         if (this.state.test === null) return null;
+        if (this.state.test.questions.length === 0) return null;
         if (this.state.submission.isStarted === false) return <CodingTestInstructions startTest={this.startTest} test={this.state.test} />
 
         return (

@@ -6,10 +6,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons'
 import { NotificationManager } from 'react-notifications';
 import Select from 'react-select';
+import Modal from 'react-bootstrap/Modal'
 class AddCodingQuestion extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            showNumber: false,
+            showString: false,
+            minRange:0,
+            maxRange:100,
+            stringSize:10,
+            integerCount:10,
+            stringCount:10,
+            seperator: { value: ' ', label: 'Space Separated' },
             question: {
                 imageUrl: "",
                 title: "",
@@ -28,7 +37,7 @@ class AddCodingQuestion extends React.Component {
                     }
                 ]
             },
-            resetQuestion:{
+            resetQuestion: {
                 imageUrl: "",
                 title: "",
                 desc: "",
@@ -46,7 +55,7 @@ class AddCodingQuestion extends React.Component {
                     }
                 ]
             },
-            selectedOption : {value: 'easy', label: 'Easy' },
+            selectedOption: { value: 'easy', label: 'Easy' },
         }
         this.onChangeData = this.onChangeData.bind(this);
 
@@ -55,6 +64,11 @@ class AddCodingQuestion extends React.Component {
         { value: 'easy', label: 'Easy' },
         { value: 'medium', label: 'Medium' },
         { value: 'hard', label: 'Hard' },
+    ]
+    seperator = [
+        { value: '\n', label: 'New Line Separated' },
+        { value: ' ', label: 'Space Separated' },
+        { value: ',', label: 'Comma separated' },
     ]
     questionType = [
         { value: 'coding', label: 'Coding Question' },
@@ -67,6 +81,20 @@ class AddCodingQuestion extends React.Component {
         this.setState({ question });
 
     }
+    getRandomIntInclusive(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
+      }
+      generateRandomString(length) {
+        var result           = '';
+        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+           result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+     }
     componentDidMount() {
 
     }
@@ -157,26 +185,26 @@ class AddCodingQuestion extends React.Component {
                         <div class="form-group">
                             <div className="row">
 
-                            {/* <label for="exampleFormControlTextarea1"> Difficulty</label><br/> */}
-                            <div className="col-8">
-                                <Select
-                                    value={this.state.selectedOption}
-                                    onChange={(e) => { 
-                                        var question = this.state.question;
-                                        question.difficulty = e.value;
-                                        var selectedOption = this.state.selectedOption;
-                                        selectedOption = e;
-                                        this.setState({selectedOption,question},()=>{
-                                            // alert(this.state.question.difficulty)
-                                        })
+                                {/* <label for="exampleFormControlTextarea1"> Difficulty</label><br/> */}
+                                <div className="col-8">
+                                    <Select
+                                        value={this.state.selectedOption}
+                                        onChange={(e) => {
+                                            var question = this.state.question;
+                                            question.difficulty = e.value;
+                                            var selectedOption = this.state.selectedOption;
+                                            selectedOption = e;
+                                            this.setState({ selectedOption, question }, () => {
+                                                // alert(this.state.question.difficulty)
+                                            })
 
-                                    }}
-                                    options={this.difficulty}
-                                />
+                                        }}
+                                        options={this.difficulty}
+                                    />
 
+                                </div>
                             </div>
-                            </div>
-                            
+
                         </div>
 
                         <h5>Test Cases</h5>
@@ -231,18 +259,151 @@ class AddCodingQuestion extends React.Component {
                                 })
                                 this.setState({ question });
                             }} className="btn btn-outline-info">Add More test Cases</button>
+                            <button onClick={() => {
+
+                                this.setState({ showNumber: true });
+                            }} className="btn btn-outline-info ml-1">Random Number</button>
+                            <button onClick={() => {
+
+                                this.setState({ showString: true });
+                            }} className="btn btn-outline-info ml-1">Random String</button>
+
                             <br />
 
                             <button onClick={() => {
                                 var question = this.state.question;
                                 var resetQuestion = JSON.parse(JSON.stringify(this.state.resetQuestion));
                                 this.props.saveQuestion(question);
-                                 this.setState({ question :resetQuestion});
+                                this.setState({ question: resetQuestion });
                             }} className="btn mt-3 btn-info">Save</button>
 
                         </div>
                     </div>
                 </div>
+
+                < Modal size="md" centered={true} show={this.state.showNumber} onHide={() => { this.setState({ showNumber: false }) }}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Random Number Generator</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <div className="container text-center">
+                            <div className="row">
+                                <div className="col-4">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">Min Range</label>
+                                        <input value = {this.state.minRange} onChange ={(e)=>{
+                                            this.setState({minRange:parseInt(e.target.value)})
+                                        }} />
+
+                                    </div>
+                                </div>
+                                <div className="col-4">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">Max Range</label>
+                                        <input value = {this.state.maxRange} onChange ={(e)=>{
+                                            this.setState({maxRange:parseInt(e.target.value)})
+                                        }} />
+
+                                    </div>
+                                </div>
+                                
+                                
+                                
+                                <div className="col-10">
+
+                                    <Select
+                                        value={this.state.seperator}
+                                        onChange={(e) => {
+                                            this.setState({ seperator: e }, () => {
+                                                // alert(this.state.question.difficulty)
+                                            })
+
+                                        }}
+                                        options={this.seperator}
+                                    />
+                                </div>
+                                <div className="col-10 mt-3">
+                                    <div class="form-group">
+                                        <label className="mr-2" for="exampleFormControlTextarea1">Integer Count</label>
+                                        <input value = {this.state.integerCount} onChange ={(e)=>{
+                                            this.setState({integerCount:parseInt(e.target.value)})
+                                        }} />
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button onClick ={(e)=>{
+                            var res = '';
+                            for(var i = 0;i<this.state.integerCount;i++){
+                                res+= String(this.getRandomIntInclusive(this.state.minRange,this.state.maxRange));
+                                res+= this.state.seperator.value;
+
+                            }
+                            navigator.clipboard.writeText(res);
+                            NotificationManager.success("Numbers copied to clipboard");
+                            this.setState({showNumber:false})
+
+                        }} className="btn btn-info">Generate</button>
+                    </Modal.Footer>
+                </Modal>
+
+                < Modal size="md" centered={true} show={this.state.showString} onHide={() => { this.setState({ showString: false }) }}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Random String Generator</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                    <div className="container text-center">
+                            <div className="row">
+                                
+                                <div className="col-10">
+
+                                    <Select
+                                        value={this.state.seperator}
+                                        onChange={(e) => {
+                                            this.setState({ seperator: e }, () => {
+                                               
+                                            })
+
+                                        }}
+                                        options={this.seperator}
+                                    />
+                                </div>
+                                <div className="col-10 mt-3">
+                                    <div class="form-group">
+                                        <label className="mr-2" for="exampleFormControlTextarea1">String Length</label>
+                                        <input value = {this.state.stringCount} onChange ={(e)=>{
+                                            this.setState({stringCount:parseInt(e.target.value)})
+                                        }} />
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </Modal.Body>
+                    <Modal.Footer>
+                    <button onClick ={(e)=>{
+                            var res = '';
+                            for(var i = 0;i<this.state.stringCount;i++){
+                                res+= String(this.generateRandomString(this.state.stringCount));
+                                res+= this.state.seperator.value;
+
+                            }
+                            navigator.clipboard.writeText(res);
+                            NotificationManager.success("Strings copied to clipboard");
+                            this.setState({showString:false})
+
+                        }} className="btn btn-info">Generate</button>
+                    </Modal.Footer>
+                </Modal>
 
             </div>
         );
