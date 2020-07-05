@@ -471,12 +471,12 @@ table {
 }
 
 .sidenav a:hover {
-    color: white;
-    background: #4633af;
-    background: -webkit-linear-gradient(-135deg, #4633af, #c850c0);
-    background: -o-linear-gradient(-145deg, #4633af, #c850c0);
-    background: -moz-linear-gradient(-145deg, #4633af, #c850c0);
-    background: linear-gradient(-135deg, #4633af, #c850c0);
+  color: white;
+  background: #4649f1;
+  background: -webkit-linear-gradient(-135deg, #f0f0f3, #4649f1);
+  background: -webkit-linear-gradient(-135deg, #f0f0f3, #4649f1);
+  background: -webkit-linear-gradient(-135deg, #f0f0f3, #4649f1);
+  background: -webkit-linear-gradient(-135deg, #f0f0f3, #4649f1);
 }
 
 .main {

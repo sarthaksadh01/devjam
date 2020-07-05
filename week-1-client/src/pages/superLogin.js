@@ -56,14 +56,14 @@ class SuperLogin extends React.Component {
     render() {
         return (
 
-            <div class="container-outer">
-                <div class="wrap-login100">
-                    <div class="inner">
-                        <div class="login100-form" >
-                            <span class="login100-form-title">Cryptx</span>
-                            <div class="container">
+            <div class="container-outer pl-0">
+                <div class="wrap-login100 pl-0">
+                    <div class="inner pl-0">
+                        <div class="login100-form pl-0" >
+                            <span class="login100-form-title ml-4">Cryptx</span>
+                            <div class="container pl-0">
                                 <form onSubmit={this.handleFormSubmit} class="">
-                                    <div class="wrap-input100">
+                                    <div class="wrap-input100 pl-0">
 
                                         {/* <label for="exampleInputEmail1" class="label">Username</label> */}
 
@@ -74,8 +74,8 @@ class SuperLogin extends React.Component {
                                         {/* <label for="exampleInputPassword1" class="label">Password</label> */}
                                         <input onChange={this.handlePasswordChange} type="password" class="form-control input100 " id="exampleInputPassword1" placeholder="Enter your Password" />
                                     </div>
-                                    <button type="submit" class="btn login100-form-btn">Submit</button>
-                                    <div className="mt-2 text-center"> <a className="text-mute text-dark" href="/login">Login as Admin</a></div>
+                                    <button type="submit" class="btn login100-form-btn ml-4">Submit</button>
+                                    <div className="mt-3 ml-5 text-center"> <a className="text-mute text-dark" href="/login">Login as Admin</a></div>
                                 </form>
                             </div>
                         </div>

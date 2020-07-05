@@ -134,16 +134,16 @@ class Signup extends React.Component {
             <div class="container-outer bg-dark">
                 <div class="inner">
                     <div className="shadow round p-5  card">
-                        <div className="text-center "> <h3 className="heading">Cryptx</h3></div>
+                        <div className="text-center mb-3 "> <h3 className="heading">Cryptx</h3></div>
                         <form onSubmit={this.handleFormSubmit}>
                             <div class="form-group">
                                 <label for="exampleInputEmail1"></label>
-                                <input onChange={this.handleUserNameChange} value={this.state.userName} type="email" placeholder="Email" id="exampleInputEmail1" aria-describedby="emailHelp" />
+                                <input  class="mx-auto pl-4"onChange={this.handleUserNameChange} value={this.state.userName} type="email" placeholder="Email" id="exampleInputEmail1" aria-describedby="emailHelp" />
                                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1"></label>
-                                <input onChange={this.handlePasswordChange} value={this.state.password} type="password" placeholder="Password" id="exampleInputPassword1" />
+                                <input  class="mx-auto pl-4"onChange={this.handlePasswordChange} value={this.state.password} type="password" placeholder="Password" id="exampleInputPassword1" />
                             </div>
 
                             <div className="col-sm-12 text-center">
@@ -164,14 +164,14 @@ class Signup extends React.Component {
                                     onSuccess={this.googleLogin}
                                     onFailure={(data) => { this.googleLogin(data, true) }}
                                     cookiePolicy={'single_host_origin'}
-                                />,
+                                />
                                      <a type="" className=" text-dark" href={`https://github.com/login/oauth/authorize?scope=user&client_id=${'Iv1.819423876210273a'}&state=signup`}><i style={{ fontSize: 25 }} class="fab fa-github"></i></a>
 
                             </div>
 
                         </div>
                         <div style={{ marginLeft: 28 }} className="col-sm-12">
-                            <a className="text-center mr-1 mt-2 text-dark Already" href="/login">Already Account?</a>
+                            <a className="text-center mx-auto mt-3 text-dark Already" href="/login">Already Account?</a>
                         </div>
                     </div>
                 </div>

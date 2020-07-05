@@ -71,13 +71,13 @@ class EditFreeStyleQuestion extends React.Component {
     render() {
         const mdParser = new MarkdownIt();
         return (
-            <div className="container" style={{marginTop:"80px"}}>
-                <div className="row mt-3">
+            <div className="container" style={{marginTop:"120px"}}>
+                <div className="row ">
                     <div className="col-8">
                         <h5>Edit Question</h5>
                         <hr />
                         <div class="form-group w-100">
-                            <label for="exampleFormControlTextarea1">Question Image</label>
+                            <label for="exampleFormControlTextarea1" className="blueText font-weight-bold">Question Image</label>
                             <div className="row text-center">
                                 <div className="mb-2 col-12 text-center">
                                     {this.state.question.imageUrl === "" ? <div></div> :
@@ -117,11 +117,11 @@ class EditFreeStyleQuestion extends React.Component {
                             </div>
                         </div>
                         <div class="form-group w-100">
-                            <label for="exampleFormControlTextarea1">Question Title</label>
+                            <label for="exampleFormControlTextarea1" className="blueText font-weight-bold">Question Title</label>
                             <input onChange={(e) => { this.onChangeData("title", e.target.value) }} value={this.state.question.title} type="text" class="form-control w-100" id="exampleFormControlInput1" placeholder="" />
                         </div>
                         <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Question Description</label>
+                            <label for="exampleFormControlTextarea1" className="blueText font-weight-bold">Question Description</label>
                             <MdEditor
                                 value={this.state.question.desc}
                                 style={{ height: "250px" }}
@@ -131,7 +131,7 @@ class EditFreeStyleQuestion extends React.Component {
                         </div>
 
                         <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Points</label>
+                            <label for="exampleFormControlTextarea1" className="blueText font-weight-bold">Points</label>
                             <input value={this.state.question.points} onChange={(e) => { this.onChangeData("points", e.target.value) }} type="number" className="form-control" />
                         </div>
                         <div class="form-group">

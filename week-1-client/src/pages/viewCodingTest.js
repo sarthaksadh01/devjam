@@ -189,7 +189,7 @@ class ViewCodingTest extends React.Component {
 
         return (
             <div id="codeArea" style={{ overflowX: "hidden" }}>
-                <div className="sidenav bg-dark">
+                <div className="sidenav blueBack">
                     {this.state.test.isTimed ?
                         <Countdown
                             // intervalDelay={60000}
@@ -205,15 +205,15 @@ class ViewCodingTest extends React.Component {
                                 if (completed) {
                                     return null;
                                 } else {
-                                    return <button className="btn disabled btn-outline-success w-75 text-white">{hours}:{minutes}:{seconds}</button>;
+                                    return <button className="btn disabled btn-outline-success w-75 text-white  font-weight-bold ml-3">{hours}:{minutes}:{seconds}</button>;
                                 }
                             }}
                         />
                         : <div></div>}
 
-                    <hr />
-                    <h5 className="text-white ml-4">Questions</h5>
-                    <hr />
+<hr className="bgWhite"/>
+                    <h5 className="text-white ml-5">Questions</h5>
+                    <hr className="bgWhite"/>
                     {this.state.test.questions.map((question, index) => {
                         var color = this.state.submission.ans[index].isSubmitted ? "text-success" : "text-white"
                         return <div>

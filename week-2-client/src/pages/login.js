@@ -163,12 +163,12 @@ class Login extends React.Component {
                         <form onSubmit={this.handleFormSubmit}>
                             <div class="form-group">
                                 <label for="exampleInputEmail1"></label>
-                                <input onChange={this.handleUserNameChange} value={this.state.userName} type="email" placeholder="Email" id="exampleInputEmail1" aria-describedby="emailHelp" />
+                                <input class="mx-auto pl-4" onChange={this.handleUserNameChange} value={this.state.userName} type="email" placeholder="Email" id="exampleInputEmail1" aria-describedby="emailHelp" />
                                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1"></label>
-                                <input onChange={this.handlePasswordChange} value={this.state.password} type="password" placeholder="Password" id="exampleInputPassword1" />
+                                <input class="mx-auto pl-4" onChange={this.handlePasswordChange} value={this.state.password} type="password" placeholder="Password" id="exampleInputPassword1" />
                             </div>
 
                         
@@ -200,7 +200,7 @@ class Login extends React.Component {
 
                         </div>
                         <div style={{marginLeft:32}} className="col-sm-12 ">
-                                <a className="text-center mr-1 mt-2 text-dark Already" href="/signup">Create Account</a>
+                                <a className="text-center mx-auto mt-2 text-dark Already" href="/signup">Create Account</a>
                             </div>
                     </div>
                 </div>

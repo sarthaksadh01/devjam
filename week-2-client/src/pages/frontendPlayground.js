@@ -76,15 +76,18 @@ class FrontEndPlayground extends Component {
         };
 
         return (
-
-            <div className="container" style={{ marginTop: "80px" }}>
+<div>
+            <div className="container" style={{ marginTop: "100px" }}>
                 {/* <div className="container"> */}
-                <h1> UI Playground</h1>
-
-
-
-
-                <div className="w-100 row">
+                <section class="jumbotron text-center mb-5">
+      <div class=" jumboMargin" >
+        <h1 class="text-orange font-weight-bold">UI Playground</h1>
+        <p class="lead text-orange"> Test your UI application here! An ultimate UI palyground with HTML/CSS and Javascript.</p>
+       
+      </div>
+    </section>
+           
+                <div className="w-100 row mx-auto">
                     <div style={{ height: "50%" }} className="col-12 mr-5">
                         <Tabs defaultActiveKey="html" id="uncontrolled-tab-example">
                             <Tab eventKey="html" title="Html">
@@ -134,13 +137,18 @@ class FrontEndPlayground extends Component {
 
                         </Tabs>
                     </div>
-                    <div className="col-12 mr-5">
+                    <div className="col-12 mb-5  mr-5 mt-5 card">
                         <iframe className="w-100" style={{ height: "400px", border: "none" }} title="result" ref="iframe" />
 
                     </div>
                 </div>
             </div>
-            // </div>
+            <footer id="sticky-footer" class="py-4  text-white-50 blueBack ">
+                    <div class="container text-center">
+                        <small>Copyright &copy; Cryptx</small>
+                    </div>
+                </footer>
+            </div>
         );
     }
 }

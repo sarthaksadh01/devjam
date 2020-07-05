@@ -95,19 +95,20 @@ public class Solution {
 }`;
     render() {
 
-        return (<div className="container" style={{ marginTop: "80px" }}>
-            {/* <section class="jumbotron text-center"> */}
-      {/* <div class=" jumboMargin" > */}
-        <h1> Code Playground</h1>
+        return (<div>
+        <div className="container" style={{ marginTop: "100px" }}>
+           <section class="jumbotron text-center mb-5">
+      <div class=" jumboMargin" >
+        <h1 class="text-orange font-weight-bold">Coding Playground</h1>
+        <p class="lead text-orange"> Test your Code here! An ultimate code palyground with C++, JAVA, Python and Javascript support.</p>
        
-       
-      {/* </div> */}
-    {/* </section> */}
+      </div>
+    </section>
 
-            <div className="row">
+            <div className="row mx-auto ">
 
                 <div className="col-12 mb-5 mr-5">
-                    <div className="card mr-5">
+                    <div className="card mr-5 mx-auto">
                         <div className="card-header">
                             <div className="row float-right">
 
@@ -173,7 +174,7 @@ public class Solution {
                                             <div class="btn-group" role="group" aria-label="Basic example">
                                                 <button onClick={() => {
                                                     this.onClickRunCode();
-                                                }} type="button" class="btn btn-lg btn-light shadow">Run Code</button>
+                                                }} type="button" class="btn btn-lg btn-success shadow">Run Code</button>
 
 
                                             </div>
@@ -181,7 +182,7 @@ public class Solution {
 
                                     </div>}
                                 {this.state.isCustomInput ?
-                                    <div className="col-4">
+                                    <div className="col-4 ">
                                         <textarea value={this.state.customInput} onChange={(e) => {
                                             this.setState({ customInput: e.target.value })
                                         }} rows={4} className="form-control"></textarea>
@@ -195,7 +196,7 @@ public class Solution {
                 </div>
             </div>
 
-            <div className="row">
+            <div className="row mx-auto mb-5">
                 {this.state.isCodeRunning === false && this.state.showCodeRunResult ?
                     <div className="col-12 mt-3 mb-3">
                         <div className="card">
@@ -228,7 +229,14 @@ public class Solution {
             </div>
 
 
-        </div >)
+        </div >
+          <footer id="sticky-footer" class="py-4  text-white-50 blueBack ">
+          <div class="container text-center">
+              <small>Copyright &copy; Cryptx</small>
+          </div>
+      </footer>
+  </div>
+        )
     }
 }
 export default CodingPlayground;
