@@ -159,9 +159,9 @@ class EditFreeStyleQuestion extends React.Component {
                                 <input onChange={(e) => {
                                     var question = this.state.question;
                                     question.enableJavascript = !question.enableJavascript;
-                                    var questionType = "freeStyle";
-                                    if(question.enableJavascript)questionType ="freeStyleDynamic";
-                                    this.setState({ question ,questionType})
+                                     question.questionType = "freeStyle";
+                                    if(question.enableJavascript)question.questionType ="freeStyleDynamic";
+                                    this.setState({ question })
 
                                 }} checked ={this.state.question.enableJavascript}  class="form-check-input" type="checkbox" />
                                 <span class="form-check-label">

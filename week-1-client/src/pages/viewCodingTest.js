@@ -75,7 +75,7 @@ class ViewCodingTest extends React.Component {
             if (this.state.test.isTabsPrevented) {
                 this.checkTabsChange();
             }
-            if(this.state.isCopyPasteBlocked){
+            if(this.state.test.isCopyPasteBlocked){
                 this.preventCopyPaste();
 
             }

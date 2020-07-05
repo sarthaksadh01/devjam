@@ -129,25 +129,23 @@ class ViewCodingResult extends React.Component {
         this.setState({ modifiedUser: newUsers, queryUsers, isAllReleased });
     }
     avgAutoGraded() {
-        return 0;
-        // var modifiedUser = this.state.modifiedUser;
-        // var marks = 0;
-        // modifiedUser.forEach((user) => {
-        //     var mark = this.calculateMarks(user.testSubmission) == -1 ? 0 : this.calculateMarks(user.testSubmission);
-        //     marks += mark;
-        // })
-        // return Math.round((marks / this.state.modifiedUser.length))
+        var modifiedUser = this.state.modifiedUser;
+        var marks = 0;
+        modifiedUser.forEach((user) => {
+            var mark = this.calculateMarks(user.testSubmission) == -1 ? 0 : this.calculateMarks(user.testSubmission);
+            marks += mark;
+        })
+        return Math.round((marks / this.state.modifiedUser.length))
 
     }
     avgFinal() {
-        return 0;
-        // var modifiedUser = this.state.modifiedUser;
-        // var marks = 0;
-        // modifiedUser.forEach((user) => {
-        //     var mark = this.calculateMarks(user.testSubmission) == -1 ? 0 : this.calculateFinalMarks(user.testSubmission);
-        //     marks += mark;
-        // })
-        // return Math.round((marks / this.state.modifiedUser.length))
+        var modifiedUser = this.state.modifiedUser;
+        var marks = 0;
+        modifiedUser.forEach((user) => {
+            var mark = this.calculateFinalMarks(user.testSubmission) == -1 ? 0 : this.calculateFinalMarks(user.testSubmission);
+            marks += mark;
+        })
+        return Math.round((marks / this.state.modifiedUser.length))
     }
 
     componentDidMount() {
