@@ -1,3 +1,9 @@
+/* 
+
+This file contains the code for implementing notifications.
+
+*/
+
 import React from 'react';
 import { getNotification,updateNotification } from '../data/data';
 import { reactLocalStorage } from 'reactjs-localstorage';
