@@ -3,6 +3,8 @@ import Select from 'react-select';
 import { getAllCodingTests, createCodingTest, updateCodingTest } from '../data/data';
 import { NotificationManager } from 'react-notifications';
 import history from '../components/history';
+import Joyride from 'react-joyride';
+
 const ReactMarkdown = require('react-markdown')
 class CodingTests extends React.Component {
     constructor(props) {
@@ -28,17 +30,17 @@ class CodingTests extends React.Component {
         })
 
     }
-    onClickTestCreate(){
+    onClickTestCreate() {
         this.props.toggleLoading();
-        createCodingTest().then((doc)=>{
+        createCodingTest().then((doc) => {
             history.push(`/edit-coding-test/${doc._id}`);
             window.location.reload();
 
 
-        }).catch((err)=>{
+        }).catch((err) => {
             NotificationManager.error("Error connecting to the server..!")
 
-        }).finally(()=>{
+        }).finally(() => {
             this.props.toggleLoading();
 
         })
@@ -70,7 +72,7 @@ class CodingTests extends React.Component {
                         codingTests[i].status = "closed";
                     }
                 }
-        
+
                 updateCodingTest(filterCodingTests[index]).then(() => {
                     NotificationManager.success("Test Closed");
                     this.setState({ filterCodingTests, codingTests })
@@ -117,10 +119,20 @@ class CodingTests extends React.Component {
         return (
             <div style={{ marginTop: "80px" }}>
                 <div className="container">
-                <br />
-               
+                    <br />
+                    <Joyride
+                        steps={[
+                            {
+                                target: '.create-coding-test',
+                                content: 'This is my first Step',
+                            },
+                        ]}
+
+                    />
+
+
                     <div className="row my-4 ">
-                    <div className="col-7">
+                        <div className="col-7">
                             <Select
                                 value={this.state.selectedOption}
                                 onChange={this.onFilterChange}
@@ -129,12 +141,12 @@ class CodingTests extends React.Component {
 
                         </div>
                         <div className="col-4 ml-4">
-                            <button onClick ={()=>{this.onClickTestCreate()}} className="btn  blueBack font-weight-bold text-white float-right">Create New Test</button>
+                            <button onClick={() => { this.onClickTestCreate() }} className="btn create-coding-test  blueBack font-weight-bold text-white float-right">Create New Test</button>
 
                         </div>
-                   
-                        </div>
-               
+
+                    </div>
+
                     <br />
                     <div className="row mt-3">
                         {this.state.filterCodingTests.map((value, index) => {
@@ -149,16 +161,16 @@ class CodingTests extends React.Component {
                                     </div>
                                     <div className="m-2 mb-4 text-center">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <button onClick={()=>{
+                                            <button onClick={() => {
                                                 history.push(`/edit-coding-test/${value._id}`);
                                                 window.location.reload();
                                             }} type="button" class="btn btn-outline-danger ">Edit</button>
-                                            <button onClick ={()=>{
+                                            <button onClick={() => {
                                                 history.push(`/view-coding-test/${value._id}`);
                                                 window.location.reload();
 
                                             }} type="button" class="btn btn-outline-danger">Preview</button>
-                                            <button onClick ={()=>{
+                                            <button onClick={() => {
                                                 this.functionCall[value.status](index);
                                             }} type="button" class="btn btn-outline-danger">{this.buttonText[value.status]}</button>
 
@@ -166,7 +178,7 @@ class CodingTests extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                           
+
                         })}
                     </div>
                 </div>
