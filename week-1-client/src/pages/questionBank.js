@@ -1,3 +1,9 @@
+/* 
+
+This file is used to maintain a question bank.
+
+*/
+
 import React from 'react';
 import Select from 'react-select';
 import history from '../components/history';
