@@ -1,3 +1,9 @@
+/* 
+
+This file contains the code for implementing UI playground.
+
+*/
+
 import React, { Component } from "react";
 import { Controlled as CodeMirror } from "react-codemirror2";
 import Tabs from 'react-bootstrap/Tabs'
