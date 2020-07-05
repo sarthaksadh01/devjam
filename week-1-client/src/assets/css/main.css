@@ -6,6 +6,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap');
 
+.text-orange{
+  color: orange;
+}
+    
+    .jumbotron {
+padding-top: 3rem;
+padding-bottom: 3rem;
+margin-bottom: 0;
+background-color:#060c22;
+}
+@media (min-width: 768px) {
+  .jumbotron {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+.jumbotron p:last-child {
+  margin-bottom: 0;
+}
+
+.jumbotron h1 {
+  font-weight: 300;
+}
+.jumboMargin{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+
 .title {
 
     margin-top: 100px;
@@ -31,6 +61,9 @@
 .border-info{
 border-color:#060c22 !important
 }
+.border-info2{
+  border-color:#153fd8 !important
+  }
 
 .text-info{
   color:#060c22 !important

@@ -197,15 +197,15 @@ class CodingTests extends React.Component {
                                             <button onClick={() => {
                                                 history.push(`/edit-coding-test/${value._id}`);
                                                 window.location.reload();
-                                            }} type="button" class="btn btn-outline-danger ">Edit</button>
+                                            }} type="button" class="btn border-info2 blueLight">Edit</button>
                                             <button onClick={() => {
                                                 history.push(`/view-coding-test/${value._id}`);
                                                 window.location.reload();
 
-                                            }} type="button" class="btn btn-outline-danger">Preview</button>
+                                            }} type="button" class="btn border-info2 blueLight">Preview</button>
                                             <button onClick={() => {
                                                 this.functionCall[value.status](index);
-                                            }} type="button" class="btn btn-outline-danger">{this.buttonText[value.status]}</button>
+                                            }} type="button" class="btn border-info2 blueLight">{this.buttonText[value.status]}</button>
 
                                         </div>
                                     </div>

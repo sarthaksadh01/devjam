@@ -392,11 +392,11 @@ class ViewSingleCodingResult extends React.Component {
 
                             return <div>
                                 {value.questionType === "coding" ?
-                                    <div className="row">
+                                    <div className="row mt-3">
                                         <div className="col-12">
-                                            <div className="card mb-3">
-                                                <div className="card-header">
-                                                    {index + 1}.  {question.title}
+                                            <div className="card mb-3 shadow">
+                                                <div className="card-header redBack textBlue font-weight-bold" >
+                                                    {index + 1}. <span className="ml-2" style={{fontSize:"20px"}}>{question.title}</span> 
                                                 </div>
                                                 <div className="card-body">
                                                     <div className="row">
@@ -432,9 +432,7 @@ class ViewSingleCodingResult extends React.Component {
 
                                                     </div>
                                                 </div>
-                                                <div className="card-footer"><a href={`localhost:4000/api/code/${this.state.modifiedUsers[this.state.currentIndex].testSubmission._id}/${index}`} className="btn btn-outline-info">
-                                                    View Code
-                                                            </a>
+                                                <div className="card-footer">
                                                     <Collapse in={this.state.isOpen}>
                                                         <div className="row">
                                                             <table class="table">
@@ -481,12 +479,12 @@ class ViewSingleCodingResult extends React.Component {
 
                                             </div>
                                         </div>
-                                    </div> : <div className="row">
+                                    </div> : <div className="row mt-3">
 
                                         <div className="col-12">
-                                            <div className="card mb-3">
-                                                <div className="card-header">
-                                                    {index + 1}.  {question.title}
+                                            <div className="card mb-3 shadow">
+                                            <div className="card-header redBack textBlue font-weight-bold" >
+                                                    {index + 1}. <span className="ml-2" style={{fontSize:"20px"}}>{question.title}</span> 
                                                 </div>
                                                 <div class="card-body">
                                                     <div className="row">
@@ -501,14 +499,9 @@ class ViewSingleCodingResult extends React.Component {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className="card-footer">
-                                                    <div className="row">
-                                                        <div className="col-2">
-                                                            <a href={`localhost:4000/api/html/${this.state.modifiedUsers[this.state.currentIndex].testSubmission._id}/${index}`} className="btn btn-outline-info">
-                                                                View Code
-                                                            </a>
-                                                        </div>
-                                                        <div className="col-3">
+                                                <div >
+                                                    <div className="row mx-auto mb-4">
+                                                    <div className="col-6 mr-3">
                                                             <input onChange={(e) => {
                                                                 var modifiedUsers = this.state.modifiedUsers;
                                                                 var currentIndex = this.state.currentIndex;
@@ -520,8 +513,8 @@ class ViewSingleCodingResult extends React.Component {
 
                                                             }} value={value.feedBack} className="form-control" placeholder="Give Feedback" />
                                                         </div>
-                                                        <div className="col-1">
-                                                            <input onChange={(e) => {
+                                                        <div className="col-1 ">
+                                                            <input style={{width:"50%", float:"right"}}class=" mr-0 pr-0" onChange={(e) => {
                                                                 var marks = parseInt(e.target.value);
                                                                 if (marks < 0) marks = 0;
                                                                 if (marks > question.poitns) marks = question.points
@@ -535,8 +528,16 @@ class ViewSingleCodingResult extends React.Component {
 
                                                             }}
                                                                 value={value.finalMarks} type="number" className="form-control" placeholder="Marks" />
+                                                                
                                                         </div>
-                                                        <div className="col-1">/{question.points}</div>
+                                                        <div className="col-1 blueText font-weight-bold mt-2 pl-0 ml-0" style={{fontSize:"20px"}}>/{question.points}</div>
+                                                        <div className="col-2">
+                                                            <button className="btn btn-lg blueText font-weight-bold redBack float-right">
+                                                                View Code
+                                                            </button>
+                                                        </div>
+                                                       
+                                                       
                                                     </div>
 
                                                 </div>

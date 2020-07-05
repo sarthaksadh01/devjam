@@ -159,32 +159,14 @@ class ViewSingleCodingResult extends React.Component {
 
         return (
             <div style={{ marginTop: "80px" }} className="container">
-                <div class="ml-3 mt-5 ">
-                    <div className="row float-right">
-                        <div className="col-8"></div>
-
-    
-                        <div className="col-2">
-                            <label> Marks</label>
-                            <h5 class="details2 ">
-
-                                {this.calculateFinalMarks(this.state.submission)}/{this.calculateTotalMarks()}
-                            </h5>
-                        </div>
-                    </div>
-
-                    <div className="row mb-3 mt-4">
-                        <div className="col-7">
-                        </div>
-                        <div className="col-4 text-right float-right">
-                            <div className="row text-right float-right" >
-
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+                 <section class="jumbotron text-center">
+      <div class=" jumboMargin" >
+        <h1 class="text-orange font-weight-bold">Test Result</h1>
+        <p class="lead text-orange"> Your Score : {this.calculateFinalMarks(this.state.submission)}/{this.calculateTotalMarks()}</p>
+       
+      </div>
+    </section>
+               
                 {this.state.submission.isReleased === false ?
                     <TestFinish
                         image="fa fa-times text-danger"
@@ -199,10 +181,10 @@ class ViewSingleCodingResult extends React.Component {
 
                             return <div>
                                 {value.questionType === "coding" ?
-                                    <div className="row">
+                                    <div className="row mt-5">
                                         <div className="col-12">
-                                            <div className="card mb-3">
-                                                <div className="card-header">
+                                            <div className="card mb-3 shadow">
+                                                <div className="card-header blueBack text-white">
                                                     {index + 1}.  {question.title}
                                                 </div>
                                                 <div className="card-body">
@@ -276,11 +258,11 @@ class ViewSingleCodingResult extends React.Component {
 
                                             </div>
                                         </div>
-                                    </div> : <div className="row">
+                                    </div> : <div className="row mt-5">
 
                                         <div className="col-12">
-                                            <div className="card mb-3">
-                                                <div className="card-header">
+                                            <div className="card mb-3 shadow">
+                                                <div className="card-header  blueBack text-white">
                                                     {index + 1}.  {question.title}
                                                 </div>
                                                 <div class="card-body">
@@ -300,13 +282,13 @@ class ViewSingleCodingResult extends React.Component {
                                                     <div className="row">
 
                                                         <div className="col-6">
-                                                            <input value={value.feedBack} className="form-control" placeholder="Give Feedback" />
+                                                            <input disabled value={value.feedBack} className="form-control" placeholder="No Feedback" />
                                                         </div>
                                                         <div className="col-2">
                                                             <input disabled={true}
-                                                                value={value.finalMarks} type="number" className="form-control" placeholder="Marks" />
+                                                                value={value.finalMarks} type="number" className="form-control  mr-0 pr-0" placeholder="Marks" style={{width:"50%", float:"right"}}/>
                                                         </div>
-                                                        <div className="col-1">/{question.points}</div>
+                                                        <div className="col-1 blueText font-weight-bold mt-1 pl-0 ml-0" style={{fontSize:"20px"}}>/{question.points}</div>
                                                     </div>
 
                                                 </div>
