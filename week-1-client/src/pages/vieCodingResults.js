@@ -3,6 +3,7 @@ import React from 'react';
 import { getTest, getUsers, getsubmissionByTestId, releaseResult, getCodingTest, releaseCodingResult } from '../data/data'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCopy } from '@fortawesome/free-solid-svg-icons'
+import { NotificationManager } from 'react-notifications';
 const ReactMarkdown = require('react-markdown')
 class ViewCodingResult extends React.Component {
 
@@ -303,7 +304,7 @@ class ViewCodingResult extends React.Component {
                     return (this.calculateFinalMarks(user2.testSubmission) - this.calculateFinalMarks(user1.testSubmission))
                 })
                 modifiedUser.forEach((user, index) => {
-                    queryUsers.push(index);
+                    queryUsers.push(user.testSubmission.lolIndex);
 
                 })
                 break;
@@ -742,13 +743,15 @@ class ViewCodingResult extends React.Component {
                                                                 <span>
 
                                                                     <span onClick={() => {
-                                                                        navigator.clipboard.writeText(`http://hiii-15fdf.web.app/result/${this.state.modifiedUser[user].testSubmission._id}`)
+                                                                        navigator.clipboard.writeText(`http://hiii-15fdf.web.app/coding-test-result/${this.state.modifiedUser[user].testSubmission._id}`)
+                                                                        NotificationManager.info("Link Copied")
                                                                     }} class="badge badge-info mr-2">
 
                                                                         User
                                                             </span>
                                                                     <span onClick={() => {
-                                                                        navigator.clipboard.writeText(`https://sarthak-493c6.web.app/test-submission/test/${this.state.test._id}/submission/${this.state.modifiedUser[user].testSubmission._id}`)
+                                                                        navigator.clipboard.writeText(`https://sarthak-493c6.web.app/view-coding-test-result-single/${this.state.test._id}/${this.state.modifiedUser[user].testSubmission._id}`)
+                                                                        NotificationManager.info("Link Copied")
                                                                     }} class="badge badge-info">
 
                                                                         Admin

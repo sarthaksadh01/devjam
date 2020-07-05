@@ -66,8 +66,21 @@ class EditCodingTest extends React.Component {
     }
     functionCall = {
         draft: () => {
-            history.push(`/publish-coding-test/${this.state.test._id}`)
-            window.location.reload();
+            this.props.toggleLoading();
+            updateCodingTest(this.state.test).then((doc) => {
+                NotificationManager.info("Test Updated")
+                history.push(`/publish-coding-test/${this.state.test._id}`)
+                window.location.reload();
+
+
+            }).catch((err) => {
+                NotificationManager.error("Error connecting to the server!..")
+
+            }).finally(() => {
+                this.props.toggleLoading();
+
+            })
+
         },
         published: () => {
             if (window.confirm("Are you sure you want to close the test?")) {
@@ -75,8 +88,8 @@ class EditCodingTest extends React.Component {
                 this.props.toggleLoading("loading....");
                 var test = this.state.test;
                 test.status = "closed";
-           
-    
+
+
                 updateCodingTest(test).then(() => {
                     NotificationManager.success("Test Closed");
                     this.setState({ test })
@@ -99,7 +112,7 @@ class EditCodingTest extends React.Component {
 
         }
     }
-    
+
     saveQuestion(question) {
         this.props.toggleLoading();
         createCodingQuestion(question).then((question) => {
@@ -212,44 +225,44 @@ class EditCodingTest extends React.Component {
             this.setState({ run: false });
         }
     };
-    
+
     render() {
         const mdParser = new MarkdownIt();
         return (
             <div style={{ marginTop: "100px" }}>
-                  {reactLocalStorage.get("tour-2", "no", true) === "no" ?  <Joyride
-                            callback={this.handleJoyrideCallback}
+                {reactLocalStorage.get("tour-2", "no", true) === "no" ? <Joyride
+                    callback={this.handleJoyrideCallback}
 
-                            steps={[
-                                {
-                                    target: '.prevent-opening',
-                                    content: 'Click this to prevent students from opening other tabs',
-                                },
-                                {
-                                    target: '.copy-paste',
-                                    content: 'Click this to prevent students from pasting code in the code editor',
-                                },
-                                {
-                                    target: '.timed-event',
-                                    content: 'Click this to make the test of certain time',
-                                },
-                                {
-                                    target: '#question-bank',
-                                    content: 'Select previously saved questions',
-                                },
-                                {
-                                    target: '.add-new-coding-question',
-                                    content: 'Add a new coding question',
-                                },
-                                {
-                                    target: '.add-new-frontend-question',
-                                    content: 'Add a new Frontend question',
-                                },
-                                // coding-test-status
-                            ]}
+                    steps={[
+                        {
+                            target: '.prevent-opening',
+                            content: 'Click this to prevent students from opening other tabs',
+                        },
+                        {
+                            target: '.copy-paste',
+                            content: 'Click this to prevent students from pasting code in the code editor',
+                        },
+                        {
+                            target: '.timed-event',
+                            content: 'Click this to make the test of certain time',
+                        },
+                        {
+                            target: '#question-bank',
+                            content: 'Select previously saved questions',
+                        },
+                        {
+                            target: '.add-new-coding-question',
+                            content: 'Add a new coding question',
+                        },
+                        {
+                            target: '.add-new-frontend-question',
+                            content: 'Add a new Frontend question',
+                        },
+                        // coding-test-status
+                    ]}
 
-                        />:<div></div>}
-                        
+                /> : <div></div>}
+
 
                 <div className="container ">
                     <div style={{ marginTop: "90px" }} className="row">
@@ -278,12 +291,12 @@ class EditCodingTest extends React.Component {
 
                                 }} type="button" class="btn btn-outline-info">Save</button>
                                 <button onClick={() => {
-                                        history.push(`/view-coding-test/${this.state.test._id}`)
-                                        window.location.reload();
-                                    }} type="button" class="btn btn-outline-info">Preview</button>
+                                    history.push(`/view-coding-test/${this.state.test._id}`)
+                                    window.location.reload();
+                                }} type="button" class="btn btn-outline-info">Preview</button>
                                 <button
                                     onClick={() => {
-                                       this.functionCall[this.state.test.status]();
+                                        this.functionCall[this.state.test.status]();
                                     }}
 
                                     type="button" class="btn btn-outline-info">{this.buttonText[this.state.test.status]}</button>
@@ -302,7 +315,7 @@ class EditCodingTest extends React.Component {
                                     test.title = e.target.value;
                                     this.setState({ test });
                                 }} value={this.state.test.title} type="text" class="form-control w-100" id="exampleFormControlInput1" placeholder="" />
-                            
+
                             </div>
                             <div class="form-group">
                                 <label for="exampleFormControlTextarea1">Test Instructions</label>
@@ -323,9 +336,9 @@ class EditCodingTest extends React.Component {
                             {/* </form> */}
                         </div>
                     </div>
-                    <br/>
+                    <br />
                     <div className="row  ml-2 mt-1 ">
-                    <div className="col-3 prevent-opening">
+                        <div className="col-3 prevent-opening">
                             <label class="form-check">
                                 <input onChange={(e) => {
                                     var test = this.state.test;
@@ -352,38 +365,38 @@ class EditCodingTest extends React.Component {
                         <div className="col-5 timed-event">
                             <div class="row">
                                 <div className="col-4">
-                                <label class="form-check">
-                                <input onChange={(e) => {
-                                    var test = this.state.test;
-                                    test.isTimed = !this.state.test.isTimed;
-                                    this.setState({ test })
+                                    <label class="form-check">
+                                        <input onChange={(e) => {
+                                            var test = this.state.test;
+                                            test.isTimed = !this.state.test.isTimed;
+                                            this.setState({ test })
 
-                                }} checked={this.state.test.isTimed} class="form-check-input" type="checkbox" />
-                                <span class="form-check-label">
-                                    Timed (In Minutes)
+                                        }} checked={this.state.test.isTimed} class="form-check-input" type="checkbox" />
+                                        <span class="form-check-label">
+                                            Timed (In Minutes)
                              </span>
-                            </label>
+                                    </label>
                                 </div>
 
                                 <div className="col-4">
-                                {this.state.test.isTimed ? <span><input onChange={(e) => {
-                                var test = this.state.test;
-                                test.testTiming = e.target.value;
-                                this.setState({ test });
-                            }} value={this.state.test.testTiming} type="number" className="form-control" placeholder="Minutes"  style={{ height: "18px" }}/></span> : <span></span>}
+                                    {this.state.test.isTimed ? <span><input onChange={(e) => {
+                                        var test = this.state.test;
+                                        test.testTiming = e.target.value;
+                                        this.setState({ test });
+                                    }} value={this.state.test.testTiming} type="number" className="form-control" placeholder="Minutes" style={{ height: "18px" }} /></span> : <span></span>}
                                 </div>
                             </div>
-                            
+
                         </div>
-                        
+
                     </div>
-                    
+
                     <br />
                     <br />
                     <div className="row">
                         <div className="col-8">
                             <h4> Selected Questions: {this.state.test.questions.length}</h4>
-                            <br/>
+                            <br />
                         </div>
 
                     </div>
@@ -405,7 +418,7 @@ class EditCodingTest extends React.Component {
                     </div>
                     <hr />
                     {/* <div className="row"> */}
-                    <Tabs  defaultActiveKey="qList" id="uncontrolled-tab-example">
+                    <Tabs defaultActiveKey="qList" id="uncontrolled-tab-example">
                         <Tab id="queston-bank" className="queston-bank" eventKey="qList" title="Question Bank">
                             <QuestionBank
                                 addRemoveQuestion={this.addRemoveQuestion}
@@ -426,7 +439,7 @@ class EditCodingTest extends React.Component {
                             />
 
                         </Tab>
-                        <Tab className = "add-new-frontend-question" eventKey="addFrontEndQ" title="Add frontend Question" >
+                        <Tab className="add-new-frontend-question" eventKey="addFrontEndQ" title="Add frontend Question" >
                             <AddFreeStyleQuestion
                                 saveQuestion={this.saveQuestion}
                             />

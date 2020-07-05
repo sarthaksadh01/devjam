@@ -3,6 +3,7 @@ import { getCodingTest, getUsers, publishCodingTest } from '../data/data';
 import { NotificationManager } from 'react-notifications';
 import history from '../components/history';
 import Modal from 'react-bootstrap/Modal'
+const ReactMarkdown = require('react-markdown')
 class PublishCodingTest extends React.Component {
     constructor(props) {
         super(props);
@@ -116,9 +117,9 @@ class PublishCodingTest extends React.Component {
                     <div className="row">
                         <div className="col-8">
                             <h6>Test Desciption</h6>
-                            <p>This International Dance Day, an event management company organized an evening of Indian classical dance performances to celebrate the rich, eloquent, and elegant art of dance. Post the event, the company planned to create a microsite to promote and raise awareness among the public about these dance forms. However, identifying them from images is a tough nut to crack.
-
-You have been appointed as a Machine Learning Engineer for this project. Build an image tagging Deep Learning model that can help the company classify these images into eight categories of Indian classical dance.</p>
+                            <p>
+                            <ReactMarkdown escapeHtml={false} source={this.state.test.instructions} />
+                            </p>
                             <hr className="" />
                         </div>
                         <div className="col-4">

@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCopy, faEllipsisH } from '@fortawesome/free-solid-svg-icons'
 import TestFinish from '../components/testFinish';
 import Collapse from 'react-bootstrap/Collapse'
+import { NotificationManager } from 'react-notifications';
 class ViewSingleCodingResult extends React.Component {
     constructor(props) {
         super(props)
@@ -121,9 +122,9 @@ class ViewSingleCodingResult extends React.Component {
         </html>
       `;
         const iframe = <iframe
-        srcDoc = {documentContents}
+            srcDoc={documentContents}
 
-        width="540" height="450"></iframe>;
+            width="540" height="450"></iframe>;
 
         return iframe;
 
@@ -239,16 +240,16 @@ class ViewSingleCodingResult extends React.Component {
         return marks;
     }
 
-    calculateTotalMarks(){
+    calculateTotalMarks() {
         var marks = 0;
-        this.state.test.questions.forEach((question)=>{
-            if(question.questionType === "coding"){
-                question.testCases.forEach((testCase)=>{
+        this.state.test.questions.forEach((question) => {
+            if (question.questionType === "coding") {
+                question.testCases.forEach((testCase) => {
                     marks += parseInt(testCase.points);
                 })
- 
+
             }
-            else{
+            else {
                 marks += parseInt(question.points);
             }
 
@@ -274,7 +275,7 @@ class ViewSingleCodingResult extends React.Component {
                         <div className="col-4">
                             <div class="dropdown ml-1 ">
                                 <button class="btn  shadow dropdown-toggle  bgWhite" type="button" id="dropdownMenuButton"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{width:"350px"}}>
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{ width: "350px" }}>
                                     <img style={{ height: "30px" }} class="rounded-circle float-left" src={this.state.modifiedUsers[this.state.currentIndex].imageUrl} />
                                     <span class="blueText mx-3 ">{this.state.modifiedUsers[this.state.currentIndex].name}</span>
                                     <span class="badge badge-primary ml-1 text-white float-right mt-2">{this.calculateFinalMarks(this.state.modifiedUsers[this.state.currentIndex].testSubmission)}/{this.calculateTotalMarks()}</span>
@@ -289,7 +290,7 @@ class ViewSingleCodingResult extends React.Component {
                                         else if (user.testSubmission.completedOnTime) msg = "On Time";
                                         else msg = "Not on Time";
 
-                                        return (<div><a onClick={() => { this.chnageUser(index) }} class="dropdown-item  " href="#" style={{width:"330px"}}>
+                                        return (<div><a onClick={() => { this.chnageUser(index) }} class="dropdown-item  " href="#" style={{ width: "330px" }}>
 
                                             <img style={{ height: "30px" }} class="rounded-circle" src={user.imageUrl} />
                                             <span class="blueText mr-2 ml-2">{user.name}</span>
@@ -325,48 +326,49 @@ class ViewSingleCodingResult extends React.Component {
                             </h5>
                         </div>
                         <div className="col-2">
-                        <button
-                                                    onClick={() => { this.setState({ isOpen: !this.state.isOpen }) }}
-                                                    aria-controls="example-collapse-text"
-                                                    aria-expanded={this.state.isOpen} className="btn blueBack text-white btn-lg mb-3 ml-2 mr-3 float-right"> Detailed View</button>
+                            <button
+                                onClick={() => { this.setState({ isOpen: !this.state.isOpen }) }}
+                                aria-controls="example-collapse-text"
+                                aria-expanded={this.state.isOpen} className="btn blueBack text-white btn-lg mb-3 ml-2 mr-3 float-right"> Detailed View</button>
                         </div>
                         <div className="col-1 ">
-                        {this.state.modifiedUsers[this.state.currentIndex].testSubmission.isReleased ?
-                                    <button onClick={() => {
-                                        navigator.clipboard.writeText(`http://hiii-15fdf.web.app/result/${this.state.modifiedUsers[this.state.currentIndex].testSubmission._id}`)
-                                    }} class="btn-success btn btn-lg ml-5  text-white text-right float-right mr-4">
+                            {this.state.modifiedUsers[this.state.currentIndex].testSubmission.isReleased ?
+                                <button onClick={() => {
+                                    navigator.clipboard.writeText(`http://hiii-15fdf.web.app/coding-test-result/${this.state.modifiedUsers[this.state.currentIndex].testSubmission._id}`)
+                                    NotificationManager.info("link copied");
+                                }} class="btn-success btn btn-lg ml-5  text-white text-right float-right mr-4">
 
-                                        <FontAwesomeIcon icon={faCopy} />
-                                    </button>
+                                    <FontAwesomeIcon icon={faCopy} />
+                                </button>
 
-                                    : <button class="btn-success btn btn-lg ml-5  text-white text-right float-right mr-4"
+                                : <button class="btn-success btn btn-lg ml-5  text-white text-right float-right mr-4"
 
-                                        onClick={() => {
-                                            var submissions = [];
-                                            submissions.push(this.state.modifiedUsers[this.state.currentIndex].testSubmission);
-                                            releaseCodingResult(this.state.test, submissions).then((doc) => {
-                                                var modifiedUsers = this.state.modifiedUsers;
-                                                modifiedUsers[this.state.currentIndex].testSubmission.isReleased = true;
-                                                this.setState({ modifiedUsers });
+                                    onClick={() => {
+                                        var submissions = [];
+                                        submissions.push(this.state.modifiedUsers[this.state.currentIndex].testSubmission);
+                                        releaseCodingResult(this.state.test, submissions).then((doc) => {
+                                            var modifiedUsers = this.state.modifiedUsers;
+                                            modifiedUsers[this.state.currentIndex].testSubmission.isReleased = true;
+                                            this.setState({ modifiedUsers });
 
-                                            }).catch((err) => {
+                                        }).catch((err) => {
 
-                                            }).finally(() => {
+                                        }).finally(() => {
 
-                                            })
-                                        }}
+                                        })
+                                    }}
 
-                                    >
+                                >
 
-                                        Release
+                                    Release
                         </button>
 
-                                }
+                            }
                         </div>
 
                     </div>
 
-                 
+
                 </div>
                 {this.state.modifiedUsers[this.state.currentIndex].testSubmission.isStarted === false ?
                     <TestFinish
@@ -430,10 +432,9 @@ class ViewSingleCodingResult extends React.Component {
 
                                                     </div>
                                                 </div>
-                                                <div className="card-footer"><button
-                                                    onClick={() => { this.setState({ isOpen: !this.state.isOpen }) }}
-                                                    aria-controls="example-collapse-text"
-                                                    aria-expanded={this.state.isOpen} className="btn btn-outline-info mb-3"><FontAwesomeIcon icon={faEllipsisH} /></button>
+                                                <div className="card-footer"><a href={`localhost:4000/api/code/${this.state.modifiedUsers[this.state.currentIndex].testSubmission._id}/${index}`} className="btn btn-outline-info">
+                                                    View Code
+                                                            </a>
                                                     <Collapse in={this.state.isOpen}>
                                                         <div className="row">
                                                             <table class="table">
@@ -452,7 +453,7 @@ class ViewSingleCodingResult extends React.Component {
                                                                         var output = result.stderr === "" ? result.stdout : result.errorType + " error";
                                                                         var status = "";
                                                                         if (result.stderr === "" && result.stdout === question.testCases[index].output) status = <i className="fa fa-check text-success"></i>;
-                                                                        else status = <i className="fa fa-times text-danger ml-3" style={{fontSize:"25px"}}></i>;
+                                                                        else status = <i className="fa fa-times text-danger ml-3" style={{ fontSize: "25px" }}></i>;
                                                                         var marks = 0;
                                                                         if (result.stderr === "" && result.stdout === question.testCases[index].output) marks = question.testCases[index].points
 
@@ -462,7 +463,7 @@ class ViewSingleCodingResult extends React.Component {
                                                                             <th scope="row"></th>
                                                                             <td>Test Case  {index + 1}</td>
                                                                             <td><textarea disabled className="text-center blueText mr-2">{question.testCases[index].output}</textarea></td>
-                                                                            <td><textarea  disabled className="text-center mr-2 blueText">{output}</textarea></td>
+                                                                            <td><textarea disabled className="text-center mr-2 blueText">{output}</textarea></td>
                                                                             <td>{status}</td>
                                                                             <td className="pl-5">{marks}/{question.testCases[index].points}</td>
                                                                         </tr>
@@ -503,9 +504,9 @@ class ViewSingleCodingResult extends React.Component {
                                                 <div className="card-footer">
                                                     <div className="row">
                                                         <div className="col-2">
-                                                            <button className="btn btn-outline-info">
+                                                            <a href={`localhost:4000/api/html/${this.state.modifiedUsers[this.state.currentIndex].testSubmission._id}/${index}`} className="btn btn-outline-info">
                                                                 View Code
-                                                            </button>
+                                                            </a>
                                                         </div>
                                                         <div className="col-3">
                                                             <input onChange={(e) => {
@@ -517,13 +518,13 @@ class ViewSingleCodingResult extends React.Component {
                                                                 })
 
 
-                                                            }} value ={value.feedBack} className="form-control" placeholder="Give Feedback" />
+                                                            }} value={value.feedBack} className="form-control" placeholder="Give Feedback" />
                                                         </div>
                                                         <div className="col-1">
                                                             <input onChange={(e) => {
                                                                 var marks = parseInt(e.target.value);
-                                                                if(marks<0)marks = 0;
-                                                                if(marks>question.poitns)marks = question.points
+                                                                if (marks < 0) marks = 0;
+                                                                if (marks > question.poitns) marks = question.points
                                                                 var modifiedUsers = this.state.modifiedUsers;
                                                                 var currentIndex = this.state.currentIndex;
                                                                 modifiedUsers[currentIndex].testSubmission.ans[index].finalMarks = marks;

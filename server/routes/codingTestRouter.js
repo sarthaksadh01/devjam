@@ -122,6 +122,30 @@ router.post("/api/releaseCodingResult",(req,res)=>{
 
 })
 
+router.get("/api/code/:id/:qNo",(req,res)=>{
+    var qNo = parseInt(req.params.qNo);
+    db.getTestSubmissionById(req.params.id).then((submission)=>{
+        if(submission === null) res.json({});
+        res.json(submission.ans[qNo].submission.code);
+
+    })
+})
+
+router.get("/api/html/:id/:qNo",(req,res)=>{
+    var qNo = parseInt(req.params.qNo);
+    db.getTestSubmissionById(req.params.id).then((submission)=>{
+        console.log(submission)
+        if(submission === null) res.json({});
+        const {html,css,js} = submission.ans[qNo].submission;
+        var obj = {
+            html,
+            css,
+            js
+        }
+        res.json(obj);
+       
+    })
+})
 
 
 module.exports = router
