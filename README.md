@@ -1,5 +1,30 @@
 ## Devjam 2020 - Team Cryptx
 
+## 📍 Week 7 - Coding challenge system
+
+## ℹ️  How to access our solution
+
+**Link** : 
+
+**Server Hosting** :
+
+
+---
+## 🔆 Design Specs 
+
+
+
+
+---
+
+
+## 🔥 Cherry on the Cake
+
+
+
+---
+
+
 ## 📍 Week 6 - Testing system & Megabonus challenge
 
 ## ℹ️  How to access our solution
