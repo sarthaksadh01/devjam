@@ -1,5 +1,109 @@
 ## Devjam 2020 - Team Cryptx
 
+## 📍 Week 7 - Coding challenge system
+
+## ℹ️  How to access our solution
+
+**Link** : 
+
+**Server Hosting** :
+
+
+---
+## 🔆 Design Specs 
+
+
+
+
+---
+## 🍒 Cherry on the cake
+
+
+
+## 🔥 Admin Portal
+
+1. **Site Walkthrough**
+
+_To make Admin aware of the all functionalities of our portal, a walkthrough is prepared to make admin know all the features._
+
+2. **Auto generated General Instructions**
+
+_To save Admin's time in writing general intructions about the duration of test, number of questionsetc, we have added the functionality of auto generating these instructions to save admin's time._
+
+3. **Prevent Tab Changing**
+
+_To make sure there is no cheating during the challenge, we made sure that learner cannot change the tabs/browser durimg the challenge. Doing so for 5 times will end the test automatically._
+
+4. **Copy/Paste Disabled**
+
+_To make sure there is no copy/pasting of answers from resources, Admin can enable this functionality to prohibit copy/paste from challenge page._
+
+5. **Random Number Generator for test cases**
+
+_To save Admin's time in generating test cases involving large amount of numbers, we have added the functionality to allow admins generate numbers in a certain range._
+
+6. **Random Strings Generator for test cases**
+
+_To save Admin's time in generating test cases involving large amount of strings, we have added the functionality to allow admins generate strings of a certain length._
+
+7.  **Question Bank**
+
+_A reservoir of all questions(frontend, frontend dynamic & coding) made by the admin. Admin can edit the questions by clicking on them or preview the list by applying filters based on difficulty or type._
+
+8. **Execution time monitoring**
+
+_Admin can set execution time for test cases to run after which learner will get a TLE._
+
+9. **Markdown Editor**
+
+_Admin can create challenge using Markdown editor to apply various effects to their text and not just plain text. It will increase readabilty & user interaction._
+
+10. **Javascript Auto-graded challenge**
+
+_demo_
+
+11. **Saving state of the questions in the published challenges**
+
+_Say admins publishes a challenge and after taht he edits the question. This will not impact the published challenges because we are saving the state of every question in the challenge. Hence preventing unneccessary chaos._
+
+
+
+## 🔥 Learner's Portal
+
+1. **Coding Playground**
+
+_To increase learner's interactivity with our coding portal, we added a coding playground where learner can try to execute any code and run them on custom inputs._
+
+2. **UI Playground**
+
+_To increase learner's interactivity with our UI portal, we added a UI playground where learner can try to execute any HTML/CSS/Javascript code and see its live preview._
+
+
+3. **Notifications**
+
+_Learners receive notifications to keep them updated about all the challenges assigned to them and the results released._
+
+4. **Redeem Points**
+
+_Learners can redeem the points earned by giving the challenges to purchase exclusive merchandise. This will ensure user interactivity and will urge the learner to use out platform more._
+
+5. **Progress Graph**
+
+_Learner's progress is shown as a line graph._
+
+6. **Code auto completion**
+
+
+7. **Syntax Highlighting in Editor**
+
+
+8. **Email regarding Test published and Results released**
+
+_Once the admins publish a challenge, the selected learner receives a mail regarding the test & a test link. This also happens when admisn release test results._
+
+---
+
+
 ## 📍 Week 6 - Testing system & Megabonus challenge
 
 ## ℹ️  How to access our solution
