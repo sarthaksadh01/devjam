@@ -11,6 +11,7 @@ class AllCodingTest extends React.Component {
             profile: {
 
             },
+            submissions:[],
             points: 0
         }
         this.calculateTotalMarks = this.calculateTotalMarks.bind(this)
@@ -66,6 +67,12 @@ class AllCodingTest extends React.Component {
 
         return marks
     }
+    calculateStudentMarks(test){
+        var submission = this.state.submissions.filter((submission)=>{
+            return submission.testId===test._id;
+        })
+        return submission.length===0?0:this.calculateFinalMarks(submission[0],test);
+    }
     componentDidMount() {
         var user = reactLocalStorage.getObject('user', {
             email: "",
@@ -84,14 +91,16 @@ class AllCodingTest extends React.Component {
             var data = [ ["Test", "%", ]]
             modifiedTests.forEach((test) => {
                 var total = this.calculateTotalMarks(test);
+                var submissions = [];
                 
                 getTestSubmission(user.email, test._id).then((submission) => {
                     if (submission !== null && submission.isReleased) {
+                        submissions.push(submission);
                         var finalMarks = this.calculateFinalMarks(submission, test)
                         points += finalMarks
                         var per = Math.round((finalMarks/total)*100);
                         data.push([test.title,per])
-                        this.setState({ points ,data})
+                        this.setState({ points ,data,submissions})
 
 
                     }
@@ -103,6 +112,29 @@ class AllCodingTest extends React.Component {
             this.setState({ tests: modifiedTests, profile: user, points });
         })
 
+    }
+    testStatus(test){
+        var submission = this.state.submissions.filter((submission)=>{
+            return submission.testId===test._id;
+        })
+       
+        if(submission.length === 0 && test.status === "closed"){
+            return <span className="badge badge-warning text-white">Closed</span>
+
+        }
+        if(test.status !== "closed" && submission.length === 0){
+           return <a href={`/coding-test/${test._id}`}>View</a>
+
+        }
+        if(test.status === "closed" && submission.length !== 0 && submission[0].isReleased ){
+            return <a href={`/coding-test-result/${submission[0]._id}`}>View Result</a>
+
+        }
+        if(test.status === "closed" && submission.length !== 0 && !submission[0].isReleased){
+            return <span className="badge badge-warning text-white">Closed</span>
+
+        }
+        
     }
     render() {
         return (<div>
@@ -154,7 +186,7 @@ class AllCodingTest extends React.Component {
                                                         <th scope="col">#</th>
                                                         <th scope="col">Contest Name</th>
                                                         <th scope="col">Points</th>
-                                                        <th scope="col">View</th>
+                                                        <th scope="col">Status</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -162,8 +194,8 @@ class AllCodingTest extends React.Component {
                                                         return <tr>
                                                             <th scope="row">{index + 1}</th>
                                                             <td>{test.title}</td>
-                                                            <td>{this.calculateTotalMarks(test)}</td>
-                                                            <td><a href={`/coding-test/${test._id}`}>View</a></td>
+                                                    <td>{this.calculateStudentMarks(test)}/{this.calculateTotalMarks(test)}</td>
+                                                    <td>{this.testStatus(test)}</td>
                                                         </tr>
                                                     })}
 

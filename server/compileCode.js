@@ -28,7 +28,7 @@ async function compileCode(sourcecode, input, language) {
                 });
                 break;
             case "python":
-                python.runSource(sourcecode, { stdin: input }, (err, result) => {
+                python.runSource(sourcecode, { stdin: input ,executionPath: 'python3'}, (err, result) => {
                     if (err) reject(err);
                     resolve(result);
 
