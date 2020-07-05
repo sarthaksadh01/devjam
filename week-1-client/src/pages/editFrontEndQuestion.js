@@ -1,3 +1,9 @@
+/* 
+
+This file is used to edit a frontend question.
+
+*/
+
 import React from 'react';
 import MarkdownIt from 'markdown-it'
 import MdEditor from 'react-markdown-editor-lite'
