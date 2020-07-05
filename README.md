@@ -10,12 +10,6 @@
 
 
 ---
-## 🔆 Design Specs 
-
-
-
-
----
 ## 🍒 Cherry on the cake
 
 
