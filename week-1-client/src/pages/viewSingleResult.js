@@ -182,7 +182,7 @@ class ViewSingleTestResult extends React.Component {
                                 <button class="btn shadow dropdown-toggle  bgWhite" type="button" id="dropdownMenuButton"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <img style={{ height: "30px" }} class="rounded-circle float-left" src={this.state.modifiedUsers[this.state.currentIndex].imageUrl} />
-                                    <span class="details mx-3 ">{this.state.modifiedUsers[this.state.currentIndex].name}</span>
+                                    <span class="details mx-3 ">{(this.state.modifiedUsers[this.state.currentIndex].name === '' || this.state.modifiedUsers[this.state.currentIndex].name === undefined || this.state.modifiedUsers[this.state.currentIndex].name === null)?this.state.modifiedUsers[this.state.currentIndex].email:this.state.modifiedUsers[this.state.currentIndex].name}</span>
                                     <span class="badge badge-primary ml-1 text-white float-right ">{this.calculateFinalMarks(this.state.modifiedUsers[this.state.currentIndex].testSubmission)}/{this.state.test.questions.length}</span>
                                     <span class="badge badge-info text-white float-right ">{message}</span>
 

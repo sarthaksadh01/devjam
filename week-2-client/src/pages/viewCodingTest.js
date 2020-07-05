@@ -17,7 +17,9 @@ class ViewCodingTest extends React.Component {
             currentIndex: 0,
             dropDownOptions: [],
             selectedOption: {},
-            submission: {}
+            submission: {},
+            tabSwitchCount:0
+            
 
         }
         this.updateSubmission = this.updateSubmission.bind(this);
@@ -55,13 +57,7 @@ class ViewCodingTest extends React.Component {
         submission.isStarted = true;
         saveTestSubmission(submission).then((data) => {
             this.setState({ submission: data },()=>{
-                if (this.state.test.isTabsPrevented) {
-                    this.checkTabsChange();
-                }
-                if(this.state.isCopyPasteBlocked){
-                    this.preventCopyPaste();
-    
-                }
+               
             });
         })
     }
@@ -139,6 +135,13 @@ class ViewCodingTest extends React.Component {
                     if (this.state.test.isTimed) {
                         this.updateProgress();
 
+                    }
+                    if (this.state.test.isTabsPrevented) {
+                        this.checkTabsChange();
+                    }
+                    if(this.state.isCopyPasteBlocked){
+                        this.preventCopyPaste();
+        
                     }
 
                 });

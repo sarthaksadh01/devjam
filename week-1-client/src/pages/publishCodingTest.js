@@ -148,7 +148,7 @@ class PublishCodingTest extends React.Component {
                                                 return <tr>
                                                     <th scope="row"><input onChange={(e) => { this.addRemoveUser(user) }} checked={isChecked} className="form-check-control" type="checkbox" /></th>
                                                     <td>  <img style={{ height: "30px" }} class="rounded-circle mr-3" src={user.imageUrl} /></td>
-                                                    <td>{user.name}</td>
+                                                    <td>{(user.name==='' || user.name===undefined || user.name=== null)?user.email:user.name}</td>
 
                                                 </tr>
                                             })}

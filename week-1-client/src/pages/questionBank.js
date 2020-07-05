@@ -13,8 +13,8 @@ function QuestionBank(props) {
     var questionType = [
         { value: 'all', label: 'All' },
         { value: 'coding', label: 'Coding Question' },
-        { value: 'frontend', label: 'Frontend Question' },
-        { value: 'frontendDynamic', label: 'Frontend Dynamic Question' },
+        { value: 'freeStyle', label: 'Frontend Question' },
+        { value: 'freeStyleDynamic', label: 'Frontend Dynamic Question' },
     ]
     var questionProps = {
         easy: {

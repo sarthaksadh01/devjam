@@ -40,6 +40,8 @@ import Result from './pages/result';
 import ViewCodingTest from './pages/viewCodingTest';
 import ViewSingleCodingResult from './pages/viewSingleCodingResult';
 import AllCodingTest from './pages/allCodingTest';
+import CodingPlayground from './pages/codingPlayground';
+import FrontEndPlayground from './pages/frontendPlayground';
 
 class App extends React.Component {
   state = {
@@ -116,6 +118,8 @@ class App extends React.Component {
             <Route path="/coding-test/:id" render={(props) => this.state.isLoggedin ? <ViewCodingTest {...props} toggleLoading={this.toggleLoading} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
             <Route path="/coding-test-result/:id" render={(props) => this.state.isLoggedin ? <ViewSingleCodingResult {...props} toggleLoading={this.toggleLoading} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
             <Route path="/coding-tests" render={(props) => this.state.isLoggedin ? <AllCodingTest {...props} toggleLoading={this.toggleLoading} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
+            <Route path="/coding-playground" render={(props) => this.state.isLoggedin ? <CodingPlayground {...props} toggleLoading={this.toggleLoading} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
+            <Route path="/frontend-playground" render={(props) => this.state.isLoggedin ? <FrontEndPlayground {...props} toggleLoading={this.toggleLoading} /> : <Login {...props} toggleLoading={this.toggleLoading} />} />
           </Switch>
         </LoadingOverlay>
       </Router>

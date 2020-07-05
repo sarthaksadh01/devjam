@@ -727,7 +727,7 @@ class ViewCodingResult extends React.Component {
 
                                                         <img src={this.state.modifiedUser[user].imageUrl} class="avatar-2"
                                                             alt="" />
-                                                        <a className="user-link text-dark padding-top" href={this.state.modifiedUser[user].testSubmission.isStarted === false ? undefined : `/view-coding-test-result-single/${this.state.test._id}/${this.state.modifiedUser[user].testSubmission._id}`}> {this.state.modifiedUser[user].name}  </a>
+                                                        <a className="user-link text-dark padding-top" href={this.state.modifiedUser[user].testSubmission.isStarted === false ? undefined : `/view-coding-test-result-single/${this.state.test._id}/${this.state.modifiedUser[user].testSubmission._id}`}> {(this.state.modifiedUser[user].name === '' || this.state.modifiedUser[user].name === undefined || this.state.modifiedUser[user].name === null )? this.state.modifiedUser[user].email : this.state.modifiedUser[user].name}  </a>
 
                                                     </td>
                                                     <td>
