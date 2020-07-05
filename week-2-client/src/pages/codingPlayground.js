@@ -1,3 +1,9 @@
+/* 
+
+This file contains the code for implementing coding playground.
+
+*/
+
 import React, { Component } from "react";
 import { Controlled as CodeMirror } from "react-codemirror2";
 import Select from 'react-select';
