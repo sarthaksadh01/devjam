@@ -32,7 +32,7 @@ _To save Admin's time in writing general intructions about the duration of test,
 
 3. **Prevent Tab Changing**
 
-_To make sure there is no cheating during the challenge, we made sure that learner cannot change the tabs/browser durimg the challenge. Doing so for 5 times will end the test automatically._
+_To make sure there is no cheating during the challenge, we made sure that learner cannot change the tabs/browser during the challenge. Doing so for 5 times will end the test automatically._
 
 4. **Copy/Paste Disabled**
 
@@ -60,12 +60,15 @@ _Admin can create challenge using Markdown editor to apply various effects to th
 
 10. **Javascript Auto-graded challenge**
 
-_demo_
+_The tests are administered using a selenium browser, which renders the page within the DOM, allowing it to check if the elements’ properties are within expected ranges. Since this task require server in isolated environment, we didn't include it in our solution. However we made a demo of it's working in our local. Check the video to see its working. _
 
 11. **Saving state of the questions in the published challenges**
 
 _Say admins publishes a challenge and after taht he edits the question. This will not impact the published challenges because we are saving the state of every question in the challenge. Hence preventing unneccessary chaos._
 
+12. **Admin can create challenges for focussed learner groups**
+
+_Instead of publishing the challeneges to teh entire learner community, admin can publish the challenge to selected students._
 
 
 ## 🔥 Learner's Portal
