@@ -1,3 +1,9 @@
+/* 
+
+This file conatins all coding challenges for learner.
+
+*/
+
 import React, { useReducer } from 'react';
 import { getAllCodingTests, getTestSubmission } from '../data/data';
 import { reactLocalStorage } from 'reactjs-localstorage';
