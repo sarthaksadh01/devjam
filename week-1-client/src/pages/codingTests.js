@@ -1,3 +1,9 @@
+/* 
+
+This file contains all challenges.
+
+*/
+
 import React from 'react';
 import Select from 'react-select';
 import { getAllCodingTests, createCodingTest, updateCodingTest } from '../data/data';
