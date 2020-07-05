@@ -8,6 +8,7 @@ import Countdown from 'react-countdown';
 import CodingTestInstructions from "../components/codingTestInstructions";
 import TestFinish from '../components/testFinish'
 import { reactLocalStorage } from 'reactjs-localstorage';
+import $ from 'jquery';
 class ViewCodingTest extends React.Component {
     constructor(props) {
         super(props);
@@ -53,7 +54,15 @@ class ViewCodingTest extends React.Component {
         var submission = this.state.submission;
         submission.isStarted = true;
         saveTestSubmission(submission).then((data) => {
-            this.setState({ submission: data });
+            this.setState({ submission: data },()=>{
+                if (this.state.test.isTabsPrevented) {
+                    this.checkTabsChange();
+                }
+                if(this.state.isCopyPasteBlocked){
+                    this.preventCopyPaste();
+    
+                }
+            });
         })
     }
 
@@ -159,6 +168,34 @@ class ViewCodingTest extends React.Component {
             })
         })
 
+    }
+
+    preventCopyPaste(){
+        $('#codeArea').bind('cut copy paste', function (e) {
+            e.preventDefault();
+        });
+    }
+    checkTabsChange() {
+        setInterval(() => {
+            let body = document.querySelector('body');
+            let codeArea = document.getElementById('codeArea');
+
+            if (!document.hasFocus()) {
+                this.setState({ tabSwitchCount: this.state.tabSwitchCount + 1 }, () => {
+                    if (!this.state.submission.isOver) {
+                        NotificationManager.error(`Please donot switch tabs else your test will be terminated`);
+                        if (this.state.tabSwitchCount >= 5) {
+                            this.onTimeEnd("timeOver");
+                        }
+
+                    }
+
+
+                })
+
+            }
+
+        }, 1000)
     }
 
 
