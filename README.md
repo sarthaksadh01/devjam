@@ -56,7 +56,7 @@ _Admin can create challenge using Markdown editor to apply various effects to th
 
 _The tests are administered using a selenium browser, which renders the page within the DOM, allowing it to check if the elements’ properties are within expected ranges. Since this task require server in isolated environment, we didn't include it in our solution. However we made a demo of it's working in our local. Check the video to see its working._
 
-**Code : ** https://drive.google.com/file/d/1frCEKNKZ29GZfwH-FJqjLpi3sYQ6x9Tj/view?usp=sharing
+**Code :** https://drive.google.com/file/d/1frCEKNKZ29GZfwH-FJqjLpi3sYQ6x9Tj/view?usp=sharing
 
 11. **Saving state of the questions in the published challenges**
 
