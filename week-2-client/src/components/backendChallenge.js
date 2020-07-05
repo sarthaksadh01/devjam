@@ -202,7 +202,17 @@ public class Solution {
                                     theme: "material",
                                     lineNumbers: true,
                                     scrollbarStyle: null,
-                                    lineWrapping: true
+                                    lineWrapping: true,
+                                    smartIndent: true,
+                                    foldGutter: true,
+                                    gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+                                    autoCloseTags: true,
+                                    keyMap: 'sublime',
+                                    matchBrackets: true,
+                                    autoCloseBrackets: true,
+                                    extraKeys: {
+                                        'Ctrl-Space': 'autocomplete'
+                                    }
                                 }} />
 
                         </div>
