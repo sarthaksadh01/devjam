@@ -1,4 +1,8 @@
+/* 
 
+This file is used to view result of a single learner.
+
+*/
 import React from 'react';
 import { getsubmissionByTestId, getTest, updateTestSubmission, getUsers, releaseCodingResult, getCodingTest } from '../data/data';
 import Mcq from '../components/mcq';
