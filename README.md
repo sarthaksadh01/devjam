@@ -20,6 +20,33 @@
 
 ## 🔥 Cherry on the Cake
 
+1. **Coding Playground**
+
+2. **UI Playground**
+
+3. **Site Walkthrough**
+
+4. **Auto generated General Instructions**
+
+5. **Prevent Tab Changing**
+
+6. **Copy/Paste Disabled**
+
+7. **Random Number Generator for test cases**
+
+8. **Random Strings Generator for test cases**
+
+9.  **Question Bank**
+
+10. **Redeem Points**
+
+11. **Progress Graph**
+
+12. **Execution time monitoring**
+
+13. **Markdown Editor**
+
+14. **Javascript Auto-graded challenge**
 
 
 ---
