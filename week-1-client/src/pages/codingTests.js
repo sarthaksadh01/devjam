@@ -3,7 +3,8 @@ import Select from 'react-select';
 import { getAllCodingTests, createCodingTest, updateCodingTest } from '../data/data';
 import { NotificationManager } from 'react-notifications';
 import history from '../components/history';
-import Joyride from 'react-joyride';
+import Joyride, { ACTIONS, EVENTS, STATUS } from 'react-joyride';
+import { reactLocalStorage } from '../../../week-2-client/node_modules/reactjs-localstorage/react-localstorage';
 
 const ReactMarkdown = require('react-markdown')
 class CodingTests extends React.Component {
@@ -115,24 +116,56 @@ class CodingTests extends React.Component {
         { value: 'published', label: 'Published' },
         { value: 'closed', label: 'Closed' },
     ]
+    handleJoyrideCallback = data => {
+        const { action, index, status, type } = data;
+
+
+        if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+
+            reactLocalStorage.set("tour-1", "yes");
+            this.setState({ run: false });
+        }
+    };
     render() {
         return (
             <div style={{ marginTop: "80px" }}>
                 <div className="container">
                     <br />
-                    <Joyride
-                        steps={[
-                            {
-                                target: '.create-coding-test',
-                                content: 'This is my first Step',
-                            },
-                        ]}
+                    {reactLocalStorage.get("tour-1", "no", true) === "no" ?
+                        <Joyride
+                            callback={this.handleJoyrideCallback}
 
-                    />
+                            steps={[
+                                {
+                                    target: '.create-coding-test',
+                                    content: 'To Create a new test click on this Create button',
+                                },
+                                {
+                                    target: '.coding-test-filter',
+                                    content: 'Filter the Created test based on the status',
+                                },
+                                {
+                                    target: '.coding-test-status',
+                                    content: 'Test status will appear here',
+                                },
+                                {
+                                    target: '.coding-test-status',
+                                    content: 'Test status will appear here',
+                                },
+                                {
+                                    target: '.coding-test-buttons',
+                                    content: 'Click here to perform relevant action',
+                                },
+                                // coding-test-status
+                            ]}
+
+                        />
+                        : <div></div>}
+
 
 
                     <div className="row my-4 ">
-                        <div className="col-7">
+                        <div className="col-7 coding-test-filter">
                             <Select
                                 value={this.state.selectedOption}
                                 onChange={this.onFilterChange}
@@ -153,14 +186,14 @@ class CodingTests extends React.Component {
                             return <div className="col-12 mb-4">
                                 <div className="card mb-3 shadow rounded">
                                     <div className="card-header redBack text-white font-weight-bold">
-                                        <h4>{value.title} <span className={`badge ${this.badgeColor[value.status]} text-white float-right mt-1`}>{value.status}</span></h4>
+                                        <h4>{value.title} <span className={`badge coding-test-status ${this.badgeColor[value.status]} text-white float-right mt-1`}>{value.status}</span></h4>
                                     </div>
                                     <div className="card-body mx-3">
                                         <ReactMarkdown escapeHtml={false} source={value.instructions} />
 
                                     </div>
                                     <div className="m-2 mb-4 text-center">
-                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                        <div class="coding-test-buttons btn-group" role="group" aria-label="Basic example">
                                             <button onClick={() => {
                                                 history.push(`/edit-coding-test/${value._id}`);
                                                 window.location.reload();

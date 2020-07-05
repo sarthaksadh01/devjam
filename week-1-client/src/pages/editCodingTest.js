@@ -12,6 +12,8 @@ import history from '../components/history';
 import { getCodingTest, createCodingQuestion, getAllCodingQuestions, updateCodingTest } from '../data/data';
 import { NotificationManager } from 'react-notifications';
 import AddFreeStyleQuestion from '../components/addFreeStyleQuestion';
+import Joyride, { ACTIONS, EVENTS, STATUS } from 'react-joyride';
+import { reactLocalStorage } from '../../../week-2-client/node_modules/reactjs-localstorage/react-localstorage';
 
 class EditCodingTest extends React.Component {
     constructor(props) {
@@ -200,10 +202,54 @@ class EditCodingTest extends React.Component {
         })
 
     }
+    handleJoyrideCallback = data => {
+        const { action, index, status, type } = data;
+
+
+        if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+
+            reactLocalStorage.set("tour-2", "yes");
+            this.setState({ run: false });
+        }
+    };
+    
     render() {
         const mdParser = new MarkdownIt();
         return (
             <div style={{ marginTop: "100px" }}>
+                  {reactLocalStorage.get("tour-2", "no", true) === "no" ?  <Joyride
+                            callback={this.handleJoyrideCallback}
+
+                            steps={[
+                                {
+                                    target: '.prevent-opening',
+                                    content: 'Click this to prevent students from opening other tabs',
+                                },
+                                {
+                                    target: '.copy-paste',
+                                    content: 'Click this to prevent students from pasting code in the code editor',
+                                },
+                                {
+                                    target: '.timed-event',
+                                    content: 'Click this to make the test of certain time',
+                                },
+                                {
+                                    target: '#question-bank',
+                                    content: 'Select previously saved questions',
+                                },
+                                {
+                                    target: '.add-new-coding-question',
+                                    content: 'Add a new coding question',
+                                },
+                                {
+                                    target: '.add-new-frontend-question',
+                                    content: 'Add a new Frontend question',
+                                },
+                                // coding-test-status
+                            ]}
+
+                        />:<div></div>}
+                        
 
                 <div className="container ">
                     <div style={{ marginTop: "90px" }} className="row">
@@ -279,7 +325,7 @@ class EditCodingTest extends React.Component {
                     </div>
                     <br/>
                     <div className="row  ml-2 mt-1 ">
-                    <div className="col-3">
+                    <div className="col-3 prevent-opening">
                             <label class="form-check">
                                 <input onChange={(e) => {
                                     var test = this.state.test;
@@ -291,7 +337,7 @@ class EditCodingTest extends React.Component {
                              </span>
                             </label>
                         </div>
-                        <div className="col-3">
+                        <div className="col-3 copy-paste">
                             <label class="form-check">
                                 <input onChange={(e) => {
                                     var test = this.state.test;
@@ -303,7 +349,7 @@ class EditCodingTest extends React.Component {
                              </span>
                             </label>
                         </div>
-                        <div className="col-5">
+                        <div className="col-5 timed-event">
                             <div class="row">
                                 <div className="col-4">
                                 <label class="form-check">
@@ -336,7 +382,7 @@ class EditCodingTest extends React.Component {
                     <br />
                     <div className="row">
                         <div className="col-8">
-                            <h4># Selected Questions: {this.state.test.questions.length}</h4>
+                            <h4> Selected Questions: {this.state.test.questions.length}</h4>
                             <br/>
                         </div>
 
@@ -359,8 +405,8 @@ class EditCodingTest extends React.Component {
                     </div>
                     <hr />
                     {/* <div className="row"> */}
-                    <Tabs defaultActiveKey="qList" id="uncontrolled-tab-example">
-                        <Tab eventKey="qList" title="Question Bank">
+                    <Tabs  defaultActiveKey="qList" id="uncontrolled-tab-example">
+                        <Tab id="queston-bank" className="queston-bank" eventKey="qList" title="Question Bank">
                             <QuestionBank
                                 addRemoveQuestion={this.addRemoveQuestion}
                                 selectedQuestions={this.state.test.questions}
@@ -373,14 +419,14 @@ class EditCodingTest extends React.Component {
                             />
 
                         </Tab>
-                        <Tab eventKey="addCodingQ" title="Add coding Question">
+                        <Tab className="add-new-coding-question" eventKey="addCodingQ" title="Add coding Question">
                             <AddCodingQuestion
                                 saveQuestion={this.saveQuestion}
 
                             />
 
                         </Tab>
-                        <Tab eventKey="addFrontEndQ" title="Add frontend Question" >
+                        <Tab className = "add-new-frontend-question" eventKey="addFrontEndQ" title="Add frontend Question" >
                             <AddFreeStyleQuestion
                                 saveQuestion={this.saveQuestion}
                             />
