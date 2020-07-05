@@ -7,7 +7,8 @@ function codingQuestions(test) {
 }
 function CodingTestInstructions(props) {
     return (
-        <div style={{ marginTop: "140px" }} className="container">
+        <div style={{ marginTop: "100px" }} className="container">
+            <button className="btn btn-warning mb-2">Go back</button>
             <div className="row">
                 <div className="col-12">
                     <div className="card rounded shadow p-3 mb-5">

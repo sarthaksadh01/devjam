@@ -175,7 +175,8 @@ class ViewSingleTestResult extends React.Component {
 
         return (
             <div style={{ marginTop: "80px" }} className="container">
-                <div class="ml-3 mt-5 ">
+                  <button className="btn btn-warning">Go back</button>
+                <div class="ml-3 mt-2 ">
                     <div className="row">
                         <div className="col-5">
                             <div class="dropdown ml-4 ">

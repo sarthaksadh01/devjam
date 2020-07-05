@@ -270,7 +270,8 @@ class ViewSingleCodingResult extends React.Component {
 
 
         return (
-            <div style={{ marginTop: "120px" }} className="container">
+            <div style={{ marginTop: "100px" }} className="container">
+                  <button className="btn btn-warning mb-2">Go back</button>
                 <div class="ml-3 mt-5 mb-4">
                     <div className="row">
                         <div className="col-4">

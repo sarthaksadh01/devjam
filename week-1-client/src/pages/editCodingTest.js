@@ -230,6 +230,7 @@ class EditCodingTest extends React.Component {
         const mdParser = new MarkdownIt();
         return (
             <div style={{ marginTop: "100px" }}>
+                  
                 {reactLocalStorage.get("tour-2", "no", true) === "no" ? <Joyride
                     callback={this.handleJoyrideCallback}
 
@@ -265,7 +266,8 @@ class EditCodingTest extends React.Component {
 
 
                 <div className="container ">
-                    <div style={{ marginTop: "90px" }} className="row">
+                <button className="btn btn-warning">All Challenges</button>
+                    <div style={{ marginTop: "50px" }} className="row">
                         <div className="col-md-7">
                             <div className="col-md-10 mb-3"><h4 className=" text-truncate text-topic font-weight-bold">{this.state.test.title}</h4></div>
                             <hr className="hr" />
