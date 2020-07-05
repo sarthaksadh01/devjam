@@ -1,3 +1,9 @@
+/* 
+
+This file is used to edit a coding challenge.
+
+*/
+
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
 import React from 'react';
