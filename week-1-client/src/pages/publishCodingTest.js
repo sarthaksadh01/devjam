@@ -1,3 +1,9 @@
+/* 
+
+This file is used to publish a coding challenge.
+
+*/
+
 import React from 'react';
 import { getCodingTest, getUsers, publishCodingTest } from '../data/data';
 import { NotificationManager } from 'react-notifications';
