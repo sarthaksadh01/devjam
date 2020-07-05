@@ -34,8 +34,11 @@ function NavbarUi(props) {
                     <Dropdown.Toggle variant="" id="dropdown-basic">
                         <Avatar src={props.imageUrl} color={Avatar.getRandomColor('sitebase', ['green'])} name={props.email} size={30} round="35px" />
                     </Dropdown.Toggle>
+                   
+                    
 
                     <Dropdown.Menu>
+                    <Dropdown.Item href="/coding-tests">Profile</Dropdown.Item>
                         <Dropdown.Item onClick={() => { reactLocalStorage.clear(); window.location.reload() }} href="">Logout</Dropdown.Item>
 
                     </Dropdown.Menu>
