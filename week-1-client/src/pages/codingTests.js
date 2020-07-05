@@ -185,7 +185,7 @@ class CodingTests extends React.Component {
                         {this.state.filterCodingTests.map((value, index) => {
                             return <div className="col-12 mb-4">
                                 <div className="card mb-3 shadow rounded">
-                                    <div className="card-header redBack text-white font-weight-bold">
+                                    <div className="card-header redBack blueText font-weight-bold">
                                         <h4>{value.title} <span className={`badge coding-test-status ${this.badgeColor[value.status]} text-white float-right mt-1`}>{value.status}</span></h4>
                                     </div>
                                     <div className="card-body mx-3">

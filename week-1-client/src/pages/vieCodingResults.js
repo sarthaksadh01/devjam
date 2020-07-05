@@ -400,30 +400,36 @@ class ViewCodingResult extends React.Component {
 
 
 
-                <div class="container ">
+                <div class="container title" style={{marginTop:"120px"}}>
 
-                    <div class="title text-dark ">
-                        <a href={undefined}><h2 class="details text-monospace inline-block">{this.state.test.title}</h2></a>
+                    {/* <div class="title text-dark">
+                        <a href={undefined}><h2 class="blueText mt-5 inline-block">{this.state.test.title}</h2></a>
                         <h3 class="text-muted float-right">{this.state.isAllReleased ? <div></div> : <button onClick ={()=>{
                             this.onClickreleaseResult("sarthak",true)
                         }} className="btn btn-lg text-white rounded-pill bg-info">Release All</button>} </h3>
                     </div>
+                    <hr /> */}
+                    <div class="mt-5 " >
+                        <div class="card  rounded p-3 title">
+                        <div class=" text-dark">
+                        <a href={undefined}><h2 class="blueText inline-block">{this.state.test.title}</h2></a>
+                        <h3 class="text-muted  float-right">{this.state.isAllReleased ? <div></div> : <button onClick ={()=>{
+                            this.onClickreleaseResult("sarthak",true)
+                        }} className="btn btn-lg text-white rounded-pill bg-info">Release All</button>} </h3>
+                    </div>
                     <hr />
-                    <div class="mt-5">
-                        <div class="card shadow-lg rounded p-3">
-                        
 
                             <div class="px-3">
-                                <h5 class="details2 text-monospace inline-block"> Created Date : </h5>
+                                <h5 class="blueText inline-block"> Created Date : </h5>
                                 <p class="text-muted inline-block"> {new Date(this.state.test.createdAt).toLocaleDateString("en-US", options)}</p>
                             </div>
 
                             <div class="px-3">
-                                <h5 class="details2 text-monospace inline-block">Points : </h5>
+                                <h5 class="blueText inline-block">Points : </h5>
                                 <p class="text-muted inline-block"> {this.calculateTotalMarks()}  Points</p>
                             </div>
                             <div class="px-3">
-                                <h5 class="details2 text-monospace inline-block">Duration : </h5>
+                                <h5 class="blueText inline-block">Duration : </h5>
                                 <p class="text-muted inline-block"> {this.state.test.isTimed ? this.state.test.testTiming : "N/A"}  Mins</p>
                             </div>
 
@@ -435,7 +441,7 @@ class ViewCodingResult extends React.Component {
 
                     <div class="my-5">
                         <div class="row">
-                            <div class="col-md-5 col-sm-12 mt-5 sorting">
+                            <div class="col-md-5 col-sm-12 mt-3 sorting">
                                 <button class="border border-info btn btn-lg btn-block col-6 text-info mx-5 hide"
                                     onClick={() => {
                                         var isSort = this.state.isSort;
@@ -512,10 +518,10 @@ class ViewCodingResult extends React.Component {
                                 Numeric Filters
                             </button>
                                 {this.state.isNumericFilter ?
-                                    <div class="card rounded    col-8 mx-5 mt-1 numeric-filter" id="filter">
+                                    <div class="card rounded   col-8 mx-5 mt-1 numeric-filter" id="filter">
                                         <article class=" card-group-item">
 
-                                            <div class="filter-content">
+                                            <div class="filter-content mt-4">
                                                 <div class="">
                                                     <div class="custom-control custom-checkbox">
 
@@ -669,7 +675,7 @@ class ViewCodingResult extends React.Component {
 
                                     : <div></div>
                                 }
-                                <button class="border border-info btn btn-lg btn-block col-6 text-info mx-5 mt-2 mb-1"
+                                <button class="border border-info btn btn-lg btn-block col-6 text-info mx-5 mt-2 mb-5"
                                     onClick={() => {
                                         this.onSortChange({
                                             target: {
@@ -680,10 +686,10 @@ class ViewCodingResult extends React.Component {
                                     Clear
                             </button>
                             </div>
-                            <div class="col-md-6 col-sm-12 ">
+                            <div class="col-md-6 col-sm-12 mb-5">
                                 <div class="card rounded p-1 ">
                                     <table class="table text-dark text-center ">
-                                        <thead class="bg-light details">
+                                        <thead class="bg-light blueText">
                                             <tr>
 
                                                 <th><span>User</span></th>
@@ -730,14 +736,14 @@ class ViewCodingResult extends React.Component {
                                                         <h6 class="text-center">{this.state.modifiedUser[user].testSubmission.isStarted === false ? -1 : this.calculateFinalMarks(this.state.modifiedUser[user].testSubmission)}/{this.calculateTotalMarks()}</h6>
                                                     </td>
                                                     <td>
-                                                        <h6 class="text-center">{this.state.modifiedUser[user].testSubmission.isReleased === false ? <div
+                                                        <h5 class="text-center">{this.state.modifiedUser[user].testSubmission.isReleased === false ? <div
                                                         ><button onClick={() => { this.onClickreleaseResult(user) }} className="btn btn-success">Release</button></div> :
                                                             <div>
                                                                 <span>
 
                                                                     <span onClick={() => {
                                                                         navigator.clipboard.writeText(`http://hiii-15fdf.web.app/result/${this.state.modifiedUser[user].testSubmission._id}`)
-                                                                    }} class="badge badge-info">
+                                                                    }} class="badge badge-info mr-2">
 
                                                                         User
                                                             </span>
@@ -748,7 +754,7 @@ class ViewCodingResult extends React.Component {
                                                                         Admin
                                                             </span>
                                                                 </span>
-                                                            </div>}</h6>
+                                                            </div>}</h5>
                                                     </td>
                                                 </tr>
                                             })}
@@ -760,7 +766,7 @@ class ViewCodingResult extends React.Component {
                         </div>
                     </div>
                 </div>
-                <footer id="sticky-footer" class="py-4 bg-dark text-white-50 bgGradient">
+                <footer id="sticky-footer" class="py-4  text-white-50 blueBack fixed-bottom">
                     <div class="container text-center">
                         <small>Copyright &copy; Cryptx</small>
                     </div>

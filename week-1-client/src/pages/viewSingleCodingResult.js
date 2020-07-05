@@ -268,17 +268,17 @@ class ViewSingleCodingResult extends React.Component {
 
 
         return (
-            <div style={{ marginTop: "80px" }} className="container">
-                <div class="ml-3 mt-5 ">
+            <div style={{ marginTop: "120px" }} className="container">
+                <div class="ml-3 mt-5 mb-4">
                     <div className="row">
                         <div className="col-4">
-                            <div class="dropdown ml-4 ">
-                                <button class="btn shadow dropdown-toggle  bgWhite" type="button" id="dropdownMenuButton"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="dropdown ml-1 ">
+                                <button class="btn  shadow dropdown-toggle  bgWhite" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{width:"350px"}}>
                                     <img style={{ height: "30px" }} class="rounded-circle float-left" src={this.state.modifiedUsers[this.state.currentIndex].imageUrl} />
-                                    <span class="details mx-3 ">{this.state.modifiedUsers[this.state.currentIndex].name}</span>
-                                    <span class="badge badge-primary ml-1 text-white float-right ">{this.calculateFinalMarks(this.state.modifiedUsers[this.state.currentIndex].testSubmission)}/{this.calculateTotalMarks()}</span>
-                                    <span class="badge badge-info text-white float-right ">{message}</span>
+                                    <span class="blueText mx-3 ">{this.state.modifiedUsers[this.state.currentIndex].name}</span>
+                                    <span class="badge badge-primary ml-1 text-white float-right mt-2">{this.calculateFinalMarks(this.state.modifiedUsers[this.state.currentIndex].testSubmission)}/{this.calculateTotalMarks()}</span>
+                                    <span class="badge badge-info text-white float-right mt-2">{message}</span>
 
                                 </button>
                                 <div class="dropdown-menu mt-1 " aria-labelledby="dropdownMenuButton"
@@ -289,12 +289,12 @@ class ViewSingleCodingResult extends React.Component {
                                         else if (user.testSubmission.completedOnTime) msg = "On Time";
                                         else msg = "Not on Time";
 
-                                        return (<div><a onClick={() => { this.chnageUser(index) }} class="dropdown-item  " href="#">
+                                        return (<div><a onClick={() => { this.chnageUser(index) }} class="dropdown-item  " href="#" style={{width:"330px"}}>
 
                                             <img style={{ height: "30px" }} class="rounded-circle" src={user.imageUrl} />
-                                            <span class="details mr-2 ml-2">{user.name}</span>
-                                            <span class="badge badge-primary ml-1 text-white float-right ">{this.calculateFinalMarks(user.testSubmission)}/{this.calculateTotalMarks()}</span>
-                                            <span class="badge badge-info text-white float-right ">{msg}</span>
+                                            <span class="blueText mr-2 ml-2">{user.name}</span>
+                                            <span class="badge badge-primary ml-1 text-white float-right mt-2">{this.calculateFinalMarks(user.testSubmission)}/{this.calculateTotalMarks()}</span>
+                                            <span class="badge badge-info text-white float-right mt-2">{msg}</span>
                                         </a>
                                             <hr />
                                         </div>)
@@ -304,42 +304,42 @@ class ViewSingleCodingResult extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-2">
-                            <h3 class="details2 ">
+                        <div className="col-1">
+                            <h3 class="blueText ">
                                 {this.state.currentIndex != 0 ? <i onClick={() => { this.moveUser("left") }} class="fa fa-chevron-left mr-2"></i> : <i></i>}
                                 {this.state.currentIndex != (this.state.modifiedUsers.length - 1) ? <i onClick={() => { this.moveUser("right") }} class="fa fa-chevron-right"></i> : <i></i>}
                             </h3>
                         </div>
-                        <div className="col-2">
+                        <div className="col-1">
                             <label>Auto Graded</label>
-                            <h5 class="details2 ">
+                            <h5 class="blueLight ">
 
                                 {this.calculateMarks(this.state.modifiedUsers[this.state.currentIndex].testSubmission)}/{this.calculateTotalMarks()}
                             </h5>
                         </div>
-                        <div className="col-2">
+                        <div className="col-1">
                             <label>Final Marks</label>
-                            <h5 class="details2 ">
+                            <h5 class="blueLight ">
 
                                 {this.calculateFinalMarks(this.state.modifiedUsers[this.state.currentIndex].testSubmission)}/{this.calculateTotalMarks()}
                             </h5>
                         </div>
-                    </div>
-
-                    <div className="row mb-3 mt-4">
-                        <div className="col-7">
+                        <div className="col-2">
+                        <button
+                                                    onClick={() => { this.setState({ isOpen: !this.state.isOpen }) }}
+                                                    aria-controls="example-collapse-text"
+                                                    aria-expanded={this.state.isOpen} className="btn blueBack text-white btn-lg mb-3 ml-2 mr-3 float-right"> Detailed View</button>
                         </div>
-                        <div className="col-4 text-right float-right">
-                            <div className="row text-right float-right" >
-                                {this.state.modifiedUsers[this.state.currentIndex].testSubmission.isReleased ?
+                        <div className="col-1 ">
+                        {this.state.modifiedUsers[this.state.currentIndex].testSubmission.isReleased ?
                                     <button onClick={() => {
                                         navigator.clipboard.writeText(`http://hiii-15fdf.web.app/result/${this.state.modifiedUsers[this.state.currentIndex].testSubmission._id}`)
-                                    }} class="filter btn btn-lg ml-5  text-white text-right float-right mr-4">
+                                    }} class="btn-success btn btn-lg ml-5  text-white text-right float-right mr-4">
 
                                         <FontAwesomeIcon icon={faCopy} />
                                     </button>
 
-                                    : <button class="filter btn btn-lg ml-5  text-white text-right float-right mr-4"
+                                    : <button class="btn-success btn btn-lg ml-5  text-white text-right float-right mr-4"
 
                                         onClick={() => {
                                             var submissions = [];
@@ -362,11 +362,11 @@ class ViewSingleCodingResult extends React.Component {
                         </button>
 
                                 }
-
-                            </div>
                         </div>
+
                     </div>
 
+                 
                 </div>
                 {this.state.modifiedUsers[this.state.currentIndex].testSubmission.isStarted === false ?
                     <TestFinish
@@ -452,7 +452,7 @@ class ViewSingleCodingResult extends React.Component {
                                                                         var output = result.stderr === "" ? result.stdout : result.errorType + " error";
                                                                         var status = "";
                                                                         if (result.stderr === "" && result.stdout === question.testCases[index].output) status = <i className="fa fa-check text-success"></i>;
-                                                                        else status = <i className="fa fa-times text-danger"></i>;
+                                                                        else status = <i className="fa fa-times text-danger ml-3" style={{fontSize:"25px"}}></i>;
                                                                         var marks = 0;
                                                                         if (result.stderr === "" && result.stdout === question.testCases[index].output) marks = question.testCases[index].points
 
@@ -461,10 +461,10 @@ class ViewSingleCodingResult extends React.Component {
                                                                         return <tr>
                                                                             <th scope="row"></th>
                                                                             <td>Test Case  {index + 1}</td>
-                                                                            <td><textarea className="text-center  mr-2">{question.testCases[index].output}</textarea></td>
-                                                                            <td><textarea className="text-center mr-2">{output}</textarea></td>
+                                                                            <td><textarea disabled className="text-center blueText mr-2">{question.testCases[index].output}</textarea></td>
+                                                                            <td><textarea  disabled className="text-center mr-2 blueText">{output}</textarea></td>
                                                                             <td>{status}</td>
-                                                                            <td>{marks}/{question.testCases[index].points}</td>
+                                                                            <td className="pl-5">{marks}/{question.testCases[index].points}</td>
                                                                         </tr>
                                                                     })}
 
