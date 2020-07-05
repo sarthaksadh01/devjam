@@ -95,10 +95,10 @@ class PublishCodingTest extends React.Component {
     render() {
         
         return (
-            <div style={{ marginTop: "80px" }}>
-                <div className="container">
+            <div style={{ marginTop: "120px" ,marginLeft:"20%"}} >
+                <div className="container p-0">
                     <div className="row">
-                        <div className="col-8">
+                        <div className="col-6">
                             <h4>{this.state.test.title}</h4>
                             <hr className="hr" />
                         </div>
@@ -108,7 +108,7 @@ class PublishCodingTest extends React.Component {
 
 
 
-                            }} className="btn btn-outline-info">
+                            }} className="btn btn-success ml-5 btn-lg">
                                 Publish
                             </button>
 
@@ -129,8 +129,8 @@ class PublishCodingTest extends React.Component {
                     <div className="row">
                         <div className="col-8">
                             <div className="card mb-5">
-                                <div className="card-header">
-                                    <input onChange={this.searchQuery} placeholder="Search Students" className="form-control w-100" />
+                                <div className="card-header redBack pl-0">
+                                    <input onChange={this.searchQuery} placeholder="Search Students" className="form-control mx-auto" style={{width:"80%"}} />
                                 </div>
                                 <div style={{ maxHeight: "300px", overflowY: "auto" }} className="card-body">
                                     <table class="table">
@@ -159,12 +159,12 @@ class PublishCodingTest extends React.Component {
                         </div>
                     </div>
                 </div>
-                < Modal size="lg" centered={true} show={this.state.showModal} onHide={() => { this.setState({ showModal: false }) }}>
+                < Modal size="lg" centered={true}  show={this.state.showModal} onHide={() => { this.setState({ showModal: false }) }}>
                     <Modal.Header closeButton>
                         <Modal.Title>Publish Test </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <div className="container text-center">
+                        <div className="container text-center px-2" >
                             <div class="row">
                                 <div style={{ maxHeight: "300px", overflowY: "auto" }} className="card-body">
                                     <table class="table">
@@ -196,7 +196,7 @@ class PublishCodingTest extends React.Component {
 
                     </Modal.Body>
                     <Modal.Footer>
-                        <button onClick={() => { this.onPublishTest(); this.setState({ showModal: false }) }} className="btn text-white filter">Publish</button>
+                        <button onClick={() => { this.onPublishTest(); this.setState({ showModal: false }) }} className="btn text-white btn-success mr-3">Publish</button>
                     </Modal.Footer>
                 </Modal>
             </div>

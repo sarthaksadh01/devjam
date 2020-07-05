@@ -17,20 +17,20 @@ function NavbarUi(props) {
             <a class=" text-white navbar-brand" href="/"><img style={{ height: 35 }} src="https://www.zaiodev.com/static/media/zaiowhite.76601178.png" /></a>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
-            <ul class="nav navbar-nav ml-auto">
+            <ul class="nav navbar-nav ml-auto ">
                 <li class="nav-item ">
                     <a class="text-white nav-link" href="/tests">Tests </a>
                 </li>
                 <li class="nav-item ">
-                    <a class="text-white nav-link" href="/courses">Courses </a>
+                    <a class="text-white nav-link" href="/coding-tests">Profile </a>
                 </li>
                 <li class="nav-item ">
-                    <a class="text-white nav-link" href="/notification"><span className="badge badge-sm badge-info"><i class="fas fa-bell mr-1"></i>{props.notifications.filter((notification)=>{
+                    <a class="text-white nav-link" href="/notification"><span className="badge badge-md badge-warning"><i class="fas fa-bell mr-1"></i>{props.notifications.filter((notification)=>{
                         return notification.isRead===false
                     }).length}</span> </a>
                 </li>
 
-                <Dropdown className="float-right">
+                <Dropdown className="float-right" >
                     <Dropdown.Toggle variant="" id="dropdown-basic">
                         <Avatar src={props.imageUrl} color={Avatar.getRandomColor('sitebase', ['green'])} name={props.email} size={30} round="35px" />
                     </Dropdown.Toggle>

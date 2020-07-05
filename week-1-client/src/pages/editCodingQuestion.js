@@ -83,21 +83,20 @@ class EditCodingQuestion extends React.Component {
     render() {
         const mdParser = new MarkdownIt();
         return (
-            <div style={{ marginTop: "80px" }} className="container">
+            <div style={{ marginTop: "120px" }} className="container">
                 <div className="row">
                     <div className="col-12">
-                        <h4>Edit Question <span className="mb-5 float-right"><button onClick={() => {
+                        <h3>Edit Question <span className="mb-5 float-right"><button onClick={() => {
                             this.saveQuestion();
-                        }} className="btn btn-lg btn-info">Save</button></span></h4>
-                        <hr className="hr" />
+                        }} className="btn  btn-info">Save</button></span></h3>
+                        <hr className="hr " />
                     </div>
                 </div>
                 <div className="row mt-3">
                     <div className="col-12">
-                        <h5>General Details</h5>
-                        <hr />
+                        
                         <div class="form-group w-100">
-                            <label for="exampleFormControlTextarea1">Question Image</label>
+                            <label for="exampleFormControlTextarea1" className="blueText font-weight-bold">Question Image</label>
                             <div className="row text-center">
                                 <div className="mb-2 col-12 text-center">
                                     {this.state.question.imageUrl === "" ? <div></div> :
@@ -137,11 +136,11 @@ class EditCodingQuestion extends React.Component {
                             </div>
                         </div>
                         <div class="form-group w-100">
-                            <label for="exampleFormControlTextarea1">Question Title</label>
+                            <label for="exampleFormControlTextarea1" className="blueText font-weight-bold">Question Title</label>
                             <input onChange={(e) => { this.onChangeData("title", e.target.value) }} value={this.state.question.title} type="text" class="form-control w-100" id="exampleFormControlInput1" placeholder="" />
                         </div>
                         <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Question Description</label>
+                            <label for="exampleFormControlTextarea1" className="blueText font-weight-bold">Question Description</label>
                             <MdEditor
                                 value={this.state.question.desc}
                                 style={{ height: "250px" }}
@@ -150,7 +149,7 @@ class EditCodingQuestion extends React.Component {
                             />
                         </div>
                         <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Constraints</label>
+                            <label for="exampleFormControlTextarea1" className="blueText font-weight-bold">Constraints</label>
                             <MdEditor
                                 value={this.state.question.constraints}
                                 style={{ height: "150px" }}
@@ -159,16 +158,16 @@ class EditCodingQuestion extends React.Component {
                             />
                         </div>
                         <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Execution Time</label>
+                            <label for="exampleFormControlTextarea1" className="blueText font-weight-bold">Execution Time</label>
                             <input value={this.state.question.execTime} onChange={(e) => { this.onChangeData("execTime", e.target.value) }} type="number" className="form-control" />
                         </div>
 
                         <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Sample Input</label>
+                            <label for="exampleFormControlTextarea1" className="blueText font-weight-bold">Sample Input</label>
                             <textarea value={this.state.question.sampleInput} onChange={(e) => { this.onChangeData("sampleInput", e.target.value) }} className="form-control" rows={"2"}></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Sample Output</label>
+                            <label for="exampleFormControlTextarea1" className="blueText font-weight-bold">Sample Output</label>
                             <textarea value={this.state.question.sampleOutput} onChange={(e) => { this.onChangeData("sampleOutput", e.target.value) }} className="form-control" rows={"2"}></textarea>
                         </div>
 
@@ -201,9 +200,9 @@ class EditCodingQuestion extends React.Component {
                         <hr />
                         <div className="card p-3">
                             {this.state.question.testCases.map((testCae, index) => {
-                                return <div className="">
+                                return <div className="mr-4">
                                     <div class="form-group">
-                                        <label for="exampleFormControlTextarea1">Test Case {index + 1} Input</label>
+                                        <label for="exampleFormControlTextarea1" >Test Case {index + 1} Input</label>
                                         <textarea value={this.state.question.testCases[index].input} onChange={(e) => {
                                             var question = this.state.question;
                                             question.testCases[index].input = e.target.value;

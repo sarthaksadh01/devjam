@@ -51,12 +51,20 @@ function QuestionBank(props) {
 
 
     return (
+        
         <div >
-            <div className="row mb-2 mt-4">
+             <section class="jumbotron text-center">
+      <div class="container jumboMargin" >
+        <h1 class="text-orange font-weight-bold">Question Bank</h1>
+        <p class="lead text-orange">Welcome to the Question Bank, all your questions at one place..</p>
+       
+      </div>
+    </section>
+            <div className="row mb-2 mt-5 mb-3">
                 <div className="col-6">
                     <input onChange={(e) => { props.onSearchQuestion(e.target.value) }} className="form-control w-100" placeholder="Search question By name"></input>
                 </div>
-                <div className="col-2">
+                <div className="col-2 ml-5">
                     <Select
                         // value={selectedOption}
                         onChange={(e) => {

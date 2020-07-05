@@ -105,42 +105,25 @@ class AllCodingTest extends React.Component {
 
     }
     render() {
-        return (
+        return (<div>
             <div style={{ marginTop: "80px" }} className="container">
-
-                <div className="row">
-                    <div className="col-4">
-                        <div className="card">
-                            <div className="card-header">
-                                Profile
-                            </div>
-                            <div className="card-body">
-                                <div className="row text-center">
-                                    <div className="col-12">
-                                        <img className="rounded-circle" src={this.state.profile.imageUrl} />
-                                    </div>
-                                </div>
-                                <hr />
-                                <div className="row">
-                                    <div className="col-12">
-                                        <p>{this.state.profile.name}</p>
-                                        <p>{this.state.profile.email}</p>
-                                    </div>
-                                </div>
-                                <hr />
-                                <div className="row">
-                                    <div className="col-12">
-                                        <p>Points <span className="badge badge-info">{this.state.points}</span></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-8">
+  <section class="jumbotron text-center mb-5 ">
+      <div class=" jumboMargin"  >
+         <h1 class="text-orange font-weight-bold">Welcome !</h1>
+      <img className="rounded-circle " src={this.state.profile.imageUrl} />
+      <p class="lead text-orange">{this.state.profile.name}</p>
+    <p class="lead text-orange ">{this.state.profile.email}</p>
+    <p class="lead text-orange ">Points <span className="badge badge-warning">{this.state.points}</span></p>
+       
+      </div>
+    </section>
+                <div className="row ml-3">
+                   
+                    <div className="col-12 ">
                         <div className="row">
                             <div className="col-12">
                                 <div className="card mb-3">
-                                    <div className="card-header">
+                                    <div className="card-header blueBack text-orange font-weight-bold">
                                         Performance
                                    </div>
                                     <div className="card-body">
@@ -160,7 +143,7 @@ class AllCodingTest extends React.Component {
                         <div className="row">
                             <div className="col-12">
                                 <div className="card">
-                                    <div className="card-header">
+                                    <div className="card-header blueBack text-orange font-weight-bold">
                                         <p>Coding Challenges</p>
                                     </div>
                                     <div className="card-body">
@@ -195,7 +178,7 @@ class AllCodingTest extends React.Component {
 
                     </div>
                 </div>
-                <div className="row mt-3">
+                <div className="row mt-5">
                     <main role="main" >
 
                         <section class="jumbotron text-center">
@@ -210,12 +193,12 @@ class AllCodingTest extends React.Component {
                             <div class="container">
 
                                 <div class="row">
-                                    <div class="col-md-4">
+                                <div class="col-md-4">
                                         <div class="card mb-4 shadow-sm">
                                             <img class="bd-placeholder-img card-img-top p-2" src="https://leetcode.com/static/images/store/tshirt_promo.png" />
                                             <div class="card-body">
                                                 <p class="m-0 inline-block" >Cryptx T-Shirt </p>
-                                                <button class="btn btn-warning float-right" >Redeem</button>
+                                                <button class="btn blueBack float-right text-orange" ><i class="fa fa-coins mr-2" style={{color:"yellow"}}>5000</i>Redeem</button>
                                                 <br />
                                                 <small class="text-muted">Redeem our t-shirts !</small>
                                             </div>
@@ -226,7 +209,7 @@ class AllCodingTest extends React.Component {
                                             <img class="bd-placeholder-img card-img-top p-2" src="https://leetcode.com/static/images/store/tshirt_promo.png" />
                                             <div class="card-body">
                                                 <p class="m-0 inline-block" >Cryptx T-Shirt </p>
-                                                <button class="btn btn-warning float-right" >Redeem</button>
+                                                <button class="btn blueBack float-right text-orange" ><i class="fa fa-coins mr-2" style={{color:"yellow"}}>5000</i>Redeem</button>
                                                 <br />
                                                 <small class="text-muted">Redeem our t-shirts !</small>
                                             </div>
@@ -237,7 +220,7 @@ class AllCodingTest extends React.Component {
                                             <img class="bd-placeholder-img card-img-top p-2" src="https://leetcode.com/static/images/store/tshirt_promo.png" />
                                             <div class="card-body">
                                                 <p class="m-0 inline-block" >Cryptx T-Shirt </p>
-                                                <button class="btn btn-warning float-right" >Redeem</button>
+                                                <button class="btn blueBack float-right text-orange" ><i class="fa fa-coins mr-2" style={{color:"yellow"}}>5000</i>Redeem</button>
                                                 <br />
                                                 <small class="text-muted">Redeem our t-shirts !</small>
                                             </div>
@@ -252,7 +235,14 @@ class AllCodingTest extends React.Component {
                     </main>
 
                 </div>
+               
             </div>
+            <footer id="sticky-footer" class="py-4  text-white-50 blueBack ">
+             <div class="container text-center">
+                 <small>Copyright &copy; Cryptx</small>
+             </div>
+         </footer>
+           </div>
         )
     }
 }
