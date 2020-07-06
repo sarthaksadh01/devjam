@@ -4,11 +4,17 @@
 
 ## ℹ️  How to access our solution
 
-**Link** : 
+**Admin Portal** : https://sarthak-493c6.web.app
 
-**Server Hosting** :
+**Student Portal** : https://hiii-15fdf.web.app/
+
+**Admin Credentials** : cryptx 12345678
+
+**Server Hosting** : https://devjam-server.herokuapp.com
 
 **Video** : https://drive.google.com/file/d/1LSwjcMCZ2QVh7VN2neXOaLtfZ-RuvGkX/view?usp=sharing
+
+**Note.** Use Safari browser for best result
 
 
 ---
@@ -24,7 +30,7 @@ _To make Admin aware of the all functionalities of our portal, a walkthrough is 
 
 2. **Auto generated General Instructions**
 
-_To save Admin's time in writing general intructions about the duration of test, number of questionsetc, we have added the functionality of auto generating these instructions to save admin's time._
+_To save Admin's time in writing general intructions about the duration of test, number of questions etc, we have added the functionality of auto generating these instructions to save admin's time._
 
 3. **Prevent Tab Changing**
 
@@ -101,7 +107,7 @@ _Learner's progress is shown as a line graph._
 
 8. **Email regarding Test published and Results released**
 
-_Once the admins publish a challenge, the selected learner receives a mail regarding the test & a test link. This also happens when admisn release test results._
+_Once the admins publish a challenge, the selected learner receives a mail regarding the test & a test link. This also happens when admins release test results._
 
 ---
 
