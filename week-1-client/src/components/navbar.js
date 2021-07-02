@@ -21,7 +21,7 @@ function NavbarUi() {
                     <li class="nav-item ">
                         <a class="nav-link" href="/">Home </a>
                     </li>
-                    {/* <li class="nav-item">
+                    <li class="nav-item">
                         <a class="nav-link" href="/createprofile">Create Profile</a>
                     </li>
 
@@ -36,7 +36,7 @@ function NavbarUi() {
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/tests">Tests</a>
-                    </li> */}
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/question-bank/">Question Bank</a>
                     </li>

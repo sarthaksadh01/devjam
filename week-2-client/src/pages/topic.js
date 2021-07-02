@@ -43,7 +43,7 @@ class Topic extends React.Component {
             fileUrl: "",
             isSubmitted: true,
             videoUrl: "",
-            fileName:"",
+            fileName: "",
             played: 0
         };
         this.renderItem = this.renderItem.bind(this);
@@ -57,8 +57,8 @@ class Topic extends React.Component {
         this.onProgress = this.onProgress.bind(this);
         this.onReady = this.onReady.bind(this);
     }
-     i = 0;
-     x = 0;
+    i = 0;
+    x = 0;
 
     calculateCurrentSubtopic(data) {
         var currentSubTopic = data.subTopics.filter((subTopic) => {
@@ -107,16 +107,16 @@ class Topic extends React.Component {
     }
 
     changeVideoQuality(value) {
-        this.x =this.i;
+        this.x = this.i;
         if (value === "HD") {
-           
+
             this.setState({ videoUrl: this.state.currentSubTopic.videoLink })
             // setTimeout(()=>{
-               
+
             //     this.player.seekTo(parseFloat(x))
 
             // },3000)
-            
+
 
         }
         else {
@@ -141,11 +141,11 @@ class Topic extends React.Component {
 
     onReady() {
         // alert(this.i)
-        if(this.x!=0){
-             this.player.seekTo(parseFloat(this.x))
+        if (this.x != 0) {
+            this.player.seekTo(parseFloat(this.x))
 
         }
-       
+
 
 
     }
@@ -158,8 +158,8 @@ class Topic extends React.Component {
         if (type == "privateComment") {
             this.setState({ privateComment: value });
         }
-        if(type=="fileName"){
-            this.setState({fileName:value})
+        if (type == "fileName") {
+            this.setState({ fileName: value })
         }
 
     }
@@ -175,11 +175,11 @@ class Topic extends React.Component {
             subTopicId: this.state.currentSubTopic.subTopicId,
             fileUrl: this.state.fileUrl,
             comment: this.state.privateComment,
-            fileName:this.state.fileName,
-            createdAt:new Date()
+            fileName: this.state.fileName,
+            createdAt: new Date()
         };
         var email = reactLocalStorage.getObject("user").email;
-        submitFile(data,email).then((doc) => {
+        submitFile(data, email).then((doc) => {
             this.setState({ isSubmitted: true });
         }).finally(() => {
             this.props.toggleLoading("Uploading..")
@@ -254,6 +254,7 @@ class Topic extends React.Component {
         var data = this.state.currentSubTopic.type == "video" ?
             this.state.currentSubTopic.desc :
             `${this.state.currentSubTopic.instruction} <br/> **Points** : ${this.state.currentSubTopic.points} <br/> **Due Date** ${new Date(this.state.currentSubTopic.due).toLocaleDateString("en-US", options)} `;
+            console.log(this.state.currentSubTopic)
         return (
             <div  >
                 <div className="container mb-0">
@@ -287,7 +288,8 @@ class Topic extends React.Component {
 
                         <div className="row">
                             {
-                                this.state.currentSubTopic.type === "video"
+                                
+                                this.state.currentSubTopic.type == "video"
                                     ? <VideoPlayer
                                         r={this.ref}
                                         prev={this.state.prev}

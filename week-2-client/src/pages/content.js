@@ -92,7 +92,7 @@ class Content extends React.Component {
 
                             var color = Math.floor(Math.random() * 4);
                             return <div class="video-card">
-                                <a href="#" class="video-card__card-link"></a>
+                                {/* <a href="#" class="video-card__card-link"></a> */}
 
                                 <img class="video-card__image"
                                     src={value.subTopics[0].thumbNail}

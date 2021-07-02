@@ -103,10 +103,6 @@ var input = [
         output:1
     }
 ]
-runTestCases(sourceCode,input,"java").then((res)=>{
-    console.log("code res is---")
-    console.log(res);
-})
 
 module.exports ={
     compileCode,
