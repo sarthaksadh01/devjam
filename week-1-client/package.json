@@ -18,7 +18,7 @@
     "bootstrap-switch-button-react": "^1.2.0",
     "compile-run": "^2.3.2",
     "jquery": "^3.5.1",
-    "markdown-it": "^11.0.0",
+    "markdown-it": "^12.3.2",
     "moment": "^2.27.0",
     "rc-select": "^11.0.1",
     "react": "^16.13.1",
