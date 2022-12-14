@@ -14,7 +14,7 @@
     "archiver": "^4.0.1",
     "compile-run": "^2.3.2",
     "cors": "^2.8.5",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "form-data": "^3.0.0",
     "mongoose": "^5.9.16",
     "mongoose-auto-increment": "^5.0.1",
